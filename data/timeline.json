@@ -1,0 +1,38 @@
+[
+  {
+    "id": "t1",
+    "year": "2016",
+    "title": "Started CS Degree",
+    "description": "Began formal studies in Computer Science.",
+    "icon": "graduation-cap",
+    "coords": [37.7749, -122.4194],
+    "facts": ["Algorithms", "Data Structures", "Hackathons"]
+  },
+  {
+    "id": "t2",
+    "year": "2018",
+    "title": "Design Internship",
+    "description": "Joined a design studio focusing on UX.",
+    "icon": "palette",
+    "coords": [34.0522, -118.2437],
+    "facts": ["Figma", "User Research", "Accessibility"]
+  },
+  {
+    "id": "t3",
+    "year": "2020",
+    "title": "First Dev Role",
+    "description": "Frontend Engineer building web apps.",
+    "icon": "code",
+    "coords": [40.7128, -74.006],
+    "facts": ["React", "TypeScript", "Testing"]
+  },
+  {
+    "id": "t4",
+    "year": "2023",
+    "title": "Lead Product Engineer",
+    "description": "Led product teams delivering at scale.",
+    "icon": "rocket",
+    "coords": [51.5074, -0.1278],
+    "facts": ["Leadership", "Performance", "DX"]
+  }
+]

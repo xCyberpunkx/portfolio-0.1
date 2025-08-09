@@ -1,0 +1,35 @@
+{
+  "name": "Your Name",
+  "role": "Product Engineer",
+  "summary": "Building immersive, accessible experiences across web, design, and 3D.",
+  "experience": [
+    {
+      "company": "Acme",
+      "role": "Lead Product Engineer",
+      "period": "2023–Present",
+      "bullets": [
+        "Led cross-functional squads.",
+        "Shipped performance-focused features.",
+        "Mentored engineers and designers."
+      ]
+    },
+    {
+      "company": "Beta Co",
+      "role": "Frontend Engineer",
+      "period": "2020–2023",
+      "bullets": [
+        "Built modular component systems.",
+        "Improved Lighthouse scores to 95+.",
+        "Introduced A11y workflows."
+      ]
+    },
+    {
+      "company": "Design Lab",
+      "role": "Design Intern",
+      "period": "2018–2019",
+      "bullets": ["User research and prototyping.", "Design tokens and handoff."]
+    }
+  ],
+  "education": [{ "school": "State University", "degree": "B.Sc. Computer Science", "period": "2016–2020" }],
+  "skills": ["JavaScript", "TypeScript", "React", "R3F", "Figma", "Accessibility", "Performance"]
+}

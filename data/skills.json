@@ -1,0 +1,12 @@
+[
+  { "id": "s1", "name": "JavaScript", "level": 90, "category": "Frontend", "kind": "code" },
+  { "id": "s2", "name": "TypeScript", "level": 85, "category": "Frontend", "kind": "code" },
+  { "id": "s3", "name": "UI Design", "level": 80, "category": "Design", "kind": "design" },
+  { "id": "s4", "name": "React", "level": 88, "category": "Frontend", "kind": "code" },
+  { "id": "s5", "name": "Accessibility", "level": 75, "category": "UX", "kind": "other" },
+  { "id": "s6", "name": "Performance", "level": 82, "category": "Web", "kind": "other" },
+  { "id": "s7", "name": "Three.js", "level": 70, "category": "3D", "kind": "code" },
+  { "id": "s8", "name": "Node.js", "level": 78, "category": "Backend", "kind": "code" },
+  { "id": "s9", "name": "GraphQL", "level": 60, "category": "Backend", "kind": "code" },
+  { "id": "s10", "name": "Figma", "level": 85, "category": "Design", "kind": "design" }
+]

@@ -1,0 +1,8 @@
+[
+  { "label": "Arch Linux", "icon": "/images/pixel-linux.png" },
+  { "label": "i3 WM", "icon": "/images/pixel-i3.png" },
+  { "label": "Neovim", "icon": "/images/pixel-vim.png" },
+  { "label": "Rust (rustup)", "icon": "/images/pixel-rust.png" },
+  { "label": "g++ / clang++", "icon": "/images/pixel-cpp.png" },
+  { "label": "GLFW + OpenGL", "icon": "/images/pixel-opengl.png" }
+]

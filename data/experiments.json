@@ -1,0 +1,10 @@
+[
+  {
+    "id": "e1",
+    "name": "Particle Orbits",
+    "repo": "https://github.com/you/particle-orbits",
+    "demo": "https://example.com/orbits"
+  },
+  { "id": "e2", "name": "Audio Visualizer", "repo": "https://github.com/you/audio-vis" },
+  { "id": "e3", "name": "Shader Toys", "repo": "https://github.com/you/shader-toys" }
+]

@@ -1,0 +1,38 @@
+{
+  "experience": [
+    {
+      "company": "Core Systems",
+      "role": "Lead Systems Engineer",
+      "period": "2023 — Present",
+      "details": [
+        "Led Rust migration for latency-critical services.",
+        "Squeezed 35% perf via lock-free structures, memory arenas.",
+        "Mentored team on profiling, flamegraphs, cache-aware design."
+      ]
+    },
+    {
+      "company": "RenderWorks",
+      "role": "Graphics Engineer",
+      "period": "2020 — 2023",
+      "details": [
+        "Built OpenGL/GLSL pipelines for real-time viz.",
+        "Optimized C++ hot paths (SIMD, SPSC queues).",
+        "Shipped cross-platform editor with C# tooling."
+      ]
+    }
+  ],
+  "skills": ["Rust", "C++", "C#", "OpenGL/GLSL", "WASM", "Linux", "Vim/Neovim", "Systems Design", "Performance"],
+  "education": [{ "school": "Tech University", "degree": "B.Sc. Computer Science", "period": "2016 — 2020" }],
+  "missions": [
+    "Hardening network stack for high packet rates.",
+    "Shipping pixel-perfect editor experience.",
+    "Teaching Vim productivity and Linux workflows."
+  ],
+  "pdf": "/cv/zine-eddine-resume.pdf",
+  "timeline": [
+    { "id": "n1", "label": "Core Systems", "branch": 0 },
+    { "id": "n2", "label": "RenderWorks", "branch": 1 },
+    { "id": "n3", "label": "Freelance", "branch": 2 },
+    { "id": "n4", "label": "Open Source", "branch": 1 }
+  ]
+}

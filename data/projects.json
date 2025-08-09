@@ -1,0 +1,93 @@
+[
+  {
+    "id": "p1",
+    "title": "Vortex CLI",
+    "cover": "/placeholder.svg?height=720&width=1280",
+    "category": "Design",
+    "story": "A cohesive UI design system with tokens, components, and motion.",
+    "tools": ["Figma", "Framer", "Tokens Studio"],
+    "type": "CLI",
+    "tech": ["Rust", "tokio", "clap"],
+    "stats": [
+      { "key": "Lang", "value": "Rust" },
+      { "key": "LOC", "value": "8,420" },
+      { "key": "Perf", "value": "1.6x baseline" },
+      { "key": "Binary", "value": "3.1 MB" }
+    ],
+    "snippet": "use clap::Parser;\n#[derive(Parser)]\nstruct Args { #[arg(short, long)] fast: bool }\nfn main(){ let args=Args::parse(); println!(\"fast? {}\", args.fast); }",
+    "demoUrl": "https://example.com/demo",
+    "repoUrl": "https://github.com/you/vortex-cli"
+  },
+  {
+    "id": "p2",
+    "title": "Raycaster",
+    "cover": "/placeholder.svg?height=720&width=1280",
+    "category": "Web",
+    "story": "Multiplayer editor with CRDTs and WebRTC.",
+    "tools": ["Next.js", "TypeScript", "Yjs"],
+    "type": "Game",
+    "tech": ["C++", "OpenGL", "GLFW"],
+    "stats": [
+      { "key": "Lang", "value": "C++" },
+      { "key": "FPS", "value": "240" },
+      { "key": "Engine", "value": "Custom" },
+      { "key": "Shaders", "value": "GLSL" }
+    ],
+    "snippet": "#version 330 core\nout vec4 FragColor;\nvoid main(){ FragColor = vec4(0.1, 1.0, 0.6, 1.0); }",
+    "demoUrl": "https://example.com/raycaster",
+    "repoUrl": "https://github.com/you/raycaster"
+  },
+  {
+    "id": "p3",
+    "title": "GraphStudio",
+    "cover": "/placeholder.svg?height=720&width=1280",
+    "category": "Data",
+    "story": "Analytics dashboard with streaming charts and alerting.",
+    "tools": ["Vega", "WebSockets", "Tailwind"],
+    "type": "GUI",
+    "tech": ["C#", "WPF"],
+    "stats": [
+      { "key": "Lang", "value": "C#" },
+      { "key": "Nodes", "value": "20+" },
+      { "key": "Latency", "value": "<4ms" },
+      { "key": "Platform", "value": "Windows" }
+    ],
+    "snippet": "public partial class Main : Window { public Main(){ InitializeComponent(); } }"
+  },
+  {
+    "id": "p4",
+    "title": "Dotfiles",
+    "cover": "/placeholder.svg?height=720&width=1280",
+    "category": "Mobile",
+    "story": "Wellness tracker with offline-first architecture.",
+    "tools": ["React Native", "Expo", "SQLite"],
+    "type": "Tooling",
+    "tech": ["Linux", "Vim", "Tmux"],
+    "stats": [
+      { "key": "WM", "value": "i3" },
+      { "key": "Shell", "value": "zsh" },
+      { "key": "Editor", "value": "Neovim" },
+      { "key": "Theme", "value": "Gruvbox" }
+    ],
+    "snippet": "set number\nset relativenumber\nset termguicolors\nnnoremap <leader>f :Telescope find_files<CR>",
+    "repoUrl": "https://github.com/you/dotfiles"
+  },
+  {
+    "id": "p5",
+    "title": "NetGraph",
+    "cover": "/placeholder.svg?height=720&width=1280",
+    "category": "Other",
+    "story": "A set of creative coding utilities and shaders.",
+    "tools": ["Three.js", "GLSL", "R3F"],
+    "type": "Lib",
+    "tech": ["Rust", "no_std"],
+    "stats": [
+      { "key": "Lang", "value": "Rust" },
+      { "key": "Coverage", "value": "96%" },
+      { "key": "Crates", "value": "3" },
+      { "key": "Users", "value": "5+" }
+    ],
+    "snippet": "pub fn connect<T: Transport>(t: T){ /* ... */ }",
+    "repoUrl": "https://github.com/you/netgraph"
+  }
+]

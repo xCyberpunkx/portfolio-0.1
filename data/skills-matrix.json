@@ -1,0 +1,6 @@
+[
+  { "name": "Rust", "hp": 92, "mp": 70, "atk": 90, "int": 95 },
+  { "name": "C++", "hp": 88, "mp": 68, "atk": 92, "int": 90 },
+  { "name": "C#", "hp": 80, "mp": 75, "atk": 78, "int": 85 },
+  { "name": "OpenGL", "hp": 85, "mp": 60, "atk": 84, "int": 88 }
+]
