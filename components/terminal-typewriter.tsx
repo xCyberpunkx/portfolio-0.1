@@ -5,12 +5,20 @@ import { useState, useEffect } from "react"
 interface TerminalTypewriterProps {
   lines: string[]
   onComplete?: () => void
+  typeSpeed?: number // Added configurable typing speed
+  lineDelay?: number // Added configurable line delay
 }
 
-export function TerminalTypewriter({ lines, onComplete }: TerminalTypewriterProps) {
+export function TerminalTypewriter({
+  lines,
+  onComplete,
+  typeSpeed = 50, // Default faster typing like Arch boot
+  lineDelay = 200, // Shorter delay between lines
+}: TerminalTypewriterProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
   const [showCursor, setShowCursor] = useState(true)
+  const [completedLines, setCompletedLines] = useState<string[]>([]) // Track completed lines
 
   useEffect(() => {
     if (currentLineIndex >= lines.length) {
@@ -25,19 +33,20 @@ export function TerminalTypewriter({ lines, onComplete }: TerminalTypewriterProp
         () => {
           setCurrentText(currentLine.slice(0, currentText.length + 1))
         },
-        Math.random() * 100 + 50,
+        Math.random() * typeSpeed + typeSpeed * 0.5,
       )
 
       return () => clearTimeout(timeout)
     } else {
       const timeout = setTimeout(() => {
+        setCompletedLines((prev) => [...prev, currentLine])
         setCurrentLineIndex(currentLineIndex + 1)
         setCurrentText("")
-      }, 1000)
+      }, lineDelay)
 
       return () => clearTimeout(timeout)
     }
-  }, [currentText, currentLineIndex, lines, onComplete])
+  }, [currentText, currentLineIndex, lines, onComplete, typeSpeed, lineDelay])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,16 +57,35 @@ export function TerminalTypewriter({ lines, onComplete }: TerminalTypewriterProp
   }, [])
 
   return (
-    <div className="font-mono text-green-400 text-sm md:text-base">
-      {lines.slice(0, currentLineIndex).map((line, index) => (
-        <div key={index} className="mb-1">
-          <span className="text-purple-400">$</span> {line}
+    <div className="font-mono text-green-400 text-sm md:text-base space-y-1">
+      {completedLines.map((line, index) => (
+        <div key={index} className="terminal-line animate-boot-sequence" style={{ animationDelay: `${index * 0.1}s` }}>
+          {line.startsWith("[") ? (
+            <span className="text-cyan-400">{line}</span>
+          ) : line.includes("$") ? (
+            <>
+              <span className="terminal-prompt">$</span>
+              <span className="text-green-400">{line.replace(/^\$\s*/, "")}</span>
+            </>
+          ) : (
+            <span className="text-purple-300">{line}</span>
+          )}
         </div>
       ))}
+
       {currentLineIndex < lines.length && (
-        <div className="mb-1">
-          <span className="text-purple-400">$</span> {currentText}
-          {showCursor && <span className="bg-green-400 text-black">█</span>}
+        <div className="terminal-line">
+          {lines[currentLineIndex].startsWith("[") ? (
+            <span className="text-cyan-400">{currentText}</span>
+          ) : lines[currentLineIndex].includes("$") ? (
+            <>
+              <span className="terminal-prompt">$</span>
+              <span className="text-green-400">{currentText.replace(/^\$\s*/, "")}</span>
+            </>
+          ) : (
+            <span className="text-purple-300">{currentText}</span>
+          )}
+          {showCursor && <span className="terminal-cursor">█</span>}
         </div>
       )}
     </div>

@@ -52,11 +52,6 @@ export default function RootLayout({
           :root {
             --font-sans: ${inter.style.fontFamily};
             --font-mono: ${jetbrainsMono.style.fontFamily};
-            --border-radius: 4px;
-            --neon-green: #00ff41;
-            --neon-purple: #bf00ff;
-            --neon-cyan: #00ffff;
-            --neon-pink: #ff0080;
           }
           
           @keyframes scanlines {
@@ -130,11 +125,7 @@ export default function RootLayout({
           }
         `}</style>
       </head>
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-black text-green-400 scanlines crt-effect`}
-      >
-        {children}
-      </body>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-white text-black`}>{children}</body>
     </html>
   )
 }
