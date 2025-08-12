@@ -1,0 +1,110 @@
+{
+  "personal": {
+    "name": "Zine Eddine",
+    "title": "Full-Stack Developer",
+    "tagline": "Building the future with Rust, C++, and Linux",
+    "bio": "Passionate systems programmer and full-stack developer with expertise in Rust, C++, C#, and Linux. I love creating efficient, elegant solutions and exploring the intersection of low-level programming and modern web technologies.",
+    "location": "Remote",
+    "email": "contact@example.com",
+    "resume_url": "/resume.pdf"
+  },
+  "skills": {
+    "languages": [
+      { "name": "Rust", "level": 90, "category": "Systems" },
+      { "name": "C++", "level": 85, "category": "Systems" },
+      { "name": "C#", "level": 80, "category": "Application" },
+      { "name": "TypeScript", "level": 85, "category": "Web" },
+      { "name": "Python", "level": 75, "category": "Scripting" },
+      { "name": "Go", "level": 70, "category": "Backend" }
+    ],
+    "technologies": [
+      { "name": "Linux", "level": 95, "category": "OS" },
+      { "name": "Docker", "level": 85, "category": "DevOps" },
+      { "name": "PostgreSQL", "level": 80, "category": "Database" },
+      { "name": "React", "level": 85, "category": "Frontend" },
+      { "name": "Next.js", "level": 80, "category": "Framework" },
+      { "name": "OpenGL", "level": 75, "category": "Graphics" }
+    ],
+    "tools": [
+      { "name": "Vim/Neovim", "level": 95, "category": "Editor" },
+      { "name": "Git", "level": 90, "category": "VCS" },
+      { "name": "Tmux", "level": 85, "category": "Terminal" },
+      { "name": "Cargo", "level": 90, "category": "Build" },
+      { "name": "CMake", "level": 75, "category": "Build" },
+      { "name": "GDB", "level": 80, "category": "Debug" }
+    ]
+  },
+  "projects": [
+    {
+      "id": "rust-cli-tool",
+      "title": "Rust CLI Tool",
+      "description": "A high-performance command-line utility built with Rust for file processing and data analysis.",
+      "image": "/placeholder.svg?height=200&width=400",
+      "tags": ["Rust", "CLI", "Performance"],
+      "category": "CLI",
+      "github": "https://github.com/example/rust-cli-tool",
+      "demo": null,
+      "featured": true,
+      "year": 2024
+    },
+    {
+      "id": "cpp-game-engine",
+      "title": "C++ Game Engine",
+      "description": "A lightweight 2D game engine built from scratch using modern C++ and OpenGL.",
+      "image": "/placeholder.svg?height=200&width=400",
+      "tags": ["C++", "OpenGL", "Game Dev"],
+      "category": "Engine",
+      "github": "https://github.com/example/cpp-game-engine",
+      "demo": "https://example.com/game-demo",
+      "featured": true,
+      "year": 2023
+    },
+    {
+      "id": "web-portfolio",
+      "title": "Interactive Portfolio",
+      "description": "This very portfolio website built with Next.js, featuring dual design modes and 3D interactions.",
+      "image": "/placeholder.svg?height=200&width=400",
+      "tags": ["TypeScript", "Next.js", "3D"],
+      "category": "Web",
+      "github": "https://github.com/example/portfolio",
+      "demo": "https://example.com",
+      "featured": true,
+      "year": 2024
+    },
+    {
+      "id": "linux-dotfiles",
+      "title": "Linux Dotfiles",
+      "description": "My carefully crafted Linux configuration files and setup scripts for a productive development environment.",
+      "image": "/placeholder.svg?height=200&width=400",
+      "tags": ["Linux", "Vim", "Shell"],
+      "category": "Config",
+      "github": "https://github.com/example/dotfiles",
+      "demo": null,
+      "featured": false,
+      "year": 2024
+    }
+  ],
+  "experience": [
+    {
+      "company": "Tech Startup",
+      "position": "Senior Full-Stack Developer",
+      "duration": "2022 - Present",
+      "description": "Leading development of high-performance web applications using Rust backend services and React frontends.",
+      "technologies": ["Rust", "TypeScript", "PostgreSQL", "Docker"]
+    },
+    {
+      "company": "Software Company",
+      "position": "Systems Developer",
+      "duration": "2020 - 2022",
+      "description": "Developed low-level system components and performance-critical applications in C++ and Rust.",
+      "technologies": ["C++", "Rust", "Linux", "CMake"]
+    }
+  ],
+  "social": {
+    "github": "https://github.com/example",
+    "linkedin": "https://linkedin.com/in/example",
+    "twitter": "https://twitter.com/example",
+    "mastodon": "https://mastodon.social/@example",
+    "email": "contact@example.com"
+  }
+}
