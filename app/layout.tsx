@@ -16,28 +16,36 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Zine Eddine - Full-Stack Developer",
-  description: "Passionate systems programmer and full-stack developer with expertise in Rust, C++, C#, and Linux.",
-  keywords: ["Rust", "C++", "Linux", "Full-Stack Developer", "Systems Programming"],
-  authors: [{ name: "Zine Eddine" }],
-  creator: "Zine Eddine",
+  title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+  description:
+    "Passionate systems programmer and security researcher from Algeria with expertise in Rust, C++, Linux, and cybersecurity.",
+  keywords: ["Rust", "C++", "Linux", "Security Research", "Systems Programming", "Algeria", "Open Source"],
+  authors: [{ name: "Zinedine Rouabah" }],
+  creator: "Zinedine Rouabah",
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Zine Eddine - Full-Stack Developer",
-    description: "Passionate systems programmer and full-stack developer with expertise in Rust, C++, C#, and Linux.",
-    siteName: "Zine Eddine Portfolio",
+    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+    description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology.",
+    siteName: "Zinedine Rouabah Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zine Eddine - Full-Stack Developer",
-    description: "Passionate systems programmer and full-stack developer with expertise in Rust, C++, C#, and Linux.",
+    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+    description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology.",
   },
   robots: {
     index: true,
     follow: true,
   },
-    generator: 'v0.dev'
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -48,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <style>{`
           :root {
             --font-sans: ${inter.style.fontFamily};
@@ -82,6 +91,12 @@ export default function RootLayout({
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(100vh); opacity: 0; }
+          }
+          
+          /* Enhanced smooth scrolling */
+          html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
           }
           
           .scanlines::before {
@@ -122,10 +137,16 @@ export default function RootLayout({
               animation-iteration-count: 1 !important;
               transition-duration: 0.01ms !important;
             }
+            
+            html {
+              scroll-behavior: auto;
+            }
           }
         `}</style>
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-white text-black`}>{children}</body>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-white text-black overflow-x-hidden`}>
+        {children}
+      </body>
     </html>
   )
 }

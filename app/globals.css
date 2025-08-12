@@ -243,6 +243,128 @@
   }
 }
 
+/* Added spin-slow animation for geometric shapes */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Enhanced contact form animations */
+@keyframes form-focus {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.form-input:focus {
+  animation: form-focus 0.3s ease-out;
+}
+
+/* Added enhanced button hover effects */
+.premium-button-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-button-enhanced::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.premium-button-enhanced:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Added project card 3D effects */
+.project-card-3d {
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card-3d:hover {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg) translateZ(20px);
+}
+
+.project-card-3d::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.project-card-3d:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced skill bar animations with stagger effect */
+@keyframes skill-bar-fill {
+  0% {
+    width: 0%;
+    background-position: -200% center;
+  }
+  100% {
+    width: var(--skill-width);
+    background-position: 200% center;
+  }
+}
+
+.skill-bar-animated {
+  background: linear-gradient(90deg, #000000, #666666, #000000);
+  background-size: 200% 100%;
+  animation: skill-bar-fill 2s ease-out forwards;
+}
+
+/* Added footer wave animation */
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.wave-animation {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.wave-animation:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.wave-animation:nth-child(3) {
+  animation-delay: 1s;
+}
+
 /* Premium animation classes */
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
@@ -377,6 +499,18 @@
 
   .shadow-xl {
     box-shadow: 0 0 0 2px #000000 !important;
+  }
+
+  .gradient-text,
+  .text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: #000000 !important;
+  }
+
+  .glass-card {
+    background: #ffffff !important;
+    border: 2px solid #000000 !important;
   }
 }
 
@@ -535,4 +669,19 @@
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .animate-fade-in-up {
+    animation-duration: 0.6s;
+  }
+
+  .premium-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .project-card-3d:hover {
+    transform: perspective(1000px) rotateX(5deg) translateZ(10px);
+  }
 }
