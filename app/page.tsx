@@ -7,28 +7,28 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import {
+  ArrowRight,
   Download,
-  Code,
-  Shield,
-  Terminal,
-  Cpu,
-  Globe,
-  Mail,
+  User,
   Github,
-  Linkedin,
   ExternalLink,
-  Play,
+  Star,
+  Mail,
+  Linkedin,
+  Send,
+  Cpu,
+  Shield,
+  Globe,
+  Terminal,
+  Brain,
   Gamepad2,
   Zap,
+  Trophy,
+  Play,
   Lock,
   Eye,
   EyeOff,
-  User,
-  ArrowRight,
-  Star,
-  Trophy,
-  Brain,
-  Send,
+  Code,
   ArrowUp,
 } from "lucide-react"
 
@@ -39,13 +39,22 @@ export default function Portfolio() {
   const [loginData, setLoginData] = useState({ email: "", password: "" })
   const [showPassword, setShowPassword] = useState(false)
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
+      setShowScrollTop(window.scrollY > 500)
 
       const sections = ["hero", "about", "journey", "skills", "projects", "services", "arcade", "contact"]
-      const currentSection = sections.find((section) => {
+      const current = sections.find((section) => {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
@@ -53,10 +62,7 @@ export default function Portfolio() {
         }
         return false
       })
-
-      if (currentSection) {
-        setActiveSection(currentSection)
-      }
+      if (current) setActiveSection(current)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -68,6 +74,30 @@ export default function Portfolio() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="relative w-32 h-32 mx-auto mb-8">
+            <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-black rounded-full animate-spin border-t-transparent"></div>
+            <div className="absolute inset-4 border-2 border-gray-300 rounded-full animate-pulse"></div>
+          </div>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-pulse">
+            Loading Experience...
+          </h2>
+          <div className="mt-4 w-64 h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-black to-gray-600 rounded-full animate-loading-bar"></div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -131,7 +161,10 @@ export default function Portfolio() {
       </nav>
 
       <main className="pt-20">
-        <section id="hero" className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+        <section
+          id="hero"
+          className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative overflow-hidden"
+        >
           <div
             className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 animate-gradient-x"
             style={{
@@ -140,70 +173,75 @@ export default function Portfolio() {
           />
 
           <div className="absolute inset-0 overflow-hidden">
-            {[...Array(50)].map((_, i) => (
+            {/* Floating particles with enhanced movement */}
+            {[...Array(120)].map((_, i) => (
               <div
                 key={i}
-                className="absolute animate-float"
+                className="absolute animate-float-enhanced"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 15}s`,
+                  animationDuration: `${8 + Math.random() * 12}s`,
+                }}
+              >
+                <div className="w-1 h-1 sm:w-2 sm:h-2 bg-gradient-to-r from-blue-400/60 to-purple-400/60 rounded-full blur-sm animate-pulse" />
+              </div>
+            ))}
+
+            {/* Vercel-style geometric shapes */}
+            {[...Array(15)].map((_, i) => (
+              <div
+                key={`vercel-${i}`}
+                className="absolute animate-vercel-float"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
                   animationDelay: `${Math.random() * 8}s`,
-                  animationDuration: `${4 + Math.random() * 6}s`,
+                  animationDuration: `${12 + Math.random() * 8}s`,
                 }}
               >
-                <div className="w-2 h-2 bg-gradient-to-r from-purple-400/30 to-blue-400/30 rounded-full blur-sm" />
+                <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-br from-indigo-200/40 to-cyan-200/40 rounded-sm rotate-45 animate-spin-slow" />
               </div>
             ))}
-            {/* Larger accent particles */}
-            {[...Array(15)].map((_, i) => (
-              <div
-                key={`large-${i}`}
-                className="absolute animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 4}s`,
-                }}
-              >
-                <div className="w-4 h-4 bg-gradient-to-r from-indigo-300/20 to-cyan-300/20 rounded-full blur-md" />
-              </div>
-            ))}
-          </div>
 
-          <div className="absolute inset-0 overflow-hidden opacity-5">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 border border-black/20 rounded-full animate-spin-slow" />
-            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 border border-black/20 rotate-45 animate-pulse" />
-            <div
-              className="absolute top-1/2 right-1/3 w-32 h-32 border-2 border-gray-300/30 transform rotate-12 animate-bounce"
-              style={{ animationDuration: "6s" }}
-            />
+            {/* Dynamic grid pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="grid grid-cols-12 grid-rows-8 h-full w-full">
+                {[...Array(96)].map((_, i) => (
+                  <div
+                    key={`grid-${i}`}
+                    className="border border-gray-300/20 animate-pulse"
+                    style={{
+                      animationDelay: `${(i * 0.1) % 5}s`,
+                      animationDuration: `${3 + (i % 3)}s`,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="relative z-10 text-center max-w-6xl mx-auto">
-            <div className="mb-12 animate-fade-in-up">
-              <div className="mb-6 text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
+            <div className="mb-8 sm:mb-12 animate-fade-in-up">
+              <div className="mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
                 Elite Systems Architect & Security Researcher
               </div>
-              <h1 className="text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-                <span className="block bg-gradient-to-r from-gray-900 via-black to-gray-700 bg-clip-text text-transparent animate-text-shimmer">
-                  ZINE EDDINE
-                </span>
-                <span className="block text-5xl lg:text-6xl bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent font-light tracking-wider">
-                  ROUABAH
-                </span>
+              <h1 className="text-6xl sm:text-8xl lg:text-9xl xl:text-[12rem] font-black mb-6 sm:mb-8 leading-[0.8] tracking-tighter">
+                <span className="block text-black font-black">ZINE EDDINE ROUABAH</span>
               </h1>
-              <div className="text-2xl lg:text-3xl text-gray-600 mb-10 font-light animate-typewriter max-w-4xl mx-auto leading-relaxed">
+              <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-600 mb-6 sm:mb-10 font-light animate-typewriter max-w-4xl mx-auto leading-relaxed px-4">
                 Crafting the future with <span className="text-black font-semibold">Rust</span>,{" "}
                 <span className="text-black font-semibold">C++</span>, and revolutionary security solutions
               </div>
-              <p className="text-lg text-gray-500 max-w-4xl mx-auto leading-relaxed animate-fade-in-up-delay mb-8">
+              <p className="text-base sm:text-lg text-gray-500 max-w-4xl mx-auto leading-relaxed animate-fade-in-up-delay mb-6 sm:mb-8 px-4">
                 From the heart of Algeria to global impact, I architect secure, blazing-fast systems that redefine
                 what's possible. Passionate about open source innovation, Linux mastery, and the elegance of perfect
                 code.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-6 mb-16 animate-fade-in-up-delay-2">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 mb-12 sm:mb-16 animate-fade-in-up-delay-2 px-4">
               {[
                 { name: "Rust Systems", icon: "🦀" },
                 { name: "C++ Performance", icon: "⚡" },
@@ -214,30 +252,31 @@ export default function Portfolio() {
               ].map((tech, index) => (
                 <div
                   key={tech.name}
-                  className="group relative animate-bounce"
+                  className="group relative animate-bounce-subtle"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <div className="absolute inset-0 bg-black rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-all duration-300" />
                   <Badge
                     variant="outline"
-                    className="relative px-6 py-3 text-base border-2 hover:border-black hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
+                    className="relative px-3 sm:px-4 lg:px-6 py-2 sm:py-3 text-sm sm:text-base border-2 hover:border-black hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
                   >
-                    <span className="mr-2 text-lg">{tech.icon}</span>
-                    {tech.name}
+                    <span className="mr-1 sm:mr-2 text-base sm:text-lg">{tech.icon}</span>
+                    <span className="hidden sm:inline">{tech.name}</span>
+                    <span className="sm:hidden">{tech.name.split(" ")[0]}</span>
                   </Badge>
                 </div>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-8 justify-center animate-fade-in-up-delay-3">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center animate-fade-in-up-delay-3 px-4">
               <Button
                 size="lg"
                 onClick={() => scrollToSection("projects")}
-                className="bg-black text-white hover:bg-gray-800 px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl group relative overflow-hidden"
+                className="bg-black text-white hover:bg-gray-800 px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl group relative overflow-hidden w-full sm:w-auto"
               >
-                <span className="relative z-10 flex items-center">
+                <span className="relative z-10 flex items-center justify-center">
                   Explore My Work
-                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-2 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
               </Button>
@@ -245,18 +284,11 @@ export default function Portfolio() {
                 size="lg"
                 variant="outline"
                 onClick={() => scrollToSection("contact")}
-                className="border-2 border-black text-black hover:bg-black hover:text-white px-12 py-6 text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl relative overflow-hidden group"
+                className="border-2 border-black text-black hover:bg-black hover:text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl relative overflow-hidden group w-full sm:w-auto"
               >
                 <span className="relative z-10">Let's Connect</span>
                 <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
               </Button>
-            </div>
-
-            {/* Scroll indicator */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-              <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
-              </div>
             </div>
           </div>
         </section>
@@ -314,20 +346,37 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* Journey Section */}
-        <section id="journey" className="py-24 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
+        <section id="journey" className="py-24 px-6 relative overflow-hidden">
+          {/* Background animation elements */}
+          <div className="absolute inset-0 opacity-5">
+            {[...Array(20)].map((_, i) => (
+              <div
+                key={`journey-bg-${i}`}
+                className="absolute animate-float-slow"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 10}s`,
+                  animationDuration: `${15 + Math.random() * 10}s`,
+                }}
+              >
+                <div className="w-8 h-8 border border-gray-300 rotate-45 animate-spin-slow" />
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
+            <div className="text-center mb-20 animate-fade-in-up">
+              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-text-shimmer">
                 My Journey
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
                 From curious beginner to systems programming enthusiast - here's how my passion for technology evolved.
               </p>
             </div>
 
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-black via-gray-400 to-black" />
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-black via-gray-400 to-black animate-pulse-slow" />
 
               <div className="space-y-16">
                 {[
@@ -374,27 +423,37 @@ export default function Portfolio() {
                 ].map((item, index) => (
                   <div
                     key={item.year}
-                    className={`flex items-center ${item.side === "right" ? "flex-row-reverse" : ""}`}
+                    className={`flex items-center ${item.side === "right" ? "flex-row-reverse" : ""} animate-slide-in-${item.side}`}
+                    style={{ animationDelay: `${index * 0.3}s` }}
                   >
                     <div className={`w-1/2 ${item.side === "right" ? "pl-16" : "pr-16"}`}>
-                      <Card className="bg-white border-2 border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                        <CardContent className="p-8">
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="p-3 bg-black rounded-xl">
+                      <Card className="bg-white border-2 border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:scale-105 group animate-fade-in-up">
+                        <CardContent className="p-8 relative overflow-hidden">
+                          {/* Animated background gradient on hover */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:to-purple-50/50 transition-all duration-500" />
+
+                          <div className="flex items-center gap-4 mb-4 relative z-10">
+                            <div className="p-3 bg-black rounded-xl group-hover:bg-gradient-to-br group-hover:from-gray-800 group-hover:to-black transition-all duration-300 animate-pulse-subtle">
                               <item.icon className="h-6 w-6 text-white" />
                             </div>
                             <div>
-                              <div className="text-2xl font-bold text-black">{item.year}</div>
-                              <div className="text-lg font-semibold text-gray-800">{item.title}</div>
+                              <div className="text-2xl font-bold text-black group-hover:text-gray-800 transition-colors duration-300 animate-number-count">
+                                {item.year}
+                              </div>
+                              <div className="text-lg font-semibold text-gray-800 group-hover:text-black transition-colors duration-300">
+                                {item.title}
+                              </div>
                             </div>
                           </div>
-                          <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                          <p className="text-gray-600 leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-300">
+                            {item.description}
+                          </p>
                         </CardContent>
                       </Card>
                     </div>
 
                     <div className="relative z-10">
-                      <div className="w-6 h-6 bg-black rounded-full border-4 border-white shadow-lg" />
+                      <div className="w-6 h-6 bg-black rounded-full border-4 border-white shadow-lg animate-pulse-ring" />
                     </div>
 
                     <div className="w-1/2" />
@@ -435,21 +494,23 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                       {[
-                        { name: "Rust", level: 95, color: "bg-orange-500" },
-                        { name: "C++", level: 90, color: "bg-blue-500" },
-                        { name: "C", level: 85, color: "bg-gray-700" },
-                        { name: "Assembly", level: 75, color: "bg-red-500" },
+                        { name: "Rust", experience: "Expert", years: "4+ years", color: "bg-orange-500" },
+                        { name: "C++", experience: "Advanced", years: "6+ years", color: "bg-blue-500" },
+                        { name: "C", experience: "Advanced", years: "5+ years", color: "bg-gray-700" },
+                        { name: "Assembly", experience: "Intermediate", years: "3+ years", color: "bg-red-500" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="font-semibold">{skill.name}</span>
-                            <span className="text-sm text-gray-500">{skill.level}%</span>
+                            <div className="text-right">
+                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
+                              <div className="text-xs text-gray-500">{skill.years}</div>
+                            </div>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
                               style={{
-                                width: `${skill.level}%`,
                                 animationDelay: `${index * 0.2}s`,
                               }}
                             />
@@ -478,21 +539,28 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                       {[
-                        { name: "Linux Administration", level: 95, color: "bg-yellow-500" },
-                        { name: "Network Security", level: 88, color: "bg-red-500" },
-                        { name: "Docker & K8s", level: 82, color: "bg-blue-500" },
-                        { name: "CI/CD Pipelines", level: 85, color: "bg-green-500" },
+                        {
+                          name: "Linux Administration",
+                          experience: "Expert",
+                          years: "7+ years",
+                          color: "bg-yellow-500",
+                        },
+                        { name: "Network Security", experience: "Advanced", years: "4+ years", color: "bg-red-500" },
+                        { name: "Docker & K8s", experience: "Advanced", years: "3+ years", color: "bg-blue-500" },
+                        { name: "CI/CD Pipelines", experience: "Advanced", years: "4+ years", color: "bg-green-500" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="font-semibold">{skill.name}</span>
-                            <span className="text-sm text-gray-500">{skill.level}%</span>
+                            <div className="text-right">
+                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
+                              <div className="text-xs text-gray-500">{skill.years}</div>
+                            </div>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
                               style={{
-                                width: `${skill.level}%`,
                                 animationDelay: `${index * 0.2 + 0.5}s`,
                               }}
                             />
@@ -521,17 +589,20 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                       {[
-                        { name: "React/Next.js", level: 90, color: "bg-cyan-500" },
-                        { name: "TypeScript", level: 88, color: "bg-blue-600" },
-                        { name: "Vim/Neovim", level: 95, color: "bg-green-600" },
-                        { name: "Git & GitHub", level: 92, color: "bg-gray-700" },
+                        { name: "React/Next.js", experience: "Expert", years: "5+ years", color: "bg-cyan-500" },
+                        { name: "TypeScript", experience: "Advanced", years: "4+ years", color: "bg-blue-600" },
+                        { name: "Vim/Neovim", experience: "Expert", years: "8+ years", color: "bg-green-600" },
+                        { name: "Git & GitHub", experience: "Expert", years: "6+ years", color: "bg-gray-700" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="font-semibold">{skill.name}</span>
-                            <span className="text-sm text-gray-500">{skill.level}%</span>
+                            <div className="text-right">
+                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
+                              <div className="text-xs text-gray-500">{skill.years}</div>
+                            </div>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
                               style={{
@@ -1005,6 +1076,32 @@ export default function Portfolio() {
                     />
                   </div>
                   <div>
+                    <label htmlFor="social" className="block text-sm font-semibold text-gray-700 mb-2">
+                      How did you find me?
+                    </label>
+                    <select
+                      id="social"
+                      name="social"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+                    >
+                      <option value="">Select platform</option>
+                      <option value="github">GitHub</option>
+                      <option value="linkedin">LinkedIn</option>
+                      <option value="twitter">X (Twitter)</option>
+                      <option value="reddit">Reddit</option>
+                      <option value="medium">Medium</option>
+                      <option value="discord">Discord</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="youtube">YouTube</option>
+                      <option value="tiktok">TikTok</option>
+                      <option value="twitch">Twitch</option>
+                      <option value="stackoverflow">Stack Overflow</option>
+                      <option value="devto">Dev.to</option>
+                      <option value="hashnode">Hashnode</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
                     <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
                       Subject
                     </label>
@@ -1023,7 +1120,7 @@ export default function Portfolio() {
                     <textarea
                       id="message"
                       name="message"
-                      rows={6}
+                      rows={5}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300 resize-none"
                       placeholder="Tell me about your project or idea..."
                     />
@@ -1043,64 +1140,74 @@ export default function Portfolio() {
 
         <footer className="bg-black text-white py-16 px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-4 gap-12 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
               <div className="md:col-span-2">
-                <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   Zinedine Rouabah
                 </h3>
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
                   Systems programmer and security researcher passionate about building secure, high-performance software
                   with Rust, C++, and cutting-edge technology.
                 </p>
-                <div className="flex gap-4 justify-center">
+                <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
                   {[
-                    { icon: Github, href: "https://github.com/zinedine", label: "GitHub" },
-                    { icon: Linkedin, href: "https://linkedin.com/in/zinedine-rouabah", label: "LinkedIn" },
-                    { icon: Mail, href: "mailto:zine.rouabah@protonmail.com", label: "Email" },
+                    { icon: Github, href: "https://github.com/zinedine", label: "GitHub", color: "hover:bg-gray-800" },
+                    {
+                      icon: Linkedin,
+                      href: "https://linkedin.com/in/zinedine-rouabah",
+                      label: "LinkedIn",
+                      color: "hover:bg-blue-600",
+                    },
+                    {
+                      icon: Mail,
+                      href: "mailto:zine.rouabah@protonmail.com",
+                      label: "Email",
+                      color: "hover:bg-red-600",
+                    },
                   ].map((social) => (
                     <a
                       key={social.label}
                       href={social.href}
-                      className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                      className={`w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110 ${social.color}`}
                       aria-label={social.label}
                     >
-                      <social.icon className="h-5 w-5" />
+                      <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                     </a>
                   ))}
                   <a
                     href="https://reddit.com/u/zinedine_dev"
-                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-orange-600 hover:text-white transition-all duration-300 hover:scale-110"
                     aria-label="Reddit"
                   >
-                    <span className="text-sm font-bold">R</span>
+                    <span className="text-xs sm:text-sm font-bold">R</span>
                   </a>
                   <a
                     href="https://x.com/zinedine_dev"
-                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all duration-300 hover:scale-110"
                     aria-label="X (Twitter)"
                   >
-                    <span className="text-sm font-bold">𝕏</span>
+                    <span className="text-xs sm:text-sm font-bold">𝕏</span>
                   </a>
                   <a
-                    href="https://medium.com/@zinedine.rouabah"
-                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                    href="https://medium.com/@zinedine_dev"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-green-600 hover:text-white transition-all duration-300 hover:scale-110"
                     aria-label="Medium"
                   >
-                    <span className="text-sm font-bold">M</span>
+                    <span className="text-xs sm:text-sm font-bold">M</span>
                   </a>
                   <a
                     href="https://discord.gg/zinedine"
-                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all duration-300 hover:scale-110"
                     aria-label="Discord"
                   >
-                    <span className="text-sm font-bold">D</span>
+                    <span className="text-xs sm:text-sm font-bold">D</span>
                   </a>
                   <a
-                    href="https://www.leagueoflegends.com/en-us/summoner/zinedine"
-                    className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-110"
+                    href="https://www.leagueoflegends.com/en-us/summoner/euw/zinedine"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-yellow-600 hover:text-black transition-all duration-300 hover:scale-110"
                     aria-label="League of Legends"
                   >
-                    <span className="text-sm font-bold">⚔️</span>
+                    <span className="text-xs sm:text-sm font-bold">⚔️</span>
                   </a>
                 </div>
               </div>
@@ -1141,15 +1248,15 @@ export default function Portfolio() {
         </footer>
       </main>
 
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-8 right-8 w-12 h-12 bg-black text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 ${
-          scrollY > 500 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
-        }`}
-        aria-label="Go to top"
-      >
-        <ArrowUp className="h-5 w-5 mx-auto" />
-      </button>
+      {scrollY > 500 && (
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-110 shadow-2xl"
+          aria-label="Go to top"
+        >
+          <ArrowUp className="h-5 w-5" />
+        </Button>
+      )}
 
       {showLogin && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">

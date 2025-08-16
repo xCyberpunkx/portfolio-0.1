@@ -16,35 +16,78 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+  title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
   description:
-    "Passionate systems programmer and security researcher from Algeria with expertise in Rust, C++, Linux, and cybersecurity.",
-  keywords: ["Rust", "C++", "Linux", "Security Research", "Systems Programming", "Algeria", "Open Source"],
-  authors: [{ name: "Zinedine Rouabah" }],
+    "Passionate systems programmer and security researcher from Algeria specializing in Rust, C++, Linux systems, and cybersecurity. Building secure, high-performance software solutions.",
+  keywords: [
+    "Rust Programming",
+    "C++ Development",
+    "Linux Systems",
+    "Security Research",
+    "Systems Programming",
+    "Cybersecurity",
+    "Algeria Developer",
+    "Open Source",
+    "Memory Management",
+    "Performance Optimization",
+    "Network Security",
+    "Vulnerability Assessment",
+  ],
+  authors: [{ name: "Zinedine Rouabah", url: "https://zinedine-rouabah.vercel.app" }],
   creator: "Zinedine Rouabah",
+  publisher: "Zinedine Rouabah",
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
-    description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology.",
+    url: "https://zinedine-rouabah.vercel.app",
+    title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
+    description:
+      "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Specializing in cybersecurity research and Linux systems.",
     siteName: "Zinedine Rouabah Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+    site: "@zinedine_dev",
+    creator: "@zinedine_dev",
+    title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
     description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
+  alternates: {
+    canonical: "https://zinedine-rouabah.vercel.app",
   },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
   },
+  manifest: "/manifest.json",
     generator: 'v0.app'
 }
 
@@ -57,6 +100,51 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="color-scheme" content="light" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Zinedine Rouabah",
+              jobTitle: "Systems Programmer & Security Researcher",
+              description:
+                "Passionate systems programmer and security researcher specializing in Rust, C++, Linux systems, and cybersecurity.",
+              url: "https://zinedine-rouabah.vercel.app",
+              sameAs: [
+                "https://github.com/zinedine",
+                "https://linkedin.com/in/zinedine-rouabah",
+                "https://x.com/zinedine_dev",
+                "https://medium.com/@zinedine_dev",
+              ],
+              knowsAbout: [
+                "Rust Programming",
+                "C++ Development",
+                "Linux Systems",
+                "Cybersecurity",
+                "Systems Programming",
+                "Network Security",
+                "Open Source Development",
+              ],
+              alumniOf: {
+                "@type": "Organization",
+                name: "University of Science and Technology",
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "Algeria",
+              },
+            }),
+          }}
+        />
+
         <style>{`
           :root {
             --font-sans: ${inter.style.fontFamily};
@@ -93,10 +181,18 @@ export default function RootLayout({
             100% { transform: translateY(100vh); opacity: 0; }
           }
           
-          /* Enhanced smooth scrolling */
           html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
+          }
+          
+          * {
+            box-sizing: border-box;
+          }
+          
+          img {
+            max-width: 100%;
+            height: auto;
           }
           
           .scanlines::before {
