@@ -4,48 +4,53 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
 import {
-  ArrowRight,
   Download,
   User,
-  Github,
-  ExternalLink,
-  Star,
   Mail,
-  Linkedin,
-  Send,
-  Cpu,
-  Shield,
+  Code,
   Globe,
   Terminal,
-  Brain,
+  Shield,
+  Cpu,
+  Github,
+  Linkedin,
+  ExternalLink,
+  ChevronUp,
+  Menu,
+  X,
+  Play,
   Gamepad2,
   Zap,
+  Star,
+  Rocket,
+  Brain,
   Trophy,
-  Play,
-  Lock,
-  Eye,
-  EyeOff,
-  Code,
-  ArrowUp,
+  Send,
+  HelpCircle,
 } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
-  const [scrollY, setScrollY] = useState(0)
   const [showLogin, setShowLogin] = useState(false)
-  const [loginData, setLoginData] = useState({ email: "", password: "" })
   const [showPassword, setShowPassword] = useState(false)
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+  const [loginData, setLoginData] = useState({ email: "", password: "" })
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 2000)
-    return () => clearTimeout(timer)
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
+
+    return () => {
+      clearTimeout(loadingTimer)
+    }
   }, [])
 
   useEffect(() => {
@@ -73,6 +78,8 @@ export default function Portfolio() {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
+      setActiveSection(sectionId)
+      setMobileMenuOpen(false) // Close mobile menu when navigating
     }
   }
 
@@ -82,19 +89,51 @@ export default function Portfolio() {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
-        <div className="text-center">
+      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center z-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+
+        <div className="relative text-center">
+          {/* Animated circles */}
           <div className="relative w-32 h-32 mx-auto mb-8">
-            <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
-            <div className="absolute inset-0 border-4 border-black rounded-full animate-spin border-t-transparent"></div>
-            <div className="absolute inset-4 border-2 border-gray-300 rounded-full animate-pulse"></div>
+            <div className="absolute inset-0 border-4 border-green-500/30 rounded-full animate-ping" />
+            <div className="absolute inset-2 border-4 border-green-400/50 rounded-full animate-pulse" />
+            <div className="absolute inset-4 border-4 border-green-300 rounded-full animate-spin" />
+            <div className="absolute inset-6 bg-green-500/20 rounded-full animate-bounce flex items-center justify-center">
+              <div className="text-green-400 text-2xl font-mono font-bold">ZR</div>
+            </div>
           </div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-pulse">
-            Loading Experience...
-          </h2>
-          <div className="mt-4 w-64 h-2 bg-gray-200 rounded-full mx-auto overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-black to-gray-600 rounded-full animate-loading-bar"></div>
+
+          {/* Matrix-style loading text */}
+          <div className="space-y-2">
+            <div className="text-green-400 text-xl font-mono animate-pulse">Initializing Portfolio...</div>
+            <div className="text-green-300 text-sm font-mono opacity-70">Loading neural networks... █████████░ 90%</div>
+            <div className="flex justify-center space-x-1 mt-4">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-2 h-2 bg-green-400 rounded-full animate-bounce"
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                />
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Matrix rain effect */}
+        <div className="absolute inset-0 opacity-20">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute text-green-400 text-xs font-mono animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+              }}
+            >
+              {Math.random().toString(36).substring(7)}
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -103,23 +142,108 @@ export default function Portfolio() {
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <h1 className="font-bold text-2xl bg-gradient-to-r from-black via-gray-700 to-black bg-clip-text text-transparent animate-pulse">
-                Zinedine Rouabah
-              </h1>
-              <div className="hidden lg:flex items-center gap-2">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="text-2xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent flex items-center gap-2">
+                <div className="hidden md:block text-3xl">🐧</div>
+                <span className="md:hidden">ZR</span>
+                <span className="hidden md:inline">Zine Eddine</span>
+              </div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <a href="#about" className="text-gray-700 hover:text-black transition-colors font-medium">
+                About
+              </a>
+              <a href="#journey" className="text-gray-700 hover:text-black transition-colors font-medium">
+                Journey
+              </a>
+              <a href="#projects" className="text-gray-700 hover:text-black transition-colors font-medium">
+                Projects
+              </a>
+              <a href="#skills" className="text-gray-700 hover:text-black transition-colors font-medium">
+                Skills
+              </a>
+              <a href="#contact" className="text-gray-700 hover:text-black transition-colors font-medium">
+                Contact
+              </a>
+            </div>
+
+            <div className="flex items-center gap-4">
+              {/* Desktop Buttons */}
+              <div className="hidden md:flex items-center gap-4">
+                <div className="relative group">
+                  <Button
+                    onClick={() => setShowLogin(true)}
+                    variant="outline"
+                    className="hover:scale-105 transition-all duration-300 border-2 hover:border-black flex items-center gap-2"
+                  >
+                    <User className="h-4 w-4" />
+                    Login
+                    <HelpCircle className="h-3 w-3 text-gray-400" />
+                  </Button>
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50">
+                    <div className="font-semibold mb-1">🎮 Unlock Premium Features:</div>
+                    <div className="text-xs space-y-1">
+                      <div>• Exclusive dev vlogs & behind-the-scenes</div>
+                      <div>• Early access to new projects</div>
+                      <div>• Interactive code playground</div>
+                      <div>• Personal tech insights & tutorials</div>
+                      <div>• Direct messaging for collaborations</div>
+                    </div>
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black"></div>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => window.open("/resume.pdf", "_blank")}
+                  className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download CV
+                </Button>
+              </div>
+
+              {/* Mobile Buttons */}
+              <div className="flex md:hidden items-center gap-2">
+                <Button
+                  onClick={() => window.open("/resume.pdf", "_blank")}
+                  size="sm"
+                  className="bg-black text-white hover:bg-gray-800 text-xs px-2"
+                >
+                  <Download className="h-3 w-3" />
+                </Button>
+                <Button onClick={() => setShowLogin(true)} variant="outline" size="sm" className="text-xs px-2">
+                  <User className="h-3 w-3" />
+                </Button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="lg:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
+          </div>
+
+          {mobileMenuOpen && (
+            <div className="lg:hidden mt-4 pb-4 border-t border-gray-100">
+              <div className="grid grid-cols-2 gap-2 mt-4">
                 {[
-                  { id: "hero", label: "Home" },
-                  { id: "about", label: "About" },
-                  { id: "journey", label: "Journey" },
-                  { id: "skills", label: "Skills" },
-                  { id: "projects", label: "Projects" },
-                  { id: "services", label: "Services" },
-                  { id: "arcade", label: "Arcade" },
-                  { id: "contact", label: "Contact" },
+                  { id: "hero", label: "Home", icon: Rocket },
+                  { id: "about", label: "About", icon: User },
+                  { id: "journey", label: "Journey", icon: Star },
+                  { id: "skills", label: "Skills", icon: Zap },
+                  { id: "projects", label: "Projects", icon: Code },
+                  { id: "services", label: "Services", icon: Globe },
+                  { id: "arcade", label: "Arcade", icon: Gamepad2 },
+                  { id: "contact", label: "Contact", icon: Mail },
                 ].map((section) => (
                   <Button
                     key={section.id}
@@ -127,36 +251,19 @@ export default function Portfolio() {
                     size="sm"
                     onClick={() => scrollToSection(section.id)}
                     className={cn(
-                      "transition-all duration-300 hover:scale-105 font-medium transform hover:rotate-1",
+                      "justify-start gap-2 transition-all duration-300",
                       activeSection === section.id
-                        ? "bg-black text-white shadow-lg animate-bounce"
+                        ? "bg-black text-white"
                         : "text-gray-600 hover:text-black hover:bg-gray-50",
                     )}
                   >
+                    <section.icon className="h-4 w-4" />
                     {section.label}
                   </Button>
                 ))}
               </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={() => setShowLogin(true)}
-                variant="outline"
-                className="hover:scale-105 transition-all duration-300 border-2 hover:border-black"
-              >
-                <User className="h-4 w-4 mr-2" />
-                Login
-              </Button>
-              <Button
-                onClick={() => window.open("/resume.pdf", "_blank")}
-                className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download CV
-              </Button>
-            </div>
-          </div>
+          )}
         </div>
       </nav>
 
@@ -166,128 +273,74 @@ export default function Portfolio() {
           className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative overflow-hidden"
         >
           <div
-            className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 animate-gradient-x"
+            className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"
             style={{
               transform: `translateY(${scrollY * 0.3}px)`,
             }}
           />
 
-          <div className="absolute inset-0 overflow-hidden">
-            {/* Floating particles with enhanced movement */}
-            {[...Array(120)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-float-enhanced"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 15}s`,
-                  animationDuration: `${8 + Math.random() * 12}s`,
-                }}
-              >
-                <div className="w-1 h-1 sm:w-2 sm:h-2 bg-gradient-to-r from-blue-400/60 to-purple-400/60 rounded-full blur-sm animate-pulse" />
-              </div>
-            ))}
-
-            {/* Vercel-style geometric shapes */}
-            {[...Array(15)].map((_, i) => (
-              <div
-                key={`vercel-${i}`}
-                className="absolute animate-vercel-float"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 8}s`,
-                  animationDuration: `${12 + Math.random() * 8}s`,
-                }}
-              >
-                <div className="w-4 h-4 sm:w-6 sm:h-6 bg-gradient-to-br from-indigo-200/40 to-cyan-200/40 rounded-sm rotate-45 animate-spin-slow" />
-              </div>
-            ))}
-
-            {/* Dynamic grid pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="grid grid-cols-12 grid-rows-8 h-full w-full">
-                {[...Array(96)].map((_, i) => (
-                  <div
-                    key={`grid-${i}`}
-                    className="border border-gray-300/20 animate-pulse"
-                    style={{
-                      animationDelay: `${(i * 0.1) % 5}s`,
-                      animationDuration: `${3 + (i % 3)}s`,
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
           <div className="relative z-10 text-center max-w-6xl mx-auto">
-            <div className="mb-8 sm:mb-12 animate-fade-in-up">
-              <div className="mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
+            <div className="mb-6 sm:mb-8 lg:mb-12 animate-fade-in-up">
+              <div className="mb-3 sm:mb-4 lg:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
                 Elite Systems Architect & Security Researcher
               </div>
-              <h1 className="text-6xl sm:text-8xl lg:text-9xl xl:text-[12rem] font-black mb-6 sm:mb-8 leading-[0.8] tracking-tighter">
-                <span className="block text-black font-black">ZINE EDDINE ROUABAH</span>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-4 sm:mb-6 lg:mb-8 leading-[0.85] tracking-tighter">
+                <span className="block text-black font-black">ZINE EDDINE</span>
+                <span className="block text-black font-black">ROUABAH</span>
               </h1>
-              <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-gray-600 mb-6 sm:mb-10 font-light animate-typewriter max-w-4xl mx-auto leading-relaxed px-4">
+              <div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-4 sm:mb-6 lg:mb-8 font-light max-w-4xl mx-auto leading-relaxed px-2 sm:px-4">
                 Crafting the future with <span className="text-black font-semibold">Rust</span>,{" "}
                 <span className="text-black font-semibold">C++</span>, and revolutionary security solutions
               </div>
-              <p className="text-base sm:text-lg text-gray-500 max-w-4xl mx-auto leading-relaxed animate-fade-in-up-delay mb-6 sm:mb-8 px-4">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delay mb-4 sm:mb-6 lg:mb-8 px-2 sm:px-4">
                 From the heart of Algeria to global impact, I architect secure, blazing-fast systems that redefine
                 what's possible. Passionate about open source innovation, Linux mastery, and the elegance of perfect
                 code.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6 mb-12 sm:mb-16 animate-fade-in-up-delay-2 px-4">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up-delay-2 px-2 sm:px-4">
               {[
-                { name: "Rust Systems", icon: "🦀" },
-                { name: "C++ Performance", icon: "⚡" },
-                { name: "Linux Mastery", icon: "🐧" },
-                { name: "Security Research", icon: "🔒" },
-                { name: "Open Source", icon: "🌟" },
-                { name: "Game Development", icon: "🎮" },
+                { name: "Rust Systems", icon: "🦀", short: "Rust" },
+                { name: "C++ Performance", icon: "⚡", short: "C++" },
+                { name: "Linux Mastery", icon: "🐧", short: "Linux" },
+                { name: "Security Research", icon: "🔒", short: "Security" },
+                { name: "Open Source", icon: "🌟", short: "OSS" },
+                { name: "Game Development", icon: "🎮", short: "Games" },
               ].map((tech, index) => (
-                <div
-                  key={tech.name}
-                  className="group relative animate-bounce-subtle"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="absolute inset-0 bg-black rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-all duration-300" />
+                <div key={tech.name} className="group relative">
                   <Badge
                     variant="outline"
-                    className="relative px-3 sm:px-4 lg:px-6 py-2 sm:py-3 text-sm sm:text-base border-2 hover:border-black hover:bg-black hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
+                    className="relative px-2 sm:px-3 lg:px-4 py-1.5 sm:py-2 lg:py-3 text-xs sm:text-sm lg:text-base border-2 hover:border-black hover:bg-black hover:text-white transition-all duration-300 hover:scale-105 cursor-pointer"
                   >
-                    <span className="mr-1 sm:mr-2 text-base sm:text-lg">{tech.icon}</span>
-                    <span className="hidden sm:inline">{tech.name}</span>
-                    <span className="sm:hidden">{tech.name.split(" ")[0]}</span>
+                    <span className="mr-1 sm:mr-2 text-sm sm:text-base lg:text-lg">{tech.icon}</span>
+                    <span className="hidden md:inline">{tech.name}</span>
+                    <span className="md:hidden">{tech.short}</span>
                   </Badge>
                 </div>
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 justify-center animate-fade-in-up-delay-3 px-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center animate-fade-in-up-delay-3 px-2 sm:px-4">
               <Button
+                onClick={() => {
+                  scrollToSection("projects")
+                }}
                 size="lg"
-                onClick={() => scrollToSection("projects")}
-                className="bg-black text-white hover:bg-gray-800 px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl group relative overflow-hidden w-full sm:w-auto"
+                className="bg-black text-white hover:bg-gray-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group relative overflow-hidden w-full sm:w-auto"
               >
-                <span className="relative z-10 flex items-center justify-center">
-                  Explore My Work
-                  <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-2 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                <span className="relative z-10">View My Work</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               </Button>
               <Button
-                size="lg"
                 variant="outline"
-                onClick={() => scrollToSection("contact")}
-                className="border-2 border-black text-black hover:bg-black hover:text-white px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6 text-lg sm:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl relative overflow-hidden group w-full sm:w-auto"
+                size="lg"
+                onClick={() => {
+                  scrollToSection("contact")
+                }}
+                className="border-2 border-black text-black hover:bg-black hover:text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto"
               >
-                <span className="relative z-10">Let's Connect</span>
-                <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                Get In Touch
               </Button>
             </div>
           </div>
@@ -346,39 +399,25 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="journey" className="py-24 px-6 relative overflow-hidden">
-          {/* Background animation elements */}
-          <div className="absolute inset-0 opacity-5">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={`journey-bg-${i}`}
-                className="absolute animate-float-slow"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 10}s`,
-                  animationDuration: `${15 + Math.random() * 10}s`,
-                }}
-              >
-                <div className="w-8 h-8 border border-gray-300 rotate-45 animate-spin-slow" />
-              </div>
-            ))}
-          </div>
-
+        <section id="journey" className="py-12 md:py-24 px-4 md:px-6 relative overflow-hidden">
           <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-20 animate-fade-in-up">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-text-shimmer">
+            <div className="text-center mb-12 md:mb-20 animate-fade-in-up">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-text-shimmer">
                 My Journey
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
                 From curious beginner to systems programming enthusiast - here's how my passion for technology evolved.
               </p>
             </div>
 
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-black via-gray-400 to-black animate-pulse-slow" />
+              {/* Desktop Timeline Line */}
+              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-black via-gray-400 to-black animate-pulse-slow" />
 
-              <div className="space-y-16">
+              {/* Mobile Timeline Line */}
+              <div className="md:hidden absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-black via-gray-400 to-black" />
+
+              <div className="space-y-8 md:space-y-16">
                 {[
                   {
                     year: "2024",
@@ -423,15 +462,37 @@ export default function Portfolio() {
                 ].map((item, index) => (
                   <div
                     key={item.year}
-                    className={`flex items-center ${item.side === "right" ? "flex-row-reverse" : ""} animate-slide-in-${item.side}`}
+                    className={`flex items-start md:items-center ${
+                      item.side === "right" ? "md:flex-row-reverse" : ""
+                    } animate-slide-in-${item.side}`}
                     style={{ animationDelay: `${index * 0.3}s` }}
                   >
-                    <div className={`w-1/2 ${item.side === "right" ? "pl-16" : "pr-16"}`}>
+                    {/* Mobile Layout */}
+                    <div className="md:hidden flex items-start gap-4 w-full">
+                      <div className="flex-shrink-0 relative">
+                        <div className="w-4 h-4 bg-black rounded-full border-4 border-white shadow-lg relative z-10" />
+                      </div>
+                      <Card className="flex-1 bg-white border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <CardContent className="p-4">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="p-2 bg-black rounded-lg">
+                              <item.icon className="h-4 w-4 text-white" />
+                            </div>
+                            <div>
+                              <div className="text-lg font-bold text-black">{item.year}</div>
+                              <div className="text-sm font-semibold text-gray-800">{item.title}</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Desktop Layout */}
+                    <div className={`hidden md:block w-1/2 ${item.side === "right" ? "pl-16" : "pr-16"}`}>
                       <Card className="bg-white border-2 border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:scale-105 group animate-fade-in-up">
                         <CardContent className="p-8 relative overflow-hidden">
-                          {/* Animated background gradient on hover */}
                           <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:to-purple-50/50 transition-all duration-500" />
-
                           <div className="flex items-center gap-4 mb-4 relative z-10">
                             <div className="p-3 bg-black rounded-xl group-hover:bg-gradient-to-br group-hover:from-gray-800 group-hover:to-black transition-all duration-300 animate-pulse-subtle">
                               <item.icon className="h-6 w-6 text-white" />
@@ -452,11 +513,8 @@ export default function Portfolio() {
                       </Card>
                     </div>
 
-                    <div className="relative z-10">
-                      <div className="w-6 h-6 bg-black rounded-full border-4 border-white shadow-lg animate-pulse-ring" />
-                    </div>
-
-                    <div className="w-1/2" />
+                    {/* Desktop Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-black rounded-full border-4 border-white shadow-lg animate-pulse-dot" />
                   </div>
                 ))}
               </div>
@@ -956,6 +1014,9 @@ export default function Portfolio() {
                 <div className="flex gap-4">
                   <Button
                     size="lg"
+                    onClick={() => {
+                      alert("🎮 Demo coming soon! This will launch an interactive game showcase.")
+                    }}
                     className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-8 py-4 transition-all duration-300 hover:scale-105"
                   >
                     <Play className="mr-2 h-5 w-5" />
@@ -964,6 +1025,9 @@ export default function Portfolio() {
                   <Button
                     size="lg"
                     variant="outline"
+                    onClick={() => {
+                      window.open("https://github.com/zinedine/arcade-portfolio", "_blank")
+                    }}
                     className="border-white text-white hover:bg-white hover:text-black font-semibold px-8 py-4 transition-all duration-300 hover:scale-105 bg-transparent"
                   >
                     <Github className="mr-2 h-5 w-5" />
@@ -1127,6 +1191,14 @@ export default function Portfolio() {
                   </div>
                   <Button
                     type="submit"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const form = e.target.closest("form")
+                      const formData = new FormData(form)
+                      const subject = `Portfolio Contact: ${formData.get("subject")}`
+                      const body = `Name: ${formData.get("name")}\nEmail: ${formData.get("email")}\nHow they found me: ${formData.get("social")}\n\nMessage:\n${formData.get("message")}`
+                      window.location.href = `mailto:zine.rouabah@protonmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+                    }}
                     className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
                   >
                     Send Message
@@ -1248,78 +1320,15 @@ export default function Portfolio() {
         </footer>
       </main>
 
-      {scrollY > 500 && (
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
         <Button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-110 shadow-2xl"
-          aria-label="Go to top"
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-40 bg-black text-white hover:bg-gray-800 rounded-full p-3 shadow-lg animate-bounce-subtle"
+          size="sm"
         >
-          <ArrowUp className="h-5 w-5" />
+          <ChevronUp className="h-5 w-5" />
         </Button>
-      )}
-
-      {showLogin && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl animate-scale-in transform-gpu">
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4 animate-bounce">
-                <Lock className="h-8 w-8 text-white" />
-              </div>
-              <h2 className="text-2xl font-bold mb-2">Welcome Back</h2>
-              <p className="text-gray-600">Sign in to access exclusive content</p>
-            </div>
-
-            <form className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Email</label>
-                <Input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={loginData.email}
-                  onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                  className="h-12 border-2 focus:border-black transition-all duration-300"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">Password</label>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    value={loginData.password}
-                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                    className="h-12 border-2 focus:border-black transition-all duration-300 pr-12"
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full h-12 bg-black text-white hover:bg-gray-800 font-semibold transition-all duration-300 hover:scale-105"
-              >
-                Sign In
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
-
-            <div className="flex justify-between items-center mt-6 text-sm">
-              <button className="text-gray-600 hover:text-black transition-colors">Forgot password?</button>
-              <button onClick={() => setShowLogin(false)} className="text-gray-600 hover:text-black transition-colors">
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   )
