@@ -28,6 +28,9 @@ import {
   Trophy,
   Send,
   HelpCircle,
+  Twitter,
+  Phone,
+  MessageCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -1145,8 +1148,15 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                       <Mail className="h-6 w-6 text-white" />
                     </div>
                     <div>
+                      <a
+                      href="mailto:rouabah.zineedinee@gmail.com?subject=Hello%20Zine&body=I%20would%20like%20to%20connect%20with%20you."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
                       <div className="font-semibold">Email</div>
-                      <div className="text-gray-600">zine.rouabah@protonmail.com</div>
+                      <div className="text-gray-600">rouabah.zineedinee@gmail.com</div>
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -1154,21 +1164,64 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                       <Github className="h-6 w-6 text-white" />
                     </div>
                     <div>
+                       <a
+                      href="https://github.com/xCyberpunkx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
                       <div className="font-semibold">GitHub</div>
-                      <div className="text-gray-600">@zinedine</div>
+                      <div className="text-gray-600">@xCyberpunkx</div>
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                     <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
                       <Linkedin className="h-6 w-6 text-white" />
                     </div>
-                    <div>
+                    <a
+                      href="https://www.linkedin.com/in/zine-eddine-rouabah-992b16265/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
                       <div className="font-semibold">LinkedIn</div>
-                      <div className="text-gray-600">Zinedine Rouabah</div>
-                    </div>
+                      <div className="text-gray-600">Zineddine Rouabah</div>
+                    </a>
                   </div>
-                </div>
-              </div>
+                  {/* Discord */}
+      <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
+          <MessageCircle className="h-6 w-6 text-white" /> {/* Lucide doesn’t have a Discord logo by default */}
+        </div>
+        <a
+          href="https://discord.com/users/557172887799463937"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <div className="font-semibold">Discord</div>
+          <div className="text-gray-600">zineddiinee</div>
+        </a>
+      </div>
+
+      {/* WhatsApp */}
+      <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+          <Phone className="h-6 w-6 text-white" />
+        </div>
+        <a
+          href="https://wa.me/0540166358"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+        >
+          <div className="font-semibold">WhatsApp</div>
+          <div className="text-gray-600">+213 540 16 63 58</div>
+        </a>
+      </div>
+      </div>
+     </div>
 
               <div className="animate-fade-in-up-delay">
                 <form className="space-y-6 bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500">
@@ -1193,7 +1246,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                       id="email"
                       name="email"
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-                      placeholder="your.email@example.com"
+                      placeholder="Taylor.durden@example.com"
                     />
                   </div>
                   <div>
@@ -1247,11 +1300,13 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault()
-                      const form = e.target.closest("form")
-                      const formData = new FormData(form)
-                      const subject = `Portfolio Contact: ${formData.get("subject")}`
-                      const body = `Name: ${formData.get("name")}\nEmail: ${formData.get("email")}\nHow they found me: ${formData.get("social")}\n\nMessage:\n${formData.get("message")}`
-                      window.location.href = `mailto:zine.rouabah@protonmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+                      const form = (e.target as HTMLElement).closest("form")
+                      if (form) {
+                        const formData = new FormData(form)
+                        const subject = `Portfolio Contact: ${formData.get("subject")}`
+                        const body = `Name: ${formData.get("name")}\nEmail: ${formData.get("email")}\nHow they found me: ${formData.get("social")}\n\nMessage:\n${formData.get("message")}`
+                        window.location.href = `mailto:rouabah.zineedinee@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+                      }
                     }}
                     className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
                   >
@@ -1280,65 +1335,132 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
 
             <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
               {/* Islamic Studies & Quran */}
-              <Card className="bg-white border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">📖</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-green-700 mb-4">Islamic Studies</h3>
-                  <p className="text-gray-600 mb-4">
-                    Daily Quran recitation and Islamic philosophy studies that provide spiritual grounding and ethical
-                    guidance in both life and work.
-                  </p>
-                  <div className="text-sm text-green-600 font-semibold">Currently reading: Tafsir Ibn Kathir</div>
-                </CardContent>
-              </Card>
+<Card className="bg-white border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+  <CardContent className="p-8 text-center">
+    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+      <span className="text-2xl text-white">📖</span>
+    </div>
+    <h3 className="text-2xl font-bold text-green-700 mb-4">Islamic Studies</h3>
+    <p className="text-gray-600 mb-4">
+      Daily Quran recitation and Islamic philosophy studies that provide spiritual grounding and ethical
+      guidance in both life and work.
+    </p>
+    <div className="text-sm text-green-600 font-semibold mb-4">
+      Currently reading: Tafsir Ibn Kathir
+    </div>
+
+    {/* Actions */}
+    <div className="flex justify-center gap-4">
+      <a
+        href="https://www.quranful.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition"
+      >
+        Read Qur’an
+      </a>
+      <a
+        href="https://www.kalamullah.com/Books/Tafsir%20Ibn%20Kathir%20all%2010%20volumes.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition"
+      >
+        Download Tafsir
+      </a>
+    </div>
+  </CardContent>
+</Card>
 
               {/* Books & Learning */}
-              <Card className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">📚</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-blue-700 mb-4">Continuous Learning</h3>
-                  <p className="text-gray-600 mb-4">
-                    Passionate reader of technical books, philosophy, and personal development. Always expanding
-                    knowledge across multiple domains.
-                  </p>
-                  <div className="text-sm text-blue-600 font-semibold">
-                    Current read: "The Rust Programming Language"
-                  </div>
-                </CardContent>
-              </Card>
+<Card className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+  <CardContent className="p-8 text-center">
+    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+      <span className="text-2xl text-white">📚</span>
+    </div>
+    <h3 className="text-2xl font-bold text-blue-700 mb-4">Continuous Learning</h3>
+    <p className="text-gray-600 mb-4">
+      Passionate reader of technical books, philosophy, and personal development. Always expanding
+      knowledge across multiple domains.
+    </p>
+    <div className="text-sm text-blue-600 font-semibold mb-4">
+      Current read: "The Rust Programming Language"
+    </div>
 
-              {/* Study Roadmap */}
-              <Card className="bg-white border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🗺️</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-purple-700 mb-4">Learning Roadmap</h3>
-                  <div className="text-left space-y-2 text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm">Advanced Rust & WebAssembly</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                      <span className="text-sm">Machine Learning with PyTorch</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <span className="text-sm">Distributed Systems Design</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                      <span className="text-sm">Quantum Computing Basics</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+    {/* Actions */}
+    <div className="flex justify-center gap-4">
+      <a
+        href="https://doc.rust-lang.org/book/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition"
+      >
+        Download C++
+      </a>
+      <a
+        href="https://www.learncpp.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition"
+      >
+        Learn C++
+      </a>
+    </div>
+  </CardContent>
+</Card>
 
+
+             {/* Study Roadmap */}
+<Card className="bg-white border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+  <CardContent className="p-8 text-center">
+    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+      <span className="text-2xl text-white">🗺️</span>
+    </div>
+    <h3 className="text-2xl font-bold text-purple-700 mb-4">Learning Roadmap</h3>
+    <div className="text-left space-y-2 text-gray-600">
+
+      <a
+        href="https://roadmap.sh/rust"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 hover:text-purple-700 transition"
+      >
+        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+        <span className="text-sm">Advanced Rust & WebAssembly</span>
+      </a>
+
+      <a
+        href="https://roadmap.sh/ai-data-scientist"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 hover:text-purple-700 transition"
+      >
+        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+        <span className="text-sm">Machine Learning with PyTorch</span>
+      </a>
+
+      <a
+        href="https://roadmap.sh/backend"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 hover:text-purple-700 transition"
+      >
+        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+        <span className="text-sm">Distributed Systems Design</span>
+      </a>
+
+      <a
+        href="https://roadmap.sh/ai-engineer"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 hover:text-purple-700 transition"
+      >
+        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+        <span className="text-sm">Quantum Computing Basics</span>
+      </a>
+
+    </div>
+  </CardContent>
+</Card>
               {/* Fitness & Health */}
               <Card className="bg-white border-2 border-orange-200 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <CardContent className="p-8 text-center">
@@ -1355,20 +1477,46 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
               </Card>
 
               {/* Tech Community */}
-              <Card className="bg-white border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🌐</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-teal-700 mb-4">Community</h3>
-                  <p className="text-gray-600 mb-4">
-                    Active in tech communities, contributing to open source, mentoring junior developers, and sharing
-                    knowledge through blogs and talks.
-                  </p>
-                  <div className="text-sm text-teal-600 font-semibold">Next talk: "Rust in Production" at DevFest</div>
-                </CardContent>
-              </Card>
-
+<Card className="bg-white border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+  <CardContent className="p-8 text-center">
+    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center">
+      <span className="text-2xl text-white">🌐</span>
+    </div>
+    <h3 className="text-2xl font-bold text-teal-700 mb-4">Community</h3>
+    <p className="text-gray-600 mb-4">
+      Active in tech communities, contributing to open source, mentoring junior developers, and sharing
+      knowledge through blogs and talks.
+    </p>
+    <div className="text-sm text-teal-600 font-semibold mb-4">Find me on:</div>
+    {/* Dev Platforms */}
+    <div className="flex justify-center gap-4">
+      <a
+        href="https://www.reddit.com/r/programming/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 transition"
+      >
+        Reddit
+      </a>
+      <a
+        href="https://news.ycombinator.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-gray-800 text-white rounded-xl text-sm font-semibold hover:bg-gray-900 transition"
+      >
+        Hacker News
+      </a>
+      <a
+        href="https://app.daily.dev/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 transition"
+      >
+        daily.dev
+      </a>
+    </div>
+  </CardContent>
+</Card>
               {/* Travel & Culture */}
               <Card className="bg-white border-2 border-rose-200 hover:border-rose-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <CardContent className="p-8 text-center">
@@ -1826,7 +1974,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
             </div>
 
             <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 mb-4 md:mb-0">© 2024 Zinedine Rouabah. All rights reserved.</p>
+              <p className="text-gray-400 mb-4 md:mb-0">© 2025 Zinedine Rouabah. All rights reserved.</p>
               <p className="text-gray-400 text-sm">Built with Next.js, TypeScript, and lots of ☕</p>
             </div>
           </div>
