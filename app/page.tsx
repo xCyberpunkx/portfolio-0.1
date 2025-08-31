@@ -786,7 +786,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                   description:
                     "Sawerni is Algeria’s premier photography platform—connecting clients with verified professional photographers across the country. Users can explore curated portfolios, communicate directly with artists, and instantly book sessions with seamless scheduling and secure payments.",
                   image: "/sawerni.png",
-                  tags: ["C", "Networking", "Security", "Wireshark"],
+                  tags: ["Typescript", "JWT", "Prisma", "PostgreSQL"],
                   github: "https://github.com/xCyberpunkx/sawerni-kv",
                   demo: "https://sawerni.vercel.app/",
                   year: "2025",
