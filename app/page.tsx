@@ -1149,7 +1149,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                     </div>
                     <div>
                       <a
-                      href="https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=Hello%20Zine&body=I%20would%20like%20to%20connect%20with%20you."
+                      href="https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=Hello%20Zineddine&body=I%20would%20like%20to%20connect%20with%20you."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block"
@@ -1224,96 +1224,127 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
      </div>
 
               <div className="animate-fade-in-up-delay">
-                <form className="space-y-6 bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-                      placeholder="Taylor.durden@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="social" className="block text-sm font-semibold text-gray-700 mb-2">
-                      How did you find me?
-                    </label>
-                    <select
-                      id="social"
-                      name="social"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-                    >
-                      <option value="">Select platform</option>
-                      <option value="github">GitHub</option>
-                      <option value="linkedin">LinkedIn</option>
-                      <option value="twitter">X (Twitter)</option>
-                      <option value="reddit">Reddit</option>
-                      <option value="medium">Medium</option>
-                      <option value="discord">Discord</option>
-                      <option value="instagram">Instagram</option>
-                      <option value="youtube">YouTube</option>
-                      <option value="tiktok">TikTok</option>                      
-                      <option value="stackoverflow">Stack Overflow</option>                                          
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-                      placeholder="What's this about?"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300 resize-none"
-                      placeholder="Tell me about your project or idea..."
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      const form = (e.target as HTMLElement).closest("form")
-                      if (form) {
-                        const formData = new FormData(form)
-                        const subject = `Portfolio Contact: ${formData.get("subject")}`
-                        const body = `Name: ${formData.get("name")}\nEmail: ${formData.get("email")}\nHow they found me: ${formData.get("social")}\n\nMessage:\n${formData.get("message")}`
-                        window.location.href = `mailto:rouabah.zineedinee@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-                      }
-                    }}
-                    className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                  >
-                    Send Message
-                    <Send className="ml-2 h-5 w-5" />
-                  </Button>
-                </form>
+                <form
+  className="space-y-6 bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500"
+  onSubmit={(e) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    const subject = `Portfolio Contact: ${formData.get("subject")}`
+    const body = `Name: ${formData.get("name")}
+Email: ${formData.get("email")}
+How they found me: ${formData.get("social")}
+
+Message:
+${formData.get("message")}`
+
+    // Gmail compose URL
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`
+
+    // Fallback mailto (if Gmail is blocked)
+    const mailtoUrl = `mailto:rouabah.zineedinee@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`
+
+    const newWindow = window.open(gmailUrl, "_blank")
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      window.location.href = mailtoUrl
+    }
+  }}
+>
+  <div>
+    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+      Name
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+      placeholder="Your name"
+      required
+    />
+  </div>
+
+  <div>
+    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+      Email
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+      placeholder="taylor.durden@example.com"
+      required
+    />
+  </div>
+
+  <div>
+    <label htmlFor="social" className="block text-sm font-semibold text-gray-700 mb-2">
+      How did you find me?
+    </label>
+    <select
+      id="social"
+      name="social"
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+      defaultValue=""
+      required
+    >
+      <option value="">Select platform</option>
+      <option value="github">GitHub</option>
+      <option value="linkedin">LinkedIn</option>
+      <option value="twitter">X (Twitter)</option>
+      <option value="reddit">Reddit</option>
+      <option value="medium">Medium</option>
+      <option value="discord">Discord</option>
+      <option value="instagram">Instagram</option>
+      <option value="youtube">YouTube</option>
+      <option value="tiktok">TikTok</option>
+      <option value="stackoverflow">Stack Overflow</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div>
+    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+      Subject
+    </label>
+    <input
+      type="text"
+      id="subject"
+      name="subject"
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+      placeholder="What's this about?"
+      required
+    />
+  </div>
+
+  <div>
+    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+      Message
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      rows={5}
+      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300 resize-none"
+      placeholder="Tell me about your project or idea..."
+      required
+    />
+  </div>
+
+  <Button
+    type="submit"
+    className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+  >
+    Send Message
+    <Send className="ml-2 h-5 w-5" />
+  </Button>
+</form>
               </div>
             </div>
           </div>
