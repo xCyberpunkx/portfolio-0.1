@@ -28,7 +28,7 @@
     "Shipping pixel-perfect editor experience.",
     "Teaching Vim productivity and Linux workflows."
   ],
-  "pdf": "/cv/zine-eddine-resume.pdf",
+  "pdf": "/resume.pdf",
   "timeline": [
     { "id": "n1", "label": "Core Systems", "branch": 0 },
     { "id": "n2", "label": "RenderWorks", "branch": 1 },

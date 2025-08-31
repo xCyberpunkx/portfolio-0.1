@@ -187,7 +187,7 @@ export default function Portfolio() {
               {/* Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4">
                 <div className="relative group">
-                  <Button
+               {/*   <Button
                     onClick={() => setShowLogin(true)}
                     variant="outline"
                     className="hover:scale-105 transition-all duration-300 border-2 hover:border-black flex items-center gap-2"
@@ -195,7 +195,7 @@ export default function Portfolio() {
                     <User className="h-4 w-4" />
                     Login
                     <HelpCircle className="h-3 w-3 text-gray-400" />
-                  </Button>
+                  </Button> */} 
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50">
                     <div className="font-semibold mb-1">🎮 Unlock Premium Features:</div>
                     <div className="text-xs space-y-1">
@@ -207,7 +207,7 @@ export default function Portfolio() {
                     </div>
                     <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black"></div>
                   </div>
-                </div>
+                </div> 
                 <Button
                   onClick={() => window.open("/resume.pdf", "_blank")}
                   className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
@@ -293,29 +293,25 @@ export default function Portfolio() {
           <div className="relative z-10 text-center max-w-6xl mx-auto">
             <div className="mb-6 sm:mb-8 lg:mb-12 animate-fade-in-up">
               <div className="mb-3 sm:mb-4 lg:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
-                Elite Systems Architect & Security Researcher
+                Software Developer · Security Enthusiast · Linux Aficionado
               </div>
               <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-4 sm:mb-6 lg:mb-8 leading-[0.85] tracking-tighter">
                 <span className="block text-black font-black">ZINE EDDINE</span>
                 <span className="block text-black font-black">ROUABAH</span>
               </h1>
               <div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-4 sm:mb-6 lg:mb-8 font-light max-w-4xl mx-auto leading-relaxed px-2 sm:px-4">
-                Crafting the future with <span className="text-black font-semibold">Rust</span>,{" "}
+               Software Engineer from Algeria, passionate about <span className="text-black font-semibold">Rust</span>,{" "}
                 <span className="text-black font-semibold">C++</span>, and revolutionary security solutions
               </div>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-500 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delay mb-4 sm:mb-6 lg:mb-8 px-2 sm:px-4">
-                From the heart of Algeria to global impact, I architect secure, blazing-fast systems that redefine
-                what's possible. Passionate about open source innovation, Linux mastery, and the elegance of perfect
-                code.
-              </p>
+              
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up-delay-2 px-2 sm:px-4">
               {[
-                { name: "Rust Systems", icon: "🦀", short: "Rust" },
+                { name: "Web Development", icon: "🦀", short: "Typescript" },
                 { name: "C++ Performance", icon: "⚡", short: "C++" },
                 { name: "Linux Mastery", icon: "🐧", short: "Linux" },
-                { name: "Security Research", icon: "🔒", short: "Security" },
+                { name: "Cybersecurity", icon: "🔒", short: "Security" },
                 { name: "Open Source", icon: "🌟", short: "OSS" },
                 { name: "Game Development", icon: "🎮", short: "Games" },
               ].map((tech, index) => (
@@ -349,7 +345,7 @@ export default function Portfolio() {
                 onClick={() => {
                   scrollToSection("contact")
                 }}
-                className="border-2 border-black text-black hover:bg-black hover:text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto"
+                className="border-2 border-black text-black hover:bg-black hover:text-black px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto"
               >
                 Get In Touch
               </Button>
@@ -370,18 +366,9 @@ export default function Portfolio() {
                 </h2>
                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                   <p className="animate-fade-in-up-delay">
-                    I'm a passionate systems programmer and security researcher from Algeria, dedicated to building
-                    secure, high-performance software that makes a difference. With expertise in Rust, C++, and Linux
-                    systems, I specialize in creating robust solutions for complex technical challenges.
-                  </p>
-                  <p className="animate-fade-in-up-delay-2">
-                    My journey in technology is driven by curiosity and a commitment to open source principles. I
-                    believe in the power of clean code, elegant architecture, and the importance of security in every
-                    line written.
-                  </p>
-                  <p className="animate-fade-in-up-delay-3">
-                    When I'm not coding, you'll find me contributing to open source projects, exploring the latest in
-                    cybersecurity research, or fine-tuning my Arch Linux setup with the perfect Vim configuration.
+                    software developer from Algeria. I love building things that work well and look good to solve real-world problems. I’m passionate about learning tech related stuff,
+especially in web development and cybersecurity. When I’m not coding, I like exploring open-source projects and staying up to date with the latest tech trends.
+I’m a huge fan of Linux and open-source software. I’m always looking for new opportunities to learn and grow as a developer
                   </p>
                 </div>
 
@@ -432,39 +419,31 @@ export default function Portfolio() {
               <div className="space-y-8 md:space-y-16">
                 {[
                   {
-                    year: "2024",
-                    title: "Security Specialist & Open Source Contributor",
+                    year: "2024 - 2025",
+                    title: "Exploration of New Domains & Open Source Contributor",
                     description:
-                      "Focusing on cybersecurity research, vulnerability analysis, and contributing to major open source security projects.",
+                      "Shifted my tech stack to full-stack Next.js and TypeScript, focusing on server components, app routing, and building scalable applications. I’ve deepened my knowledge of state management, authentication, and API design, aiming for production-grade architecture.",
                     icon: Shield,
-                    side: "left",
+                    side: "right",
+                  },
+                  {
+                    year: "Early 2024",
+                    title: "Introduction to Linux",
+                    description:
+                      "Took my first steps into Linux, sparking a long-term interest in customization and efficient workflows.",
+                    icon: Shield,
+                    side: "left",  
                   },
                   {
                     year: "2023",
-                    title: "Systems Programming Mastery",
-                    description:
-                      "Deep dive into Rust and C++ for systems programming, building high-performance applications and memory allocators.",
-                    icon: Cpu,
-                    side: "right",
-                  },
-                  {
-                    year: "2022",
-                    title: "Linux & DevOps Expertise",
-                    description:
-                      "Mastered Arch Linux, automation scripts, and modern development workflows. Became a Vim power user.",
-                    icon: Terminal,
-                    side: "left",
-                  },
-                  {
-                    year: "2021",
                     title: "Full-Stack Development",
                     description:
-                      "Expanded into web development with React, Node.js, and modern frameworks while maintaining focus on backend systems.",
-                    icon: Globe,
+                      "Combined Laravel with front-end technologies to enhance the user interface and improve responsiveness. Experimented with Next.js to build scalable and efficient web applications.",
+                    icon: Cpu,
                     side: "right",
-                  },
+                  },            
                   {
-                    year: "2020",
+                    year: "2022",
                     title: "Programming Foundation",
                     description:
                       "Started the journey with C++ and algorithms, building strong fundamentals in computer science and problem-solving.",
@@ -564,10 +543,10 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                       {[
-                        { name: "Rust", experience: "Expert", years: "4+ years", color: "bg-orange-500" },
-                        { name: "C++", experience: "Advanced", years: "6+ years", color: "bg-blue-500" },
-                        { name: "C", experience: "Advanced", years: "5+ years", color: "bg-gray-700" },
-                        { name: "Assembly", experience: "Intermediate", years: "3+ years", color: "bg-red-500" },
+                        { name: "Rust", experience: "beginner", years: "1+ years", color: "bg-orange-500" },
+                        { name: "C++", experience: "intermidiate", years: "3+ years", color: "bg-blue-500" },
+                        { name: "C", experience: "intermidiate", years: "2+ years", color: "bg-gray-700" },
+                        { name: "Assembly", experience: "mid", years: "1.5+ years", color: "bg-red-500" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
@@ -611,13 +590,13 @@ export default function Portfolio() {
                       {[
                         {
                           name: "Linux Administration",
-                          experience: "Expert",
-                          years: "7+ years",
+                          experience: "intermidiate",
+                          years: "3+ years",
                           color: "bg-yellow-500",
                         },
-                        { name: "Network Security", experience: "Advanced", years: "4+ years", color: "bg-red-500" },
-                        { name: "Docker & K8s", experience: "Advanced", years: "3+ years", color: "bg-blue-500" },
-                        { name: "CI/CD Pipelines", experience: "Advanced", years: "4+ years", color: "bg-green-500" },
+                        { name: "Network Security", experience: "mid-level", years: "3+ years", color: "bg-red-500" },
+                        { name: "Docker", experience: "beginner", years: "1+ years", color: "bg-blue-500" },
+                        { name: "CI/CD Pipelines", experience: "intermidiate", years: "2+ years", color: "bg-green-500" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
@@ -659,10 +638,10 @@ export default function Portfolio() {
 
                     <div className="space-y-4">
                       {[
-                        { name: "React/Next.js", experience: "Expert", years: "5+ years", color: "bg-cyan-500" },
+                        { name: "React/Next.js", experience: "Intermediate", years: "3+ years", color: "bg-cyan-500" },
                         { name: "TypeScript", experience: "Advanced", years: "4+ years", color: "bg-blue-600" },
-                        { name: "Vim/Neovim", experience: "Expert", years: "8+ years", color: "bg-green-600" },
-                        { name: "Git & GitHub", experience: "Expert", years: "6+ years", color: "bg-gray-700" },
+                        { name: "Vim/Neovim", experience: "Advanced", years: "3+ years", color: "bg-green-600" },
+                        { name: "Git & GitHub", experience: "Expert", years: "4+ years", color: "bg-gray-700" },
                       ].map((skill, index) => (
                         <div key={skill.name} className="space-y-2">
                           <div className="flex justify-between items-center">
@@ -698,13 +677,13 @@ export default function Portfolio() {
                 Featured Projects
               </h2>
               <p className="text-xl text-gray-600 max-w-4xl mx-auto animate-fade-in-up-delay leading-relaxed">
-                Building the future with systems programming, security research, and innovative solutions. Each project
+                Building the future with Secure, Scalable innovative solutions. Each project
                 represents a journey of learning, problem-solving, and pushing technical boundaries.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-              {[
+             {/* {[
                 {
                   title: "RustSec Scanner",
                   description:
@@ -766,7 +745,72 @@ export default function Portfolio() {
                   demo: "https://blockchain-explorer-demo.vercel.app",
                   year: "2024",
                   featured: false,
+                */}
+                {[
+                {
+                  title: "Cabinet BENSERAI",
+                  description:
+                    "Cabinet BENSERAI’s website is a professional platform that showcases their accounting, audit, tax, and legal services. It highlights their expertise, builds client trust with testimonials and insights, and makes it easy for businesses to contact them and request support.",
+                  image: "/cabinet.png",
+                  tags: ["Web", "PHP", "Elementor", "WP"],                  
+                  demo: "https://cabinet-benserai.com/",
+                  year: "2023",
+                  featured: true,
                 },
+                {
+                  title: "Optimize Construction",
+                  description:
+                    "Optimize Construction’s website is a professional digital platform showcasing their modular construction and space-optimization solutions. From durable modular cabins and bases of life to industrial shelving, material handling systems, and consumables.",
+                  image: "/optimize.png",
+                  tags: ["Wordpress", "Elementor", "Cloudflare"], 
+                  demo: "https://optimize-construction.dz",
+                  year: "2024",
+                  featured: true,
+                },
+                {
+                  title: "Remdani Dental Center",
+                  description:
+                    "A professional landing page for Remdani Dental Center. This landing page was designed to showcase the services and professionalism of Remdani Dental Center. With a clean and modern design, it provides visitors with essential information about the clinic, its services, and contact details. The website is optimized for performance and accessibility, ensuring a great user experience across all devices.",
+                  image: "/ramdani.png",
+                  tags: ["Typescript", "Oauth", "Nextjs", "Expressjs"],
+                  github: "https://github.com/xCyberpunkx/dental-frontend",
+                  demo: "https://ramdani.vercel.app/",
+                  year: "2023",
+                  featured: true,
+                },
+                {
+                  title: "Sawerni photography platform",
+                  description:
+                    "Sawerni is Algeria’s premier photography platform—connecting clients with verified professional photographers across the country. Users can explore curated portfolios, communicate directly with artists, and instantly book sessions with seamless scheduling and secure payments.",
+                  image: "/sawerni.png",
+                  tags: ["C", "Networking", "Security", "Wireshark"],
+                  github: "https://github.com/xCyberpunkx/sawerni-kv",
+                  demo: "https://sawerni.vercel.app/",
+                  year: "2025",
+                  featured: true,
+                },
+                {
+                  title: "architecture and engineering studio",
+                  description:
+                    "Moktari Amel’s website is a refined digital platform for an architecture and engineering studio in Blida, Algeria. It promotes bespoke, functional, and sustainable design from the initial sketch to project delivery.",
+                  image: "/amel.png",
+                  tags: ["Nextjs", "Typescript", "Tailwind", "Vercel"],
+                  demo: "https://betarchimoktariamel.com/",
+                  year: "2024",
+                  featured: false,
+                },
+                {
+                  title: "Personal Potfolio Website v0.1",
+                  description:
+                    "My first personal website, built to introduce myself as a software engineer and showcase my projects, skills, and interests. A clean, modern portfolio that reflects my passion for coding, Linux, and security.",
+                  image: "/personal.png",
+                  tags: ["Laravel", "WebAssembly", "linux", "React"],
+                  github: "https://github.com/xCyberpunkx/res",
+                  demo: "https://0xnira.vercel.app/",
+                  year: "2024",
+                  featured: false,
+                }
+              
               ].map((project, index) => (
                 <div
                   key={project.title}
@@ -862,63 +906,64 @@ export default function Portfolio() {
                 Services & Expertise
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
-                Comprehensive solutions across multiple domains, from systems programming to security consulting.
+                Comprehensive solutions across multiple domains, from Web Development  to Enterprise Software .
               </p>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
               {[
                 {
-                  icon: Shield,
-                  title: "Security Consulting",
-                  description:
-                    "Comprehensive security audits, vulnerability assessments, and penetration testing for your systems.",
-                  features: [
-                    "Code Review & Analysis",
-                    "Infrastructure Security",
-                    "Threat Modeling",
-                    "Compliance Auditing",
-                  ],
-                  color: "from-red-500 to-orange-500",
-                },
-                {
-                  icon: Cpu,
-                  title: "Systems Development",
-                  description:
-                    "High-performance system software, drivers, and low-level applications built with modern C++ and Rust.",
-                  features: [
-                    "Custom Allocators",
-                    "Device Drivers",
-                    "Performance Optimization",
-                    "Cross-platform Solutions",
-                  ],
-                  color: "from-blue-500 to-cyan-500",
-                },
-                {
-                  icon: Terminal,
-                  title: "DevOps & Automation",
-                  description: "Complete infrastructure automation, CI/CD pipelines, and Linux system administration.",
-                  features: [
-                    "Infrastructure as Code",
-                    "Container Orchestration",
-                    "Monitoring & Logging",
-                    "Backup Solutions",
-                  ],
-                  color: "from-green-500 to-teal-500",
-                },
-                {
-                  icon: Brain,
-                  title: "Technical Consulting",
-                  description:
-                    "Architecture design, technology selection, and strategic technical guidance for your projects.",
-                  features: [
-                    "System Architecture",
-                    "Technology Stack Selection",
-                    "Performance Analysis",
-                    "Team Mentoring",
-                  ],
-                  color: "from-purple-500 to-pink-500",
-                },
+    icon: Shield,
+    title: "Web Development",
+    description:
+      "Modern, scalable, and responsive websites and web applications tailored to your needs.",
+    features: [
+      "Full-Stack Development",
+      "API Integration",
+      "SEO Optimization",
+      "Responsive Design",
+    ],
+    color: "from-red-500 to-orange-500",
+  },
+  {
+    icon: Cpu,
+    title: "Mobile Development",
+    description:
+      "High-quality iOS and Android apps with seamless performance and user experience.",
+    features: [
+      "Cross-Platform Solutions",
+      "Native App Development",
+      "App Store Deployment",
+      "Performance Optimization",
+    ],
+    color: "from-blue-500 to-cyan-500",
+  },
+  {
+    icon: Terminal,
+    title: "UI/UX Design",
+    description:
+      "User-centered design for intuitive, accessible, and visually engaging digital experiences.",
+    features: [
+      "Wireframing & Prototyping",
+      "User Research",
+      "Design Systems",
+      "Accessibility Compliance",
+    ],
+    color: "from-green-500 to-teal-500",
+  },
+  {
+    icon: Brain,
+    title: "Desktop Development",
+    description:
+      "Powerful cross-platform desktop applications built for performance and usability.",
+    features: [
+      "Windows, macOS & Linux Apps",
+      "Custom Tooling",
+      "System Integration",
+      "Performance Optimization",
+    ],
+    color: "from-purple-500 to-pink-500",
+  },
               ].map((service, index) => (
                 <div
                   key={service.title}
@@ -1169,12 +1214,8 @@ export default function Portfolio() {
                       <option value="discord">Discord</option>
                       <option value="instagram">Instagram</option>
                       <option value="youtube">YouTube</option>
-                      <option value="tiktok">TikTok</option>
-                      <option value="twitch">Twitch</option>
-                      <option value="stackoverflow">Stack Overflow</option>
-                      <option value="devto">Dev.to</option>
-                      <option value="hashnode">Hashnode</option>
-                      <option value="leagueoflegends">League of Legends</option>
+                      <option value="tiktok">TikTok</option>                      
+                      <option value="stackoverflow">Stack Overflow</option>                                          
                       <option value="other">Other</option>
                     </select>
                   </div>
@@ -1421,7 +1462,7 @@ export default function Portfolio() {
               {/* Mobile Development */}
               <Card className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Q4 2024
+                  Q4 2026
                 </div>
                 <CardContent className="p-8">
                   <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
@@ -1440,7 +1481,7 @@ export default function Portfolio() {
               {/* Blockchain & Web3 */}
               <Card className="bg-white border-2 border-yellow-200 hover:border-yellow-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  2025
+                  mid 2026
                 </div>
                 <CardContent className="p-8">
                   <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center">
@@ -1459,7 +1500,7 @@ export default function Portfolio() {
               {/* Content Creation */}
               <Card className="bg-white border-2 border-rose-200 hover:border-rose-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-rose-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Ongoing
+                  Upcoming
                 </div>
                 <CardContent className="p-8">
                   <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
@@ -1478,7 +1519,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* Gaming Universe Section - Enhanced Professional Design */}
+        {/* Gaming Universe Section - Enhanced Professional Design 
         <section id="gaming" className="py-20 bg-white">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-16">
@@ -1627,7 +1668,7 @@ export default function Portfolio() {
               }
             `}</style>
 
-            {/*
+            
             <div className="grid md:grid-cols-2 gap-8">
               <Card className="bg-white border border-gray-200 shadow-lg">
                 <CardContent className="p-6">
@@ -1678,10 +1719,10 @@ export default function Portfolio() {
                 </CardContent>
               </Card>
             </div>
-            */}
+            
           </div>
         </section>
-
+*/}
         <footer className="bg-black text-white py-16 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
@@ -1695,7 +1736,7 @@ export default function Portfolio() {
                 </p>
                 <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
                   {[
-                    { icon: Github, href: "https://github.com/zinedine", label: "GitHub", color: "hover:bg-gray-800" },
+                    { icon: Github, href: "https://github.com/xCyberpunkx", label: "GitHub", color: "hover:bg-gray-800" },
                     {
                       icon: Linkedin,
                       href: "https://linkedin.com/in/zinedine-rouabah",
@@ -1704,7 +1745,7 @@ export default function Portfolio() {
                     },
                     {
                       icon: Mail,
-                      href: "mailto:zine.rouabah@protonmail.com",
+                      href: "mailto:rouabah.zineedinee@gmail.com",
                       label: "Email",
                       color: "hover:bg-red-600",
                     },
