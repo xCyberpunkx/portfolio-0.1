@@ -1149,7 +1149,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                     </div>
                     <div>
                       <a
-                      href="mailto:rouabah.zineedinee@gmail.com?subject=Hello%20Zine&body=I%20would%20like%20to%20connect%20with%20you."
+                      href="https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=Hello%20Zine&body=I%20would%20like%20to%20connect%20with%20you."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block"
