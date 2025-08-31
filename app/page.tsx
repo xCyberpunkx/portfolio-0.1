@@ -1425,7 +1425,7 @@ ${formData.get("message")}`
         rel="noopener noreferrer"
         className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition"
       >
-        Download C++
+        The Rust Guide
       </a>
       <a
         href="https://www.learncpp.com/"
