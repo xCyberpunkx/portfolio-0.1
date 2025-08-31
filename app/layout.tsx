@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
+  title: "Zinedine Rouabah -  Systems Programmer & Software Developer",
   description:
     "Passionate systems programmer and security researcher from Algeria specializing in Rust, C++, Linux systems, and cybersecurity. Building secure, high-performance software solutions.",
   keywords: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://zinedine-rouabah.vercel.app",
-    title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
+    title: "Zinedine Rouabah - Developer Portfolio",
     description:
       "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Specializing in cybersecurity research and Linux systems.",
     siteName: "Zinedine Rouabah Portfolio",
