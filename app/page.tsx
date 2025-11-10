@@ -31,8 +31,16 @@ import {
   Twitter,
   Phone,
   MessageCircle,
+  GitBranch,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { PixelatedCanvasDemo } from "@/components/canva"
+import {  GlareCardDemo } from "@/components/glare"
+import { StickyScrollRevealDemo } from "@/components/scroll-reveal"
+import { PlaceholdersAndVanishInputDemo } from "@/components/placeholder"
+import { CoverDemo } from "@/components/CoverDemo"
+import { FloatingDockDemo } from "@/components/floating"
+
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
@@ -155,7 +163,8 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
-      {/* Navigation */}
+    
+      
       <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -190,7 +199,7 @@ export default function Portfolio() {
               {/* Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4">
                 <div className="relative group">
-               {/*   <Button
+                  <Button
                     onClick={() => setShowLogin(true)}
                     variant="outline"
                     className="hover:scale-105 transition-all duration-300 border-2 hover:border-black flex items-center gap-2"
@@ -198,7 +207,7 @@ export default function Portfolio() {
                     <User className="h-4 w-4" />
                     Login
                     <HelpCircle className="h-3 w-3 text-gray-400" />
-                  </Button> */} 
+                  </Button> 
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50">
                     <div className="font-semibold mb-1">🎮 Unlock Premium Features:</div>
                     <div className="text-xs space-y-1">
@@ -234,7 +243,7 @@ export default function Portfolio() {
                 </Button>
               </div>
 
-              {/* Mobile Menu Button */}
+              
               <Button
                 variant="ghost"
                 size="sm"
@@ -283,78 +292,166 @@ export default function Portfolio() {
 
       <main className="pt-20">
         <section
-          id="hero"
-          className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative overflow-hidden"
-        >
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"
-            style={{
-              transform: `translateY(${scrollY * 0.3}px)`,
-            }}
-          />
+  id="hero"
+  className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative overflow-hidden"
+>
+  {/* Animated Background Dots & Icons */}
+  <div className="absolute inset-0 pointer-events-none opacity-5">
+    {[...Array(20)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-1 h-1 bg-gray-500 rounded-full animate-pulse"
+        style={{
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 2}s`,
+        }}
+      />
+    ))}
+    {/* Floating distro icons */}
+    {[
+      { icon: "🐧", top: "15%", left: "10%" },
+      { icon: "🅰️", top: "25%", left: "85%" },
+      { icon: "🇬", top: "75%", left: "5%" },
+    ].map((item, idx) => (
+      <div
+        key={idx}
+        className="absolute text-xl opacity-30 animate-bounce"
+        style={{
+          top: item.top,
+          left: item.left,
+          animationDelay: `${idx * 0.5}s`,
+          animationDuration: "3s",
+        }}
+      >
+        {item.icon}
+      </div>
+    ))}
+  </div>
 
-          <div className="relative z-10 text-center max-w-6xl mx-auto">
-            <div className="mb-6 sm:mb-8 lg:mb-12 animate-fade-in-up">
-              <div className="mb-3 sm:mb-4 lg:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-400 animate-fade-in-up">
-                Software Developer · Security Enthusiast · Linux Aficionado
-              </div>
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-4 sm:mb-6 lg:mb-8 leading-[0.85] tracking-tighter">
-                <span className="block text-black font-black">ZINE EDDINE</span>
-                <span className="block text-black font-black">ROUABAH</span>
-              </h1>
-              <div className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-4 sm:mb-6 lg:mb-8 font-light max-w-4xl mx-auto leading-relaxed px-2 sm:px-4">
-               Software Engineer from Algeria, passionate about <span className="text-black font-semibold">Rust</span>,{" "}
-                <span className="text-black font-semibold">C++</span>, and revolutionary security solutions
-              </div>
-              
-            </div>
+  {/* Parallax Background */}
+  <div
+    className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"
+    style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+  />
+  
+  {/* Two-Column Layout */}
+  <div className="relative z-10 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+     {/* Left: Text Content — Vibrant, Functional, Linux-Flavored */}
+<div className="text-center lg:text-left space-y-8">
+  <div className="space-y-4">
+    {/* Terminal Prompt */}
+    <div className="flex items-center justify-center lg:justify-start gap-2 text-xs sm:text-sm font-mono tracking-wide text-gray-500">
+      <span className="text-green-500">●</span>
+      <span className="text-blue-600 font-semibold">zinedine</span>
+      <span>@</span>
+      <span className="text-blue-500 flex items-center gap-1">
+        archlinux <span className="text-base">🅰️</span>
+      </span>
+      <span>:~$</span>
+    </div>
 
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 mb-8 sm:mb-12 lg:mb-16 animate-fade-in-up-delay-2 px-2 sm:px-4">
-              {[
-                { name: "Web Development", icon: "🦀", short: "Typescript" },
-                { name: "C++ Performance", icon: "⚡", short: "C++" },
-                { name: "Linux Mastery", icon: "🐧", short: "Linux" },
-                { name: "Cybersecurity", icon: "🔒", short: "Security" },
-                { name: "Open Source", icon: "🌟", short: "OSS" },
-                { name: "Game Development", icon: "🎮", short: "Games" },
-              ].map((tech, index) => (
-                <div key={tech.name} className="group relative">
-                  <Badge
-                    variant="outline"
-                    className="relative px-2 sm:px-3 lg:px-4 py-1.5 sm:py-2 lg:py-3 text-xs sm:text-sm lg:text-base border-2 hover:border-black hover:bg-black hover:text-white transition-all duration-300 hover:scale-105 cursor-pointer"
-                  >
-                    <span className="mr-1 sm:mr-2 text-sm sm:text-base lg:text-lg">{tech.icon}</span>
-                    <span className="hidden md:inline">{tech.name}</span>
-                    <span className="md:hidden">{tech.short}</span>
-                  </Badge>
-                </div>
-              ))}
-            </div>
+    {/* Name */}
+    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter">
+      <span className="block text-black">ZINE EDDINE</span>
+      <span className="block text-black mt-1">ROUABAH</span>
+    </h1>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center animate-fade-in-up-delay-3 px-2 sm:px-4">
-              <Button
-                onClick={() => {
-                  scrollToSection("projects")
-                }}
-                size="lg"
-                className="bg-black text-white hover:bg-gray-800 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl group relative overflow-hidden w-full sm:w-auto"
-              >
-                <span className="relative z-10">View My Work</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => {
-                  scrollToSection("contact")
-                }}
-                className="border-2 border-black text-black hover:bg-black hover:text-black px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl w-full sm:w-auto"
-              >
-                Get In Touch
-              </Button>
-            </div>
+    {/* Tagline */}
+    <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+      Software Engineer from Algeria. Passionate about{" "}
+      <span className="font-semibold text-orange-600">Rust</span>,{" "}
+      <span className="font-semibold text-red-600">C++</span>, and secure systems on{" "}
+      <span className="font-semibold text-gray-800">Linux</span> 🐧.
+    </p>
+  </div>
+
+  {/* Badges — Clean, Interactive */}
+<div className="flex flex-wrap justify-center lg:justify-start gap-3">
+  {[
+  { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" />, color: "from-orange-400/80 to-orange-500/80", glow: "shadow-orange-300/30" },
+  { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" />, color: "from-red-400/80 to-red-500/80", glow: "shadow-red-300/30" },
+  { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" />, color: "from-gray-700/80 to-gray-800/80", glow: "shadow-gray-400/30" },
+  { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" />, color: "from-green-500/80 to-emerald-600/80", glow: "shadow-green-300/30" },
+  { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" />, color: "from-purple-500/80 to-indigo-600/80", glow: "shadow-purple-300/30" },
+].map((item, i) => (
+    <div
+      key={item.label}
+      className="group relative"
+      onMouseEnter={() => setHoveredProject(i)}
+      onMouseLeave={() => setHoveredProject(null)}
+    >
+      <Badge
+        variant="default"
+        className={`
+          px-4 py-2.5 text-sm font-medium text-gray-800
+          bg-white/60 backdrop-blur-lg
+          border border-white/20
+          shadow-md group-hover:shadow-lg
+          rounded-xl
+          transition-all duration-300
+          hover:scale-[1.03] hover:bg-white/80
+          cursor-pointer
+          flex items-center gap-2
+          overflow-hidden
+        `}
+      >
+        <span className="text-base">{item.icon}</span>
+        <span>{item.label}</span>
+        {/* Subtle inner glow on hover */}
+        <div
+          className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none`}
+        />
+      </Badge>
+    </div>
+  ))}
+</div>
+
+  {/* Buttons — Polished */}
+  <div className="flex flex-col items-center sm:items-start gap-6">
+  {/* Buttons Row */}
+  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
+    <Button
+      onClick={() => scrollToSection("projects")}
+      className="bg-black text-white hover:bg-white hover:text-black hover:border-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 shadow-md"
+    >
+      View My Work
+    </Button>
+    <Button
+      variant="outline"
+      onClick={() => scrollToSection("contact")}
+      className="border-2 border-black text-black hover:bg-black hover:text-white px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
+    >
+      Get In Touch
+    </Button>
+  </div>
+
+  {/* Social Text */}
+  <span className="text-sm text-neutral-600 dark:text-neutral-300">
+    Follow me on social media
+  </span>
+
+  {/* Floating Dock under buttons */}
+  <div className="mt-2">
+    <FloatingDockDemo />
+  </div>
+</div>
+
+</div>
+
+      {/* Right: Canvas */}
+      <div className="flex justify-center lg:justify-end">
+        <div className="w-full max-w-md h-[400px] relative">
+          <div className="absolute inset-0 bg-white/30 backdrop-blur-sm rounded-2xl border border-gray-200" />
+          <div className="relative z-10">
+            <PixelatedCanvasDemo />
           </div>
-        </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         <section id="about" className="py-32 px-6 bg-gradient-to-b from-white to-gray-50">
           <div className="absolute inset-0 opacity-5">
@@ -377,145 +474,13 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
 
                 <div className="mt-12 grid grid-cols-2 gap-8 animate-fade-in-up-delay-4"></div>
               </div>
-
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-500 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-all duration-500" />
-                <div className="relative bg-white rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
-                  <div className="w-full h-64 bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                    {/* Abstract geometric art */}
-                    <div className="absolute inset-0">
-                      <div className="absolute top-4 left-4 w-16 h-16 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full opacity-60 animate-pulse" />
-                      <div className="absolute bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-indigo-400 to-cyan-500 transform rotate-45 opacity-70" />
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 border-4 border-purple-300 rounded-full animate-spin-slow" />
-                      <div className="absolute top-8 right-12 w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-bounce" />
-                    </div>
-                    <div className="relative z-10 text-center">
-                      <div className="text-4xl mb-2">🚀</div>
-                      <div className="text-lg font-semibold text-gray-700">Innovation in Motion</div>
-                    </div>
-                  </div>
-                </div>
+              <GlareCardDemo/>
               </div>
-            </div>
           </div>
         </section>
 
-        {/* Adding scroll-triggered border highlight animation for journey year boxes */}
-        <section id="journey" className="py-12 md:py-24 px-4 md:px-6 relative overflow-hidden">
-          <div className="max-w-6xl mx-auto relative z-10">
-            <div className="text-center mb-12 md:mb-20 animate-fade-in-up">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-text-shimmer">
-                My Journey
-              </h2>
-              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
-                From curious beginner to systems programming enthusiast - here's how my passion for technology evolved.
-              </p>
-            </div>
-
-            <div className="relative">
-              {/* Desktop Timeline Line */}
-              <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-black via-gray-400 to-black animate-pulse-slow" />
-
-              {/* Mobile Timeline Line */}
-              <div className="md:hidden absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-black via-gray-400 to-black" />
-
-              <div className="space-y-8 md:space-y-16">
-                {[
-                  {
-                    year: "2024 - 2025",
-                    title: "Exploration of New Domains & Open Source Contributor",
-                    description:
-                      "Shifted my tech stack to full-stack Next.js and TypeScript, focusing on server components, app routing, and building scalable applications. I’ve deepened my knowledge of state management, authentication, and API design, aiming for production-grade architecture.",
-                    icon: Shield,
-                    side: "right",
-                  },
-                  {
-                    year: "Early 2024",
-                    title: "Introduction to Linux",
-                    description:
-                      "Took my first steps into Linux, sparking a long-term interest in customization and efficient workflows.",
-                    icon: Shield,
-                    side: "left",  
-                  },
-                  {
-                    year: "2023",
-                    title: "Full-Stack Development",
-                    description:
-                      "Combined Laravel with front-end technologies to enhance the user interface and improve responsiveness. Experimented with Next.js to build scalable and efficient web applications.",
-                    icon: Cpu,
-                    side: "right",
-                  },            
-                  {
-                    year: "2022",
-                    title: "Programming Foundation",
-                    description:
-                      "Started the journey with C++ and algorithms, building strong fundamentals in computer science and problem-solving.",
-                    icon: Code,
-                    side: "left",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={item.year}
-                    className={`flex items-start md:items-center ${
-                      item.side === "right" ? "md:flex-row-reverse" : ""
-                    } animate-slide-in-${item.side} journey-item`}
-                    style={{ animationDelay: `${index * 0.3}s` }}
-                  >
-                    {/* Mobile Layout */}
-                    <div className="md:hidden flex items-start gap-4 w-full">
-                      <div className="flex-shrink-0 relative">
-                        <div className="w-4 h-4 bg-black rounded-full border-4 border-white shadow-lg relative z-10 year-highlight-dot" />
-                      </div>
-                      <Card className="flex-1 bg-white border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 year-highlight-card">
-                        <CardContent className="p-4">
-                          <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 bg-black rounded-lg">
-                              <item.icon className="h-4 w-4 text-white" />
-                            </div>
-                            <div>
-                              <div className="text-lg font-bold text-black year-box">{item.year}</div>
-                              <div className="text-sm font-semibold text-gray-800">{item.title}</div>
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    {/* Desktop Layout */}
-                    <div className={`hidden md:block w-1/2 ${item.side === "right" ? "pl-16" : "pr-16"}`}>
-                      <Card className="bg-white border-2 border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:scale-105 group animate-fade-in-up year-highlight-card">
-                        <CardContent className="p-8 relative overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:to-purple-50/50 transition-all duration-500" />
-                          <div className="flex items-center gap-4 mb-4 relative z-10">
-                            <div className="p-3 bg-black rounded-xl group-hover:bg-gradient-to-br group-hover:from-gray-800 group-hover:to-black transition-all duration-300 animate-pulse-subtle">
-                              <item.icon className="h-6 w-6 text-white" />
-                            </div>
-                            <div>
-                              <div className="text-2xl font-bold text-black group-hover:text-gray-800 transition-colors duration-300 animate-number-count year-box">
-                                {item.year}
-                              </div>
-                              <div className="text-lg font-semibold text-gray-800 group-hover:text-black transition-colors duration-300">
-                                {item.title}
-                              </div>
-                            </div>
-                          </div>
-                          <p className="text-gray-600 leading-relaxed relative z-10 group-hover:text-gray-700 transition-colors duration-300">
-                            {item.description}
-                          </p>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    {/* Desktop Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-black rounded-full border-4 border-white shadow-lg animate-pulse-dot year-highlight-dot" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
+       <StickyScrollRevealDemo />
+       <PlaceholdersAndVanishInputDemo />
         {/* Skills Section */}
         <section id="skills" className="py-24 px-6 bg-gray-50">
           <div className="max-w-7xl mx-auto">
@@ -1130,9 +1095,9 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
 
           <div className="max-w-4xl mx-auto relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-6xl font-bold mb-8 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-fade-in-up">
-                Let's Connect
-              </h2>
+   
+              <CoverDemo/>
+             
               <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay leading-relaxed">
                 Ready to collaborate on something amazing? Whether it's a challenging project, open source contribution,
                 or just a technical discussion, I'd love to hear from you.
