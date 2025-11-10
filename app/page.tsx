@@ -40,6 +40,9 @@ import { StickyScrollRevealDemo } from "@/components/scroll-reveal"
 import { PlaceholdersAndVanishInputDemo } from "@/components/placeholder"
 import { CoverDemo } from "@/components/CoverDemo"
 import { FloatingDockDemo } from "@/components/floating"
+import { LoaderScreen } from "@/components/ui/loader-screen"
+import DemoOne, { Component } from "@/components/ui/loader-9";
+import { DockDemo } from "@/components/Dock"
 interface Skill {
   name: string;
   experience: string;
@@ -63,7 +66,7 @@ export default function Portfolio() {
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000)
+    }, 1000)
 
     return () => {
       clearTimeout(loadingTimer)
@@ -115,57 +118,12 @@ export default function Portfolio() {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center z-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
-
-        <div className="relative text-center">
-          {/* Animated circles */}
-          <div className="relative w-32 h-32 mx-auto mb-8">
-            <div className="absolute inset-0 border-4 border-green-500/30 rounded-full animate-ping" />
-            <div className="absolute inset-2 border-4 border-green-400/50 rounded-full animate-pulse" />
-            <div className="absolute inset-4 border-4 border-green-300 rounded-full animate-spin" />
-            <div className="absolute inset-6 bg-green-500/20 rounded-full animate-bounce flex items-center justify-center">
-              <div className="text-green-400 text-2xl font-mono font-bold">ZR</div>
-            </div>
-          </div>
-
-          {/* Matrix-style loading text */}
-          <div className="space-y-2">
-            <div className="text-green-400 text-xl font-mono animate-pulse">Initializing Portfolio...</div>
-            <div className="text-green-300 text-sm font-mono opacity-70">Loading neural networks... █████████░ 90%</div>
-            <div className="flex justify-center space-x-1 mt-4">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 bg-green-400 rounded-full animate-bounce"
-                  style={{ animationDelay: `${i * 0.2}s` }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Matrix rain effect */}
-        <div className="absolute inset-0 opacity-20">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute text-green-400 text-xs font-mono animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-              }}
-            >
-              {Math.random().toString(36).substring(7)}
-            </div>
-          ))}
-        </div>
-      </div>
-    )
+if (isLoading) {
+    return <LoaderScreen />
   }
+
+
+
 
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
@@ -205,15 +163,7 @@ export default function Portfolio() {
               {/* Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4">
                 <div className="relative group">
-                  <Button
-                    onClick={() => setShowLogin(true)}
-                    variant="outline"
-                    className="hover:scale-105 transition-all duration-300 border-2 hover:border-black flex items-center gap-2"
-                  >
-                    <User className="h-4 w-4" />
-                    Login
-                    <HelpCircle className="h-3 w-3 text-gray-400" />
-                  </Button> 
+                 
                   <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50">
                     <div className="font-semibold mb-1">🎮 Unlock Premium Features:</div>
                     <div className="text-xs space-y-1">
@@ -433,17 +383,9 @@ export default function Portfolio() {
     </Button>
   </div>
 
-  {/* Social Text */}
-  <span className="text-lg text-neutral-600 dark:text-neutral-300">
-    Follow me on social media
-  </span>
-
-  {/* Floating Dock under buttons */}
-  <div className="mt-2">
-    <FloatingDockDemo />
-  </div>
+  
 </div>
-
+  <DockDemo />
 </div>
 
       {/* Right: Canvas */}
