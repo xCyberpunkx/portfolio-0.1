@@ -40,7 +40,13 @@ import { StickyScrollRevealDemo } from "@/components/scroll-reveal"
 import { PlaceholdersAndVanishInputDemo } from "@/components/placeholder"
 import { CoverDemo } from "@/components/CoverDemo"
 import { FloatingDockDemo } from "@/components/floating"
-
+interface Skill {
+  name: string;
+  experience: string;
+  years: string;
+  color: string;
+  level: number; // add this
+}
 
 export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("hero")
@@ -428,7 +434,7 @@ export default function Portfolio() {
   </div>
 
   {/* Social Text */}
-  <span className="text-sm text-neutral-600 dark:text-neutral-300">
+  <span className="text-lg text-neutral-600 dark:text-neutral-300">
     Follow me on social media
   </span>
 
@@ -623,7 +629,7 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                             <div
                               className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
                               style={{
-                                width: `${skill.level}%`,
+                               
                                 animationDelay: `${index * 0.2 + 1}s`,
                               }}
                             />
