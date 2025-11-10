@@ -1,6 +1,6 @@
 "use client"
 
-import React, { PropsWithChildren, useRef } from "react"
+import React, { PropsWithChildren, useRef, useEffect } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import {
   motion,
@@ -9,8 +9,20 @@ import {
   useSpring,
   useTransform,
   HTMLMotionProps,
-} from "motion/react"
+} from "framer-motion"
 import { cn } from "@/lib/utils"
+
+// Constants
+const DEFAULT_SIZE = 40
+const DEFAULT_MAGNIFICATION = 64
+const DEFAULT_DISTANCE = 160
+
+// Dock container variants
+const dockVariants = cva(
+  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 " +
+  "mx-auto mt-6 flex h-14 md:h-16 w-max items-center justify-center gap-1.5 rounded-2xl border border-neutral-200/40 dark:border-neutral-800/60 " +
+  "p-2 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-white/5"
+)
 
 export interface DockProps extends VariantProps<typeof dockVariants> {
   className?: string
@@ -22,15 +34,6 @@ export interface DockProps extends VariantProps<typeof dockVariants> {
   children: React.ReactNode
 }
 
-const DEFAULT_SIZE = 40
-const DEFAULT_MAGNIFICATION = 60
-const DEFAULT_DISTANCE = 140
-const DEFAULT_DISABLEMAGNIFICATION = false
-
-const dockVariants = cva(
-  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 mx-auto mt-8 flex h-[58px] w-max items-center justify-center gap-2 rounded-2xl border p-2 backdrop-blur-md"
-)
-
 export const Dock = React.forwardRef<HTMLDivElement, DockProps>(
   (
     {
@@ -38,7 +41,7 @@ export const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       children,
       iconSize = DEFAULT_SIZE,
       iconMagnification = DEFAULT_MAGNIFICATION,
-      disableMagnification = DEFAULT_DISABLEMAGNIFICATION,
+      disableMagnification = false,
       iconDistance = DEFAULT_DISTANCE,
       direction = "middle",
       ...props
@@ -46,19 +49,20 @@ export const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     ref
   ) => {
     const mouseX = useMotionValue(Infinity)
+    const isTouchDevice = useRef(false)
+
+    useEffect(() => {
+      isTouchDevice.current = "ontouchstart" in window || navigator.maxTouchPoints > 0
+    }, [])
 
     const renderChildren = () => {
       return React.Children.map(children, (child) => {
-        if (
-          React.isValidElement<DockIconProps>(child) &&
-          child.type === DockIcon
-        ) {
+        if (React.isValidElement<DockIconProps>(child) && child.type === DockIcon) {
           return React.cloneElement(child, {
-            ...child.props,
-            mouseX,
+            mouseX: isTouchDevice.current ? undefined : mouseX,
             size: iconSize,
             magnification: iconMagnification,
-            disableMagnification,
+            disableMagnification: disableMagnification || isTouchDevice.current,
             distance: iconDistance,
           })
         }
@@ -69,7 +73,7 @@ export const Dock = React.forwardRef<HTMLDivElement, DockProps>(
     return (
       <motion.div
         ref={ref}
-        onMouseMove={(e) => mouseX.set(e.pageX)}
+        onMouseMove={(e) => mouseX.set(e.clientX)} // ✅ use clientX for horizontal accuracy
         onMouseLeave={() => mouseX.set(Infinity)}
         {...props}
         className={cn(dockVariants({ className }), {
@@ -86,8 +90,9 @@ export const Dock = React.forwardRef<HTMLDivElement, DockProps>(
 
 Dock.displayName = "Dock"
 
+// DockIcon props
 export interface DockIconProps
-  extends Omit<HTMLMotionProps<"div">, "children"> {
+  extends Omit<HTMLMotionProps<"a">, "children"> {
   size?: number
   magnification?: number
   disableMagnification?: boolean
@@ -95,62 +100,77 @@ export interface DockIconProps
   mouseX?: MotionValue<number>
   className?: string
   children?: React.ReactNode
-  href?: string
-  target?: string
+  href: string
+  "aria-label"?: string
 }
 
-export const DockIcon = ({
-  size = DEFAULT_SIZE,
-  magnification = DEFAULT_MAGNIFICATION,
-  disableMagnification,
-  distance = DEFAULT_DISTANCE,
-  mouseX,
-  className,
-  children,
-  href,
-  target,
-  ...props
-}: DockIconProps) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const padding = Math.max(6, size * 0.2)
-  const defaultMouseX = useMotionValue(Infinity)
+export const DockIcon = React.forwardRef<HTMLAnchorElement, DockIconProps>(
+  (
+    {
+      size = DEFAULT_SIZE,
+      magnification = DEFAULT_MAGNIFICATION,
+      disableMagnification = false,
+      distance = DEFAULT_DISTANCE,
+      mouseX,
+      className,
+      children,
+      href,
+      "aria-label": ariaLabel,
+      ...props
+    },
+    ref
+  ) => {
+    const refDiv = useRef<HTMLDivElement>(null)
+    const padding = Math.max(6, size * 0.2)
+    const defaultMouseX = useMotionValue(Infinity)
 
-  const distanceCalc = useTransform(mouseX ?? defaultMouseX, (val: number) => {
-    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
-    return val - bounds.x - bounds.width / 2
-  })
+    const distanceCalc = useTransform(mouseX ?? defaultMouseX, (val: number) => {
+      const bounds = refDiv.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
+      return val - bounds.x - bounds.width / 2
+    })
 
-  const targetSize = disableMagnification ? size : magnification
+    const targetSize = disableMagnification ? size : magnification
 
-  const sizeTransform = useTransform(
-    distanceCalc,
-    [-distance, 0, distance],
-    [size, targetSize, size]
-  )
+    const sizeTransform = useTransform(
+      distanceCalc,
+      [-distance, 0, distance],
+      [size, targetSize, size]
+    )
 
-  const scaleSize = useSpring(sizeTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  })
+    const scaleSize = useSpring(sizeTransform, {
+      mass: 0.1,
+      stiffness: 180,
+      damping: 10,
+    })
 
-  const Component: any = href ? motion.a : motion.div
-
-  return (
-    <Component
-      ref={ref}
-      style={{ width: scaleSize, height: scaleSize, padding }}
-      className={cn(
-        "flex aspect-square items-center justify-center rounded-full cursor-pointer",
-        className
-      )}
-      href={href}
-      target={target}
-      {...props}
-    >
-      {children}
-    </Component>
-  )
-}
+    return (
+      <motion.a
+        ref={ref}
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+        aria-label={ariaLabel}
+        className={cn(
+          "flex items-center justify-center rounded-full cursor-pointer transition-all duration-200 ease-out",
+          "hover:brightness-110 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none",
+          className
+        )}
+        style={{
+          width: scaleSize,
+          height: scaleSize,
+          padding,
+        }}
+        {...props}
+      >
+        <div
+          ref={refDiv}
+          className="flex w-full h-full items-center justify-center"
+        >
+          {children}
+        </div>
+      </motion.a>
+    )
+  }
+)
 
 DockIcon.displayName = "DockIcon"

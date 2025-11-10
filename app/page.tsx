@@ -39,10 +39,7 @@ import {  GlareCardDemo } from "@/components/glare"
 import { StickyScrollRevealDemo } from "@/components/scroll-reveal"
 import { PlaceholdersAndVanishInputDemo } from "@/components/placeholder"
 import { CoverDemo } from "@/components/CoverDemo"
-import { FloatingDockDemo } from "@/components/floating"
 import { LoaderScreen } from "@/components/ui/loader-screen"
-import DemoOne, { Component } from "@/components/ui/loader-9";
-import { DockDemo } from "@/components/Dock"
 interface Skill {
   name: string;
   experience: string;
@@ -377,7 +374,7 @@ if (isLoading) {
     <Button
       variant="outline"
       onClick={() => scrollToSection("contact")}
-      className="border-2 border-black text-black hover:bg-black hover:text-white px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
+      className="border-2 border-black text-black hover:bg-black hover:text-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
     >
       Get In Touch
     </Button>
@@ -385,7 +382,7 @@ if (isLoading) {
 
   
 </div>
-  <DockDemo />
+  
 </div>
 
       {/* Right: Canvas */}
@@ -1262,7 +1259,7 @@ ${formData.get("message")}`
             </div>
           </div>
         </section>
-
+        
         <section
           id="lifestyle"
           className="py-24 px-6 bg-gradient-to-br from-slate-50 to-gray-100 relative overflow-hidden"
