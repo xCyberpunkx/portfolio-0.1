@@ -40,6 +40,10 @@ import { LoaderScreen } from "@/components/ui/loader-screen"
 import { ContainerTextFlipDemo } from "@/components/Textrev"
 import dynamic from "next/dynamic"
 import { LayoutTextFlipDemo } from "@/components/layoutText"
+import TextPressureDemo from "@/components/pressure"
+import AppleHelloEffectDemo from "@/components/HelloApple"
+import { AnimatedThemeTogglerDemo } from "@/components/toggle"
+import MacOSDockDemo from "@/components/Dock"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -79,7 +83,7 @@ export default function Portfolio() {
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
+    }, 3700)
 
     return () => {
       clearTimeout(loadingTimer)
@@ -176,7 +180,7 @@ export default function Portfolio() {
   }, [])
 
 if (isLoading) {
-    return <LoaderScreen />
+    return <AppleHelloEffectDemo />;
   }
 
 
@@ -219,20 +223,9 @@ if (isLoading) {
             <div className="flex items-center gap-4">
               {/* Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4">
-                <div className="relative group">
-                 
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-50">
-                    <div className="font-semibold mb-1">🎮 Unlock Premium Features:</div>
-                    <div className="text-xs space-y-1">
-                      <div>• Exclusive dev vlogs & behind-the-scenes</div>
-                      <div>• Early access to new projects</div>
-                      <div>• Interactive code playground</div>
-                      <div>• Personal tech insights & tutorials</div>
-                      <div>• Direct messaging for collaborations</div>
-                    </div>
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-black"></div>
-                  </div>
-                </div> 
+                <Button>
+                  <AnimatedThemeTogglerDemo />
+                </Button>
                 <Button
                   onClick={() => window.open("/resume.pdf", "_blank")}
                   className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
@@ -349,22 +342,23 @@ if (isLoading) {
      {/* Left: Text Content — Vibrant, Functional, Linux-Flavored */}
 <div className="text-center lg:text-left space-y-8">
   <div className="space-y-4">
-    {/* Terminal Prompt */}
-    <div className="flex items-center justify-center lg:justify-start gap-2 text-xs sm:text-sm font-mono tracking-wide text-gray-500">
-      <span className="text-green-500">●</span>
-      <span className="text-blue-600 font-semibold">zinedine</span>
-      <span>@</span>
-      <span className="text-blue-500 flex items-center gap-1">
-        archlinux <span className="text-base">🅰️</span>
-      </span>
-      <span>:~$</span>
-    </div>
+    
+   {/* Terminal Prompt - Centered */}
+        <div className="flex items-center justify-center  text-xs sm:text-sm font-mono tracking-wide text-gray-500">
+          <span className="text-green-500">●</span>
+          <span className="text-blue-600 font-semibold">root</span>
+          <span>@</span>
+          <span className="text-blue-500 flex items-center">
+            archlinux <span className="text-base">🅰️</span>
+          </span>
+          <span>:~$</span>
+        </div>
 
-    {/* Name */}
-    <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.85] tracking-tighter">
-      <span className="block text-black">ZINE EDDINE</span>
-      <span className="block text-black mt-1">ROUABAH</span>
-    </h1>
+        {/* Name - Centered */}
+        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight flex justify-center">
+          <TextPressureDemo />
+</h1>
+
 
     {/* Tagline */}
     <p className="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto lg:mx-0 leading-relaxed">
@@ -448,9 +442,13 @@ if (isLoading) {
             <PixelatedCanvasDemo />
           </div>
         </div>
+     
       </div>
-    </div>
-  </div> 
+    </div>  <div className="flex justify-start lg:justify-start my-10">
+  <MacOSDockDemo />
+</div>
+
+  </div>
 </section>
 <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">

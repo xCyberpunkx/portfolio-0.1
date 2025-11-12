@@ -1196,7 +1196,31 @@ html {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+:root {
+  --bg-color: #ffffff;
+  --text-color: #0e141b;
+  --accent-color: #00BFA5;
+}
 
+body.dark {
+  --bg-color: #0E141B;
+  --text-color: #C4CDD5;
+  --accent-color: #00BFA5;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a, .highlight {
+  color: var(--accent-color);
+}}
 .premium-button-vercel::before {
   content: "";
   position: absolute;
