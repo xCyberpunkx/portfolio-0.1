@@ -39,6 +39,8 @@ import {  BackgroundBoxesDemo } from "@/components/glare"
 import { LoaderScreen } from "@/components/ui/loader-screen"
 import { ContainerTextFlipDemo } from "@/components/Textrev"
 import dynamic from "next/dynamic"
+import { LayoutTextFlipDemo } from "@/components/layoutText"
+import { WavyBackgroundDemo } from "@/components/wavy"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -302,10 +304,11 @@ if (isLoading) {
         </div>
       </nav>
 
-      <main className="pt-20">
+      <main className="pt-15">
+       
         <section
   id="hero"
-  className="min-h-screen flex items-center justify-center px-4 sm:px-6 relative overflow-hidden"
+  className=" min-h-screen flex items-center justify-center  sm:px-6 relative overflow-hidden"
 >
   {/* Animated Background Dots & Icons */}
   <div className="absolute inset-0 pointer-events-none opacity-5">
@@ -341,15 +344,9 @@ if (isLoading) {
     ))}
   </div>
 
-  {/* Parallax Background */}
-  <div
-    className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"
-    style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-  />
-  
   {/* Two-Column Layout */}
   <div className="relative z-10 w-full max-w-7xl mx-auto">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16 items-center">
      {/* Left: Text Content — Vibrant, Functional, Linux-Flavored */}
 <div className="text-center lg:text-left space-y-8">
   <div className="space-y-4">
@@ -371,11 +368,11 @@ if (isLoading) {
     </h1>
 
     {/* Tagline */}
-    <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+    <p className="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto lg:mx-0 leading-relaxed">
       Software Engineer from Algeria. Passionate about{" "}
-      <span className="font-semibold text-orange-600">Rust</span>,{" "}
-      <span className="font-semibold text-red-600">C++</span>, and secure systems on{" "}
-      <span className="font-semibold text-gray-800">Linux</span> 🐧.
+      <span className="font-semibold text-gray-800"><strong>Rust</strong></span>,{" "}
+      <span className="font-semibold text-gray-800"><strong>C++</strong></span>, and secure systems on{" "}
+      <span className="font-semibold text-gray-800"><strong>Linux</strong></span> 🐧.
     </p>
   </div>
 
@@ -441,59 +438,30 @@ if (isLoading) {
 
   
 </div>
-  
+ 
 </div>
 
       {/* Right: Canvas */}
       <div className="flex justify-center lg:justify-end">
         <div className="w-full max-w-md h-[400px] relative">
-          <div className="absolute inset-0 bg-white/30 backdrop-blur-sm rounded-2xl border border-gray-200" />
+          <div className="relative inset-0 bg-white/30 backdrop-blur-sm rounded-2xl border border-gray-200" />
           <div className="relative z-10">
             <PixelatedCanvasDemo />
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> 
+  <WavyBackgroundDemo />
 </section>
-<section id="about" className="py-32 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+<section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
           </div>
 
-          {/* Floating Arch Linux Icons */}
-          <div className="absolute top-20 left-10 opacity-10 animate-float">
-            <svg className="w-24 h-24" viewBox="0 0 65 65" fill="currentColor">
-              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
-            </svg>
-          </div>
-          
-          <div className="absolute top-40 right-20 opacity-10 animate-float-delay">
-            <svg className="w-32 h-32" viewBox="0 0 65 65" fill="currentColor">
-              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
-            </svg>
-          </div>
-
-          <div className="absolute bottom-32 left-1/4 opacity-10 animate-float-slow">
-            <svg className="w-28 h-28" viewBox="0 0 65 65" fill="currentColor">
-              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
-            </svg>
-          </div>
-
-          <div className="absolute top-1/2 right-10 opacity-10 animate-float">
-            <svg className="w-20 h-20" viewBox="0 0 65 65" fill="currentColor">
-              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
-            </svg>
-          </div>
-
-          <div className="max-w-7xl mx-auto relative z-10">
-            {/* Title with Text Flip */}
-            <div className="text-center mb-24">
-              <h2 className="text-7xl font-bold mb-4 inline-block">
-                <ContainerTextFlipDemo />
-              </h2>
-            </div>
-
+         
+          <div className="max-w-6xl mx-auto relative">
+            
             {/* Main Content Grid */}
             <div className="grid lg:grid-cols-2 gap-28 items-center">
               {/* Left Side - About Text with Creative Layout */}
@@ -503,9 +471,9 @@ if (isLoading) {
                     <div className="w-1 h-20 bg-gradient-to-b from-black to-gray-400 rounded-full"></div>
                     <div>
                       <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                        System Engineer
+                        Who is Zine Eddine Rouabah?
                       </h3>
-                      <p className="text-gray-500 text-sm uppercase tracking-wider">Low-Level Development</p>
+                      <p className="text-gray-500 text-sm  tracking-wider">std::cin.get();</p>
                     </div>
                   </div>
                   
