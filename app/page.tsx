@@ -40,7 +40,6 @@ import { LoaderScreen } from "@/components/ui/loader-screen"
 import { ContainerTextFlipDemo } from "@/components/Textrev"
 import dynamic from "next/dynamic"
 import { LayoutTextFlipDemo } from "@/components/layoutText"
-import { WavyBackgroundDemo } from "@/components/wavy"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -452,7 +451,6 @@ if (isLoading) {
       </div>
     </div>
   </div> 
-  <WavyBackgroundDemo />
 </section>
 <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
