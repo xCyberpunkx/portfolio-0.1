@@ -95,10 +95,10 @@ export const metadata: Metadata = {
     siteName: "Zinedine Rouabah Portfolio",
     images: [
       {
-        url: "/og-image.png",
+        url: "/placeholder-logo.png",
         width: 1200,
         height: 630,
-        alt: "Zinedine Rouabah - Systems Programmer & Security Researcher Portfolio",
+        alt: "Zinedine Rouabah Portfolio",
         type: "image/png",
       },
     ],
@@ -109,7 +109,7 @@ export const metadata: Metadata = {
     creator: "@zinedine_dev",
     title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
     description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Expert in systems programming and cybersecurity.",
-    images: ["/og-image.png"],
+    images: ["/placeholder-logo.png"],
   },
   robots: {
     index: true,
@@ -137,12 +137,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.png", type: "image/png", sizes: "32x32" },
-      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
-      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icon.png", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
   },
@@ -177,11 +172,10 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preload" href="/fonts/sf-pro-display.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/sf-pro-text.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
 
         <script
           type="application/ld+json"
@@ -218,7 +212,7 @@ export default function RootLayout({
                 "Docker",
                 "CI/CD",
               ],
-              image: "https://zinedine-rouabah.vercel.app/og-image.png",
+              image: "https://zinedine-rouabah.vercel.app/placeholder-logo.png",
               worksFor: {
                 "@type": "Organization",
                 name: "Freelance",

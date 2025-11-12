@@ -223,9 +223,7 @@ if (isLoading) {
             <div className="flex items-center gap-4">
               {/* Desktop Buttons */}
               <div className="hidden md:flex items-center gap-4">
-                <Button>
-                  <AnimatedThemeTogglerDemo />
-                </Button>
+               
                 <Button
                   onClick={() => window.open("/resume.pdf", "_blank")}
                   className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
