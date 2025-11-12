@@ -3,22 +3,50 @@ import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 
+// SF Pro-like font stack - using system fonts that mimic Apple's SF Pro
+// This provides the Apple aesthetic while being web-compatible
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  preload: true,
+  fallback: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "SF Pro Display",
+    "SF Pro Text",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-jetbrains-mono",
+  preload: true,
+  fallback: [
+    "SF Mono",
+    "Monaco",
+    "Menlo",
+    "Consolas",
+    "Liberation Mono",
+    "Courier New",
+    "monospace",
+  ],
 })
 
 export const metadata: Metadata = {
-  title: "Zinedine Rouabah -  Systems Programmer & Software Developer",
+  metadataBase: new URL("https://zinedine-rouabah.vercel.app"),
+  title: {
+    default: "Zinedine Rouabah - Systems Programmer & Software Developer",
+    template: "%s | Zinedine Rouabah",
+  },
   description:
-    "Passionate systems programmer and security researcher from Algeria specializing in Rust, C++, Linux systems, and cybersecurity. Building secure, high-performance software solutions.",
+    "Passionate systems programmer and security researcher from Algeria specializing in Rust, C++, Linux systems, and cybersecurity. Building secure, high-performance software solutions. Expert in systems programming, web development, and open-source contributions.",
   keywords: [
     "Rust Programming",
     "C++ Development",
@@ -32,24 +60,46 @@ export const metadata: Metadata = {
     "Performance Optimization",
     "Network Security",
     "Vulnerability Assessment",
+    "Software Engineer",
+    "Full Stack Developer",
+    "Next.js Developer",
+    "TypeScript Developer",
+    "Web Development",
+    "Backend Development",
+    "DevOps",
+    "Docker",
+    "CI/CD",
+    "Git",
+    "Vim",
+    "Neovim",
+    "Arch Linux",
+    "System Administration",
   ],
   authors: [{ name: "Zinedine Rouabah", url: "https://zinedine-rouabah.vercel.app" }],
   creator: "Zinedine Rouabah",
   publisher: "Zinedine Rouabah",
+  applicationName: "Zinedine Rouabah Portfolio",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://zinedine-rouabah.vercel.app",
-    title: "Zinedine Rouabah - Developer Portfolio",
+    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
     description:
-      "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Specializing in cybersecurity research and Linux systems.",
+      "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Specializing in cybersecurity research, Linux systems, and full-stack web development.",
     siteName: "Zinedine Rouabah Portfolio",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+        alt: "Zinedine Rouabah - Systems Programmer & Security Researcher Portfolio",
+        type: "image/png",
       },
     ],
   },
@@ -57,16 +107,18 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@zinedine_dev",
     creator: "@zinedine_dev",
-    title: "Zinedine Rouabah - Elite Systems Programmer & Security Researcher",
-    description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology.",
+    title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
+    description: "Building secure, high-performance systems with Rust, C++, and cutting-edge technology. Expert in systems programming and cybersecurity.",
     images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -74,21 +126,35 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "your-google-verification-code",
+    // Add other verification codes as needed
   },
   alternates: {
     canonical: "https://zinedine-rouabah.vercel.app",
+    languages: {
+      "en-US": "https://zinedine-rouabah.vercel.app",
+    },
   },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.png", type: "image/png", sizes: "32x32" },
       { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
   },
   manifest: "/manifest.json",
-    generator: 'v0.app'
+  category: "technology",
+  classification: "Portfolio Website",
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "theme-color": "#000000",
+  },
 }
 
 export default function RootLayout({
@@ -99,13 +165,23 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
         <meta name="theme-color" content="#000000" />
-        <meta name="color-scheme" content="light" />
-        <meta name="format-detection" content="telephone=no" />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="format-detection" content="telephone=no, address=no, email=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Zinedine Rouabah" />
+        <meta name="application-name" content="Zinedine Rouabah Portfolio" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preload" href="/fonts/sf-pro-display.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/sf-pro-text.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
         <script
           type="application/ld+json"
@@ -132,14 +208,30 @@ export default function RootLayout({
                 "Systems Programming",
                 "Network Security",
                 "Open Source Development",
+                "Web Development",
+                "Full Stack Development",
+                "TypeScript",
+                "Next.js",
+                "React",
+                "Node.js",
+                "DevOps",
+                "Docker",
+                "CI/CD",
               ],
+              image: "https://zinedine-rouabah.vercel.app/og-image.png",
+              worksFor: {
+                "@type": "Organization",
+                name: "Freelance",
+              },
+              email: "rouabah.zineedinee@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "DZ",
+                addressLocality: "Algeria",
+              },
               alumniOf: {
                 "@type": "Organization",
                 name: "University of Science and Technology",
-              },
-              address: {
-                "@type": "PostalAddress",
-                addressCountry: "Algeria",
               },
             }),
           }}
@@ -147,8 +239,23 @@ export default function RootLayout({
 
         <style>{`
           :root {
-            --font-sans: ${inter.style.fontFamily};
-            --font-mono: ${jetbrainsMono.style.fontFamily};
+            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, ${inter.style.fontFamily};
+            --font-mono: "SF Mono", Monaco, Menlo, "Consolas", "Liberation Mono", "Courier New", monospace, ${jetbrainsMono.style.fontFamily};
+          }
+          
+          /* SF Pro-like typography */
+          body {
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: "kern" 1, "liga" 1;
+          }
+          
+          code, pre, .font-mono {
+            font-family: var(--font-mono);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
           }
           
           @keyframes scanlines {
@@ -240,7 +347,7 @@ export default function RootLayout({
           }
         `}</style>
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-white text-black overflow-x-hidden`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-white text-black overflow-x-hidden`} style={{ fontFamily: 'var(--font-sans)' }}>
         {children}
       </body>
     </html>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -35,11 +35,24 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { PixelatedCanvasDemo } from "@/components/canva"
-import {  GlareCardDemo } from "@/components/glare"
-import { StickyScrollRevealDemo } from "@/components/scroll-reveal"
-import { PlaceholdersAndVanishInputDemo } from "@/components/placeholder"
-import { CoverDemo } from "@/components/CoverDemo"
+import {  BackgroundBoxesDemo } from "@/components/glare"
 import { LoaderScreen } from "@/components/ui/loader-screen"
+import { ContainerTextFlipDemo } from "@/components/Textrev"
+import dynamic from "next/dynamic"
+
+// Lazy load heavy components for better performance
+const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
+  loading: () => <div className="min-h-[400px]" />,
+  ssr: false
+})
+const PlaceholdersAndVanishInputDemo = dynamic(() => import("@/components/placeholder").then(mod => ({ default: mod.PlaceholdersAndVanishInputDemo })), {
+  loading: () => <div className="min-h-[200px]" />,
+  ssr: false
+})
+const CoverDemo = dynamic(() => import("@/components/CoverDemo").then(mod => ({ default: mod.CoverDemo })), {
+  loading: () => <div className="min-h-[300px]" />,
+  ssr: false
+})
 interface Skill {
   name: string;
   experience: string;
@@ -59,6 +72,8 @@ export default function Portfolio() {
   const [scrollY, setScrollY] = useState(0)
   const [loginData, setLoginData] = useState({ email: "", password: "" })
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
+  const [animatedDots, setAnimatedDots] = useState<Array<{ top: number; left: number; delay: number }>>([])
+  const [stars, setStars] = useState<Array<{ id: number; left: number; top: number; delay: number }>>([])
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -70,50 +85,94 @@ export default function Portfolio() {
     }
   }, [])
 
+  // Generate animated dots only on client to avoid hydration mismatch
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-      setShowScrollTop(window.scrollY > 500)
-
-      const sections = [
-        "hero",
-        "about",
-        "journey",
-        "skills",
-        "projects",
-        "services",
-        "arcade",
-        "contact",
-        "lifestyle",
-        "gaming",
-      ]
-      const current = sections.find((section) => {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
-        }
-        return false
-      })
-      if (current) setActiveSection(current)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    setAnimatedDots(
+      Array.from({ length: 20 }, () => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        delay: Math.random() * 2,
+      }))
+    )
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
+  // Generate stars only on client to avoid hydration mismatch
+  useEffect(() => {
+    setStars(
+      Array.from({ length: 30 }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        delay: Math.random() * 3,
+      }))
+    )
+  }, [])
+
+  // Optimized scroll handler with throttling
+  const rafRef = useRef<number | null>(null)
+  const lastScrollY = useRef(0)
+  const sections = useMemo(() => [
+    "hero",
+    "about",
+    "journey",
+    "skills",
+    "projects",
+    "services",
+    "arcade",
+    "contact",
+    "lifestyle",
+    "gaming",
+  ], [])
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+
+      rafRef.current = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY
+        // Only update if scroll changed significantly (throttle)
+        if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
+          setScrollY(currentScrollY)
+          setShowScrollTop(currentScrollY > 500)
+
+          const current = sections.find((section) => {
+            const element = document.getElementById(section)
+            if (element) {
+              const rect = element.getBoundingClientRect()
+              return rect.top <= 100 && rect.bottom >= 100
+            }
+            return false
+          })
+          if (current) setActiveSection(current)
+          
+          lastScrollY.current = currentScrollY
+        }
+      })
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [sections])
+
+  const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
       setActiveSection(sectionId)
       setMobileMenuOpen(false) // Close mobile menu when navigating
     }
-  }
+  }, [])
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+  }, [])
 
 if (isLoading) {
     return <LoaderScreen />
@@ -250,14 +309,14 @@ if (isLoading) {
 >
   {/* Animated Background Dots & Icons */}
   <div className="absolute inset-0 pointer-events-none opacity-5">
-    {[...Array(20)].map((_, i) => (
+    {animatedDots.map((dot, i) => (
       <div
         key={i}
         className="absolute w-1 h-1 bg-gray-500 rounded-full animate-pulse"
         style={{
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animationDelay: `${Math.random() * 2}s`,
+          top: `${dot.top}%`,
+          left: `${dot.left}%`,
+          animationDelay: `${dot.delay}s`,
         }}
       />
     ))}
@@ -397,30 +456,93 @@ if (isLoading) {
     </div>
   </div>
 </section>
-
-        <section id="about" className="py-32 px-6 bg-gradient-to-b from-white to-gray-50">
+<section id="about" className="py-32 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
           </div>
 
+          {/* Floating Arch Linux Icons */}
+          <div className="absolute top-20 left-10 opacity-10 animate-float">
+            <svg className="w-24 h-24" viewBox="0 0 65 65" fill="currentColor">
+              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
+            </svg>
+          </div>
+          
+          <div className="absolute top-40 right-20 opacity-10 animate-float-delay">
+            <svg className="w-32 h-32" viewBox="0 0 65 65" fill="currentColor">
+              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
+            </svg>
+          </div>
+
+          <div className="absolute bottom-32 left-1/4 opacity-10 animate-float-slow">
+            <svg className="w-28 h-28" viewBox="0 0 65 65" fill="currentColor">
+              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
+            </svg>
+          </div>
+
+          <div className="absolute top-1/2 right-10 opacity-10 animate-float">
+            <svg className="w-20 h-20" viewBox="0 0 65 65" fill="currentColor">
+              <path d="M32.5 0C32.5 0 21.8 23.3 16.5 34.9c-2.6 5.7-4.9 10.7-6.5 14.3-1.6 3.5-2.5 5.7-2.5 5.7s3.3-1.4 8.2-3.5c4.9-2.1 11.5-4.9 17.3-6.9 5.8-2 10.9-3.5 10.9-3.5s-2.8-5.5-6.8-13.1C33.1 20.3 32.5 0 32.5 0z"/>
+            </svg>
+          </div>
+
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="animate-fade-in-up">
-                <h2 className="text-6xl font-bold mb-8 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                  About Me
-                </h2>
-                <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
-                  <p className="animate-fade-in-up-delay">
-                    software developer from Algeria. I love building things that work well and look good to solve real-world problems. I’m passionate about learning tech related stuff,
-especially in web development and cybersecurity. When I’m not coding, I like exploring open-source projects and staying up to date with the latest tech trends.
-I’m a huge fan of Linux and open-source software. I’m always looking for new opportunities to learn and grow as a developer
+            {/* Title with Text Flip */}
+            <div className="text-center mb-24">
+              <h2 className="text-7xl font-bold mb-4 inline-block">
+                <ContainerTextFlipDemo />
+              </h2>
+            </div>
+
+            {/* Main Content Grid */}
+            <div className="grid lg:grid-cols-2 gap-28 items-center">
+              {/* Left Side - About Text with Creative Layout */}
+              <div className="space-y-8 animate-fade-in-up">
+                <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-10 shadow-xl border border-gray-200/50 hover:shadow-2xl transition-shadow duration-500">
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-1 h-20 bg-gradient-to-b from-black to-gray-400 rounded-full"></div>
+                    <div>
+                      <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
+                        System Engineer
+                      </h3>
+                      <p className="text-gray-500 text-sm uppercase tracking-wider">Low-Level Development</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                    Zine Eddine Rouabah is a software engineer passionate about system-level programming, cybersecurity, and open-source development.
+                  </p>
+                  
+                  <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                    He began his career in web technologies and evolved toward building efficient, secure, and maintainable software solutions using <span className="font-semibold text-black">C++</span> and <span className="font-semibold text-black">Linux-based environments</span>.
+                  </p>
+                  
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    With a focus on low-level computer science concepts, network fundamentals, and modern development practices, he aims to bridge creativity and engineering precision in every project.
                   </p>
                 </div>
 
-                <div className="mt-12 grid grid-cols-2 gap-8 animate-fade-in-up-delay-4"></div>
+               
               </div>
-              <GlareCardDemo/>
+
+              {/* Right Side - Separator & Stacked 3D Cards */}
+              <div className="flex flex-col items-center space-y-8 animate-fade-in-up-delay">
+                {/* Animated Separator with Lottie-style animation */}
+                <div className="w-full flex items-center justify-center gap-4 py-4">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-400"></div>
+                  <div className="relative">
+                    <div className="w-3 h-3 bg-black rounded-full animate-pulse-scale"></div>
+                    <div className="absolute inset-0 w-3 h-3 bg-black rounded-full animate-ping opacity-20"></div>
+                  </div>
+                  <div className="flex-1 h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-400"></div>
+                </div>
+
+                {/* 3D Spaced Cards */}
+                <div className="relative w-full max-w-md space-y-8" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+                  <BackgroundBoxesDemo    />
+                </div>
               </div>
+            </div>
           </div>
         </section>
 
@@ -743,6 +865,8 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
                         alt={project.title}
                         className="w-full h-56 object-cover transition-all duration-700 group-hover:scale-110"
                         loading="lazy"
+                        decoding="async"
+                        fetchPriority={index < 3 ? "high" : "low"}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                       <div className="absolute top-4 right-4">
@@ -918,14 +1042,14 @@ I’m a huge fan of Linux and open-source software. I’m always looking for new
         <section id="arcade" className="py-24 px-6 bg-black text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
           <div className="absolute inset-0">
-            {[...Array(50)].map((_, i) => (
+            {stars.map((star) => (
               <div
-                key={i}
+                key={star.id}
                 className="absolute w-1 h-1 bg-white/20 rounded-full animate-twinkle"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
+                  left: `${star.left}%`,
+                  top: `${star.top}%`,
+                  animationDelay: `${star.delay}s`,
                 }}
               />
             ))}
