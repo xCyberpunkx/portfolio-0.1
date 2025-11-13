@@ -44,6 +44,7 @@ import TextPressureDemo from "@/components/pressure"
 import AppleHelloEffectDemo from "@/components/HelloApple"
 import { AnimatedThemeTogglerDemo } from "@/components/toggle"
 import MacOSDockDemo from "@/components/Dock"
+import { TooltipCardDemo } from "@/components/tooltip"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -357,15 +358,16 @@ if (isLoading) {
           <TextPressureDemo />
 </h1>
 
-
-    {/* Tagline */}
+<TooltipCardDemo/>
+</div>
+    {/* Tagline 
     <p className="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto lg:mx-0 leading-relaxed">
       Software Engineer from Algeria. Passionate about{" "}
       <span className="font-semibold text-gray-800"><strong>Rust</strong></span>,{" "}
       <span className="font-semibold text-gray-800"><strong>C++</strong></span>, and secure systems on{" "}
       <span className="font-semibold text-gray-800"><strong>Linux</strong></span> 🐧.
     </p>
-  </div>
+  */}
 
   {/* Badges — Clean, Interactive */}
 <div className="flex flex-wrap justify-center lg:justify-start gap-3">
