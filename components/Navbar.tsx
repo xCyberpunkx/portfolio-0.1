@@ -272,31 +272,31 @@ const navItems: NavItem[] = [
         {
           category: "Frontend",
           skills: [
-            { name: "React", level: 95, iconSlug: "react", iconHex: "61DAFB" },
-            { name: "Next.js", level: 90, iconSlug: "nextdotjs", iconHex: "ffffff" },
-            { name: "TypeScript", level: 88, iconSlug: "typescript", iconHex: "3178C6" },
-            { name: "Tailwind CSS", level: 92, iconSlug: "tailwindcss", iconHex: "38BDF8" },
-            { name: "Framer Motion", level: 85, iconSlug: "framermotion", iconHex: "0055FF" }
+            { name: "React", level: 95,  iconHex: "61DAFB" },
+            { name: "Next.js", level: 90, iconHex: "ffffff" },
+            { name: "TypeScript", level: 88, iconHex: "3178C6" },
+            { name: "Tailwind CSS", level: 92, iconHex: "38BDF8" },
+            { name: "Framer Motion", level: 85,  iconHex: "0055FF" }
           ]
         },
         {
           category: "Backend",
           skills: [
-            { name: "Node.js", level: 87, iconSlug: "nodedotjs", iconHex: "5FA04E" },
-            { name: "Python", level: 82, iconSlug: "python", iconHex: "3776AB" },
-            { name: "MongoDB", level: 85, iconSlug: "mongodb", iconHex: "47A248" },
-            { name: "PostgreSQL", level: 80, iconSlug: "postgresql", iconHex: "4169E1" },
-            { name: "Firebase", level: 88, iconSlug: "firebase", iconHex: "FFCA28" }
+            { name: "Node.js", level: 87,  iconHex: "5FA04E" },
+            { name: "Python", level: 82,  iconHex: "3776AB" },
+            { name: "MongoDB", level: 85,  iconHex: "47A248" },
+            { name: "PostgreSQL", level: 80,  iconHex: "4169E1" },
+            { name: "Firebase", level: 88, iconHex: "FFCA28" }
           ]
         },
         {
           category: "DevOps & Tools",
           skills: [
-            { name: "Git", level: 95, iconSlug: "git", iconHex: "F05032" },
-            { name: "Docker", level: 78, iconSlug: "docker", iconHex: "2496ED" },
-            { name: "AWS", level: 75, iconSlug: "amazonaws", iconHex: "FF9900" },
-            { name: "Vercel", level: 90, iconSlug: "vercel", iconHex: "000000" },
-            { name: "Figma", level: 85, iconSlug: "figma", iconHex: "F24E1E" }
+            { name: "Git", level: 95,  iconHex: "F05032" },
+            { name: "Docker", level: 78,  iconHex: "2496ED" },
+            { name: "AWS", level: 75, iconHex: "FF9900" },
+            { name: "Vercel", level: 90, iconHex: "000000" },
+            { name: "Figma", level: 85,  iconHex: "F24E1E" }
           ]
         }
       ],
