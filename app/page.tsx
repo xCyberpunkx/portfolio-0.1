@@ -59,8 +59,16 @@ export default function Portfolio() {
   const [animatedDots, setAnimatedDots] = useState<Array<{ top: number; left: number; delay: number }>>([])
   const [stars, setStars] = useState<Array<{ id: number; left: number; top: number; delay: number }>>([])
   const heroHighlights: Array<{ title: string; description: string; icon: LucideIcon }> = [
-    { title: "Low-level systems", description: "Rust, C++, memory profiling, zero-copy data flows.", icon: Cpu },
-    { title: "Security research", description: "Red teaming, threat modeling, hardened Linux toolchains.", icon: Shield },
+   {
+    title: "Networking",
+    description: "Designing and maintaining secure, high-performance networks; experience with routing, switching, and protocols.",
+    icon: Terminal
+  },
+  {
+    title: "Software Engineering",
+    description: "Building reliable, scalable applications with clean architecture, efficient algorithms, and robust system design.",
+    icon: Code
+  },
     { title: "Realtime experiences", description: "WebGL, three.js, performant UI motion for the web.", icon: Globe },
     { title: "Open source", description: "Contributor and maintainer across Linux & Rust ecosystems.", icon: GitBranch },
   ]
@@ -79,35 +87,30 @@ export default function Portfolio() {
     icon: LucideIcon;
   }> = [
     {
-      period: "2025 • Present",
-      title: "Lead Systems Engineer, Freelance",
-      description: "Designing tamper-resistant services for fintech and public sector partners.",
-      impact: "Architected verifiable CI/CD that ships secure builds in <15 minutes.",
-      stack: ["Rust", "Linux", "Zero Trust"],
-      icon: Shield,
+      "title": "Freelance Web Developer",
+      "description": "Building and maintaining websites for clients using modern web technologies. Delivering scalable, maintainable, and efficient solutions tailored to client needs.",
+      "impact": "Completed 10+ client projects, improving load times by up to 35% and implementing best practices for responsive and accessible design.",
+      "stack": ["TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "Next.js", "Node.js"],
+      "icon": Code,
+      period: "Jan 2023 – Present"
     },
-    {
-      period: "2023 – 2024",
-      title: "Full-stack Consultant",
-      description: "Scaled multi-tenant platforms for construction, dentistry and creative studios.",
-      impact: "Cut rendering cost by 42% through streaming-first Next.js pipelines.",
-      stack: ["Next.js", "Edge", "TypeScript"],
-      icon: Globe,
-    },
-    {
-      period: "2020 – 2022",
-      title: "Security-first Frontend Engineer",
-      description: "Crafted human-friendly consoles for SOC teams and DevOps squads.",
-      impact: "Led accessibility overhaul that bumped NPS by +18 in three months.",
-      stack: ["React", "Framer Motion", "GraphQL"],
-      icon: Brain,
-    },
-  ]
-  const capabilityStats: Array<{ label: string; value: string; detail: string; icon: LucideIcon }> = [
-    { label: "Latency budget", value: "<10ms", detail: "for critical UI gestures", icon: Zap },
-    { label: "Security posture", value: "Zero Sev1", detail: "incidents since 2022", icon: Shield },
-    { label: "Deploy cadence", value: "Daily", detail: "release trains", icon: Rocket },
-    { label: "UX research", value: "75+ hrs", detail: "interviews & audits", icon: Brain },
+  {
+
+    "title": "Web Developer (Part-time) – Kara Automobile",
+    "description": "Developed internal and external web solutions to enhance operational efficiency. Integrated Microsoft Office tools for business workflows.",
+    "impact": "Streamlined reporting processes, reducing manual data entry by 50%.",
+    "stack": ["HTML", "CSS", "JavaScript", "PHP", "Microsoft Office"],
+    "icon": Cpu,
+    period: "Jun 2022 – Dec 2022"
+  },
+  {
+    "title": "Full-stack Developer (Freelance) – Ultra Light",
+    "description": "Led development of corporate website using Laravel. Architected custom web applications focused on performance, scalability, and security. Ensured a responsive, user-friendly design while aligning with business objectives.",
+    "impact": "Launched website on time with 0 critical bugs; improved user engagement metrics by 40% within the first month.",
+    "stack": ["Laravel", "PHP", "MySQL", "Vue.js", "Tailwind CSS", "Docker"],
+    "icon": Globe,
+    period: "Jan 2022 – May 2022"
+  },
   ]
   const skillClusters: Array<{ title: string; description: string; icon: LucideIcon; stack: string[]; gradient: string }> = [
     {
@@ -136,7 +139,6 @@ export default function Portfolio() {
     { name: "Rust", level: 96, blurb: "Systems programming & tooling", tone: "bg-emerald-500" },
     { name: "TypeScript", level: 92, blurb: "Full-stack product velocity", tone: "bg-blue-500" },
     { name: "Systems Design", level: 90, blurb: "Streaming, sharding, HA", tone: "bg-slate-600" },
-    { name: "Application Security", level: 88, blurb: "Threat modeling & audits", tone: "bg-amber-500" },
     { name: "DevOps", level: 84, blurb: "CI/CD, observability, SRE", tone: "bg-purple-500" },
   ]
   const projectShowcase: Array<{
@@ -335,8 +337,7 @@ if (isLoading) {
                     </span>
                   </h1>
                   <p className="text-lg text-gray-600 sm:text-xl">
-                    I architect silky-smooth experiences for low-level software, guiding products from secured kernel space
-                    all the way to elegant client apps. Craft, rigor, and speed without compromise.
+                    I build software that works smoothly, from low-level systems to user-friendly applications. I focus on clean, efficient, and reliable solutions.
                   </p>
                 </div>
 
@@ -473,8 +474,8 @@ if (isLoading) {
                   </p>
                   
                   <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    He began his career in web technologies and evolved toward building efficient, secure, and maintainable software solutions using <span className="font-semibold text-black">C++</span> and <span className="font-semibold text-black">Linux-based environments</span>.
-                  </p>
+  He started in web development and progressed to creating <span className="font-semibold text-black">efficient, secure, and maintainable software</span> using <span className="font-semibold text-black">C++</span> and <span className="font-semibold text-black">Linux-based systems</span>.
+</p>
                   
                   <p className="text-lg text-gray-700 leading-relaxed">
                     With a focus on low-level computer science concepts, network fundamentals, and modern development practices, he aims to bridge creativity and engineering precision in every project.
@@ -562,187 +563,68 @@ if (isLoading) {
        <PlaceholdersAndVanishInputDemo />
         {/* Skills Section */}
         <section id="skills" className="relative overflow-hidden bg-slate-950 px-4 py-24 text-white sm:px-6">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),transparent_60%)]" aria-hidden />
-          <div className="relative z-10 mx-auto max-w-6xl space-y-12">
-            <div className="text-center space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Technical Arsenal</p>
-              <h2 className="text-4xl font-bold sm:text-5xl">Operational excellence across the stack.</h2>
-              <p className="text-base text-white/70 sm:text-lg">
-                Latency budgets, memory profiling, and tactile design converge so products feel instant on any device.
-              </p>
-            </div>
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),transparent_60%)]" aria-hidden />
 
-            <div className="grid gap-6 lg:grid-cols-3">
-              {skillClusters.map((cluster) => {
-                const Icon = cluster.icon
-                return (
-                  <article
-                    key={cluster.title}
-                    className={"h-full rounded-3xl border border-white/10 bg-gradient-to-br " + cluster.gradient + " p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"}
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <p className="text-lg font-semibold">{cluster.title}</p>
-                        <p className="text-sm text-white/60">{cluster.description}</p>
-                      </div>
-                    </div>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {cluster.stack.map((badge) => (
-                        <Badge key={badge} variant="secondary" className="bg-white/10 text-white">
-                          {badge}
-                        </Badge>
-                      ))}
-                    </div>
-                  </article>
-                )
-              })}
-            </div>
+  <div className="relative z-10 mx-auto max-w-6xl space-y-16">
+    {/* Header */}
+    <div className="text-center space-y-4">
+      <p className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Technical Arsenal</p>
+      <h2 className="text-4xl font-bold sm:text-5xl">Operational excellence across the stack</h2>
+      <p className="text-base text-white/70 sm:text-lg">
+        Latency budgets, memory profiling, and tactile design converge to create instant, reliable experiences on any device.
+      </p>
+    </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {capabilityStats.map((stat) => {
-                const Icon = stat.icon
-                return (
-                  <div
-                    key={stat.label}
-                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 shadow-inner shadow-white/10"
-                  >
-                    <div className="space-y-1">
-                      <p className="text-sm uppercase tracking-[0.3em] text-white/50">{stat.label}</p>
-                      <p className="text-3xl font-semibold">{stat.value}</p>
-                      <p className="text-xs text-white/60">{stat.detail}</p>
-                    </div>
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                  </div>
-                )
-              })}
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/40">
-              <div className="grid gap-4">
-                {skillMatrix.map((skill) => (
-                  <div key={skill.name}>
-                    <div className="flex items-center justify-between text-sm">
-                      <div>
-                        <p className="font-semibold">{skill.name}</p>
-                        <p className="text-xs text-white/60">{skill.blurb}</p>
-                      </div>
-                      <p className="font-mono text-white/80">{skill.level}%</p>
-                    </div>
-                    <div className="mt-2 h-2 w-full rounded-full bg-white/10">
-                      <div
-                        className={skill.tone + " h-full rounded-full transition-all duration-700"}
-                        style={{ width: skill.level + "%" }}
-                      />
-                    </div>
-                  </div>
-                ))}
+    {/* Skill Clusters */}
+    <div className="grid gap-6 lg:grid-cols-3">
+      {skillClusters.map((cluster) => {
+        const Icon = cluster.icon;
+        return (
+          <article
+            key={cluster.title}
+            className={`h-full rounded-3xl border border-white/10 bg-gradient-to-br ${cluster.gradient} p-6 shadow-lg shadow-black/40 hover:scale-105 transition-transform duration-300`}
+          >
+            <div className="flex items-center gap-4">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
+                <Icon className="h-5 w-5 text-white" />
+              </span>
+              <div>
+                <p className="text-lg font-semibold">{cluster.title}</p>
+                <p className="text-sm text-white/60">{cluster.description}</p>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section id="projects" className="bg-gradient-to-b from-white to-slate-50 px-4 py-24 sm:px-6">
-          <div className="mx-auto max-w-6xl space-y-12">
-            <div className="text-center space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
-                Releases
-              </div>
-              <h2 className="text-4xl font-bold sm:text-5xl">Products that stay fast in the wild.</h2>
-              <p className="text-lg text-slate-600">
-                Each build ships with budgets for performance, accessibility, and security so launches hit production without regressions.
-              </p>
-            </div>
-
-            <div className="space-y-10">
-              {projectShowcase.map((project, idx) => (
-                <article
-                  key={project.title}
-                  className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_45px_rgba(15,23,42,0.1)]"
-                >
-                  <div className={"flex flex-col gap-10 lg:items-center lg:gap-12 " + (idx % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row")}>
-                    <div className="w-full lg:w-1/2">
-                      <div className="relative overflow-hidden rounded-[28px] border border-slate-100 bg-slate-900/5">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          loading="lazy"
-                          className="h-72 w-full object-cover transition duration-500 hover:scale-105"
-                        />
-                        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                          <Badge variant="secondary" className="bg-white/90 text-slate-900">
-                            {project.year}
-                          </Badge>
-                          <Badge className="bg-slate-900 text-white">{project.badge}</Badge>
-                        </div>
-                      </div>
-                      <div className="mt-6 grid grid-cols-2 gap-3 text-sm text-slate-600">
-                        {project.metrics.map((metric) => (
-                          <div key={project.title + "-" + metric.label} className="rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{metric.label}</p>
-                            <p className="text-lg font-semibold text-slate-900">{metric.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="w-full space-y-5 lg:w-1/2">
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Case Study</p>
-                        <h3 className="mt-2 text-3xl font-bold text-slate-900">{project.title}</h3>
-                      </div>
-                      <p className="text-base text-slate-600">{project.description}</p>
-                      <p className="text-sm text-slate-500">{project.impact}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.stack.map((tech) => (
-                          <Badge key={project.title + "-" + tech} variant="outline" className="border-slate-200 text-slate-700">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="flex flex-wrap gap-3">
-                        {project.github && (
-                          <Button
-                            variant="outline"
-                            onClick={() => window.open(project.github, "_blank")}
-                            className="border-slate-300 text-slate-900"
-                          >
-                            <Github className="mr-2 h-4 w-4" />
-                            Source
-                          </Button>
-                        )}
-                        {project.demo && (
-                          <Button onClick={() => window.open(project.demo, "_blank")} className="bg-slate-900 text-white">
-                            <ExternalLink className="mr-2 h-4 w-4" />
-                            Live
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </article>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {cluster.stack.map((tech) => (
+                <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
+                  {tech}
+                </Badge>
               ))}
             </div>
-
-            <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-inner">
-              <p className="text-slate-600">Need a secure build with pixel-perfect polish?</p>
-              <div className="mt-4 flex flex-wrap justify-center gap-4">
-                <Button onClick={() => window.open("https://github.com/xCyberpunkx", "_blank")} className="bg-slate-900 text-white">
-                  <Github className="mr-2 h-4 w-4" />
-                  Explore GitHub
-                </Button>
-                <Button variant="outline" onClick={() => scrollToSection("contact")} className="border-slate-300 text-slate-900">
-                  <Send className="mr-2 h-4 w-4" />
-                  Book a build
-                </Button>
-              </div>
-            </div>
+          </article>
+        );
+      })}
+    </div>
+    {/* Modern Skill Matrix (no percentages) */}
+    <div className="grid gap-6 lg:grid-cols-2">
+      {skillMatrix.map((skill) => (
+        <div
+          key={skill.name}
+          className="rounded-3xl border border-white/20 bg-gradient-to-r from-white/5 to-white/10 p-6 shadow-lg shadow-black/50 hover:scale-105 transition-transform duration-300"
+        >
+          <p className="text-lg font-semibold mb-2">{skill.name}</p>
+          <p className="text-sm text-white/60 mb-4">{skill.blurb}</p>
+          <div className="flex flex-wrap gap-2">
+            {skill.stack?.map((tech) => (
+              <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
+                {tech}
+              </Badge>
+            ))}
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {/* Services Section */}
         <section id="services" className="py-24 px-6 bg-gray-50">
