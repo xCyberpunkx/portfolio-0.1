@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import {
-  Download,
   User,
   Mail,
   Code,
@@ -17,8 +16,6 @@ import {
   Linkedin,
   ExternalLink,
   ChevronUp,
-  Menu,
-  X,
   Play,
   Gamepad2,
   Zap,
@@ -27,22 +24,16 @@ import {
   Brain,
   Trophy,
   Send,
-  HelpCircle,
-  Twitter,
   Phone,
   MessageCircle,
   GitBranch,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { PixelatedCanvasDemo } from "@/components/canva"
-import {  BackgroundBoxesDemo } from "@/components/glare"
-import { LoaderScreen } from "@/components/ui/loader-screen"
-import { ContainerTextFlipDemo } from "@/components/Textrev"
+import { BackgroundBoxesDemo } from "@/components/glare"
 import dynamic from "next/dynamic"
-import { LayoutTextFlipDemo } from "@/components/layoutText"
-import TextPressureDemo from "@/components/pressure"
 import AppleHelloEffectDemo from "@/components/HelloApple"
-import { AnimatedThemeTogglerDemo } from "@/components/toggle"
 import MacOSDockDemo from "@/components/Dock"
 import { TooltipCardDemo } from "@/components/tooltip"
 import Navbar from "@/components/Navbar"
@@ -61,27 +52,174 @@ const CoverDemo = dynamic(() => import("@/components/CoverDemo").then(mod => ({ 
   loading: () => <div className="min-h-[300px]" />,
   ssr: false
 })
-interface Skill {
-  name: string;
-  experience: string;
-  years: string;
-  color: string;
-  level: number; // add this
-}
 
 export default function Portfolio() {
-  const [activeSection, setActiveSection] = useState("hero")
-  const [showLogin, setShowLogin] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [showWelcome, setShowWelcome] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const [loginData, setLoginData] = useState({ email: "", password: "" })
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null)
   const [animatedDots, setAnimatedDots] = useState<Array<{ top: number; left: number; delay: number }>>([])
   const [stars, setStars] = useState<Array<{ id: number; left: number; top: number; delay: number }>>([])
+  const heroHighlights: Array<{ title: string; description: string; icon: LucideIcon }> = [
+    { title: "Low-level systems", description: "Rust, C++, memory profiling, zero-copy data flows.", icon: Cpu },
+    { title: "Security research", description: "Red teaming, threat modeling, hardened Linux toolchains.", icon: Shield },
+    { title: "Realtime experiences", description: "WebGL, three.js, performant UI motion for the web.", icon: Globe },
+    { title: "Open source", description: "Contributor and maintainer across Linux & Rust ecosystems.", icon: GitBranch },
+  ]
+  const heroStats = [
+    { label: "Years Shipping", value: "05+" },
+    { label: "Projects Delivered", value: "50+" },
+    { label: "OSS Contributions", value: "120" },
+    { label: "Uptime Focus", value: "99.95%" },
+  ]
+  const journeyMilestones: Array<{
+    period: string;
+    title: string;
+    description: string;
+    impact: string;
+    stack: string[];
+    icon: LucideIcon;
+  }> = [
+    {
+      period: "2025 • Present",
+      title: "Lead Systems Engineer, Freelance",
+      description: "Designing tamper-resistant services for fintech and public sector partners.",
+      impact: "Architected verifiable CI/CD that ships secure builds in <15 minutes.",
+      stack: ["Rust", "Linux", "Zero Trust"],
+      icon: Shield,
+    },
+    {
+      period: "2023 – 2024",
+      title: "Full-stack Consultant",
+      description: "Scaled multi-tenant platforms for construction, dentistry and creative studios.",
+      impact: "Cut rendering cost by 42% through streaming-first Next.js pipelines.",
+      stack: ["Next.js", "Edge", "TypeScript"],
+      icon: Globe,
+    },
+    {
+      period: "2020 – 2022",
+      title: "Security-first Frontend Engineer",
+      description: "Crafted human-friendly consoles for SOC teams and DevOps squads.",
+      impact: "Led accessibility overhaul that bumped NPS by +18 in three months.",
+      stack: ["React", "Framer Motion", "GraphQL"],
+      icon: Brain,
+    },
+  ]
+  const capabilityStats: Array<{ label: string; value: string; detail: string; icon: LucideIcon }> = [
+    { label: "Latency budget", value: "<10ms", detail: "for critical UI gestures", icon: Zap },
+    { label: "Security posture", value: "Zero Sev1", detail: "incidents since 2022", icon: Shield },
+    { label: "Deploy cadence", value: "Daily", detail: "release trains", icon: Rocket },
+    { label: "UX research", value: "75+ hrs", detail: "interviews & audits", icon: Brain },
+  ]
+  const skillClusters: Array<{ title: string; description: string; icon: LucideIcon; stack: string[]; gradient: string }> = [
+    {
+      title: "Systems Craft",
+      description: "Memory-safe engines, observability-first services, and WASM extensions.",
+      icon: Cpu,
+      stack: ["Rust", "C++", "WebAssembly", "Linux kernel"],
+      gradient: "from-slate-950 via-slate-900 to-slate-800",
+    },
+    {
+      title: "Frontend Flow",
+      description: "Motion-rich React surfaces that stay under 100ms on mobile networks.",
+      icon: Code,
+      stack: ["Next.js 15", "TypeScript 5", "Framer Motion", "Tailwind CSS"],
+      gradient: "from-gray-900 via-gray-800 to-gray-700",
+    },
+    {
+      title: "DevSecOps",
+      description: "Immutable deploys, threat modeling, and proactive runtime hardening.",
+      icon: Shield,
+      stack: ["Docker", "Kubernetes", "GitHub Actions", "CrowdStrike"],
+      gradient: "from-slate-900 via-slate-800 to-slate-900",
+    },
+  ]
+  const skillMatrix = [
+    { name: "Rust", level: 96, blurb: "Systems programming & tooling", tone: "bg-emerald-500" },
+    { name: "TypeScript", level: 92, blurb: "Full-stack product velocity", tone: "bg-blue-500" },
+    { name: "Systems Design", level: 90, blurb: "Streaming, sharding, HA", tone: "bg-slate-600" },
+    { name: "Application Security", level: 88, blurb: "Threat modeling & audits", tone: "bg-amber-500" },
+    { name: "DevOps", level: 84, blurb: "CI/CD, observability, SRE", tone: "bg-purple-500" },
+  ]
+  const projectShowcase: Array<{
+    title: string;
+    description: string;
+    impact: string;
+    badge: string;
+    year: string;
+    image: string;
+    stack: string[];
+    metrics: Array<{ label: string; value: string }>;
+    github?: string;
+    demo?: string;
+  }> = [
+    {
+      title: "Sawerni",
+      description: "Algeria’s platform for matching clients with verified photographers in seconds.",
+      impact: "3.2× faster onboarding and automated trust scoring with Rust microservices.",
+      badge: "Flagship Case Study",
+      year: "2025",
+      image: "/sawerni.png",
+      stack: ["Rust", "TypeScript", "PostgreSQL", "JWT"],
+      metrics: [
+        { label: "Latency", value: "120ms p95" },
+        { label: "Coverage", value: "48 provinces" },
+      ],
+      github: "https://github.com/xCyberpunkx/sawerni-kv",
+      demo: "https://sawerni.vercel.app/",
+    },
+    {
+      title: "Optimize Construction",
+      description: "Enterprise site for modular construction specialists with realtime lead routing.",
+      impact: "Headless CMS + edge rendering improved SEO impressions by 61%.",
+      badge: "Energy & Industry",
+      year: "2024",
+      image: "/optimize.png",
+      stack: ["Next.js", "Cloudflare", "WordPress"],
+      metrics: [
+        { label: "Leads ↑", value: "+37%" },
+      ],
+      demo: "https://optimize-construction.dz",
+    },
+    {
+      title: "Remdani Dental Center",
+      description: "Conversion-focused landing for a modern clinic with calendar sync.",
+      impact: "HIPAA-ready forms and OTP booking flow raised conversion by 24%.",
+      badge: "Healthcare",
+      year: "2023",
+      image: "/ramdani.png",
+      stack: ["Next.js", "OAuth", "Tailwind"],
+      metrics: [
+        { label: "PageSpeed", value: "98" },
+      ],
+      github: "https://github.com/xCyberpunkx/dental-frontend",
+      demo: "https://ramdani.vercel.app/",
+    },
+    {
+      title: "Cabinet BENSERAI",
+      description: "Responsive platform for accounting & tax advisory services.",
+      impact: "Form intelligence slashed response time to <2h for premium clients.",
+      badge: "Finance",
+      year: "2023",
+      image: "/cabinet.png",
+      stack: ["PHP", "Elementor", "Cloudflare"],
+      metrics: [
+        { label: "Bounce rate", value: "-28%" },
+      ],
+      demo: "https://cabinet-benserai.com/",
+    },
+    {
+      title: "Architecture Studio",
+      description: "Minimal aesthetic site for a boutique architecture firm in Blida.",
+      impact: "Edge-rendered gallery handles 4k textures while staying ADA compliant.",
+      badge: "Creative",
+      year: "2024",
+      image: "/amel.png",
+      stack: ["Next.js", "Vercel", "Tailwind"],
+      metrics: [
+        { label: "CLS", value: "0.01" },
+      ],
+      demo: "https://betarchimoktariamel.com/",
+    },
+  ]
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -116,21 +254,7 @@ export default function Portfolio() {
     )
   }, [])
 
-  // Optimized scroll handler with throttling
   const rafRef = useRef<number | null>(null)
-  const lastScrollY = useRef(0)
-  const sections = useMemo(() => [
-    "hero",
-    "about",
-    "journey",
-    "skills",
-    "projects",
-    "services",
-    "arcade",
-    "contact",
-    "lifestyle",
-    "gaming",
-  ], [])
   
   useEffect(() => {
     const handleScroll = () => {
@@ -139,24 +263,7 @@ export default function Portfolio() {
       }
 
       rafRef.current = requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY
-        // Only update if scroll changed significantly (throttle)
-        if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
-          setScrollY(currentScrollY)
-          setShowScrollTop(currentScrollY > 500)
-
-          const current = sections.find((section) => {
-            const element = document.getElementById(section)
-            if (element) {
-              const rect = element.getBoundingClientRect()
-              return rect.top <= 100 && rect.bottom >= 100
-            }
-            return false
-          })
-          if (current) setActiveSection(current)
-          
-          lastScrollY.current = currentScrollY
-        }
+        setShowScrollTop(window.scrollY > 500)
       })
     }
 
@@ -167,14 +274,12 @@ export default function Portfolio() {
         cancelAnimationFrame(rafRef.current)
       }
     }
-  }, [sections])
+  }, [])
 
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
-      setActiveSection(sectionId)
-      setMobileMenuOpen(false) // Close mobile menu when navigating
     }
   }, [])
 
@@ -191,130 +296,156 @@ if (isLoading) {
 
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
-
-
       <Navbar />
-
       <main className="pt-15">
-       
         <section
-  id="hero"
-  className="min-h-screen flex flex-col items-center justify-center sm:px-6 relative overflow-hidden py-12 lg:py-20"
->
-  {/* Animated Background */}
-  <div className="absolute inset-0 pointer-events-none opacity-5">
-    {animatedDots.map((dot, i) => (
-      <div
-        key={i}
-        className="absolute w-1 h-1 bg-gray-500 rounded-full animate-pulse"
-        style={{
-          top: `${dot.top}%`,
-          left: `${dot.left}%`,
-          animationDelay: `${dot.delay}s`,
-        }}
-      />
-    ))}
-    {[{ icon: "🐧", top: "15%", left: "10%" }, { icon: "🅰️", top: "25%", left: "85%" }, { icon: "🇬", top: "75%", left: "5%" }].map(
-      (item, idx) => (
-        <div
-          key={idx}
-          className="absolute text-xl opacity-30 animate-bounce"
-          style={{
-            top: item.top,
-            left: item.left,
-            animationDelay: `${idx * 0.5}s`,
-            animationDuration: "3s",
-          }}
+          id="hero"
+          className="relative isolate overflow-hidden px-4 pt-28 pb-20 sm:px-6 lg:px-8"
         >
-          {item.icon}
-        </div>
-      )
-    )}
-  </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white" />
+          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white/80 via-white/40 to-transparent blur-3xl" />
+          <div className="absolute inset-0 pointer-events-none opacity-0 sm:opacity-30 hidden md:block">
+            {animatedDots.map((dot, i) => (
+              <div
+                key={`dot-${i}`}
+                className="absolute w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+                style={{
+                  top: `${dot.top}%`,
+                  left: `${dot.left}%`,
+                  animationDelay: `${dot.delay}s`,
+                }}
+              />
+            ))}
+          </div>
 
-  {/* Main Content: Two Columns */}
-  <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 px-4">
-    {/* Left: Text Content */}
-    <div className="flex-1 w-full lg:w-auto flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 lg:space-y-8">
-      {/* Terminal Prompt */}
-      <div className="flex items-center text-xs sm:text-sm font-mono tracking-wide text-gray-500">
-        <span className="text-green-500">●</span>
-        <span className="text-blue-600 font-semibold ml-1">root</span>
-        <span className="mx-0.5">@</span>
-        <span className="text-blue-500 flex items-center">
-          archlinux <span className="text-base ml-0.5">🅰️</span>
-        </span>
-        <span className="ml-1">:~$</span>
-      </div>
+          <div className="relative z-10 mx-auto max-w-6xl">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="space-y-8 text-center lg:text-left">
+                <div className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white/70 px-5 py-2 text-xs font-mono uppercase tracking-[0.3em] text-gray-600 shadow-sm">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    software engineer
+                </div>
 
-      {/* Name */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tighter">
-        <TextPressureDemo />
-      </h1>
+                <div className="space-y-4">
+                  <p className="font-mono text-sm text-gray-500">portfolio@archlinux:~$ echo "Hello, world!"</p>
+                  <h1 className="text-4xl font-black leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                    Zine Eddine{" "}
+                    <span className="block bg-gradient-to-r from-black via-gray-800 to-gray-500 bg-clip-text text-transparent">
+                      Rouabah
+                    </span>
+                  </h1>
+                  <p className="text-lg text-gray-600 sm:text-xl">
+                    I architect silky-smooth experiences for low-level software, guiding products from secured kernel space
+                    all the way to elegant client apps. Craft, rigor, and speed without compromise.
+                  </p>
+                </div>
 
-      {/* Tagline / Tooltip */}
-      <div className="max-w-2xl">
-        <TooltipCardDemo />
-      </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {heroHighlights.map((highlight) => {
+                    const Icon = highlight.icon
+                    return (
+                      <div
+                        key={highlight.title}
+                        className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm backdrop-blur lg:hover:-translate-y-1 lg:hover:shadow-lg transition-all duration-300"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-900 text-white">
+                            <Icon className="h-4 w-4" />
+                          </span>
+                          <div>
+                            <p className="text-sm font-semibold">{highlight.title}</p>
+                            <p className="text-xs text-gray-500">{highlight.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
 
-      {/* Badges */}
-      <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-        {[
-          { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" /> },
-          { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" /> },
-          { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" /> },
-          { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" /> },
-          { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" /> },
-        ].map((item) => (
-          <Badge
-            key={item.label}
-            variant="default"
-            className="px-4 py-2.5 text-sm font-medium text-gray-800 bg-white/50 backdrop-blur-md border border-white/20 shadow-sm rounded-xl flex items-center gap-2 hover:scale-[1.03] hover:bg-white/70 transition-transform duration-300 cursor-pointer"
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </Badge>
-        ))}
-      </div>
+                <div className="max-w-2xl">
+                  <TooltipCardDemo />
+                </div>
 
-      {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
-        <Button
-          onClick={() => scrollToSection("projects")}
-          className="bg-black text-white hover:bg-white hover:text-black hover:border-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 shadow-md"
-        >
-          View My Work
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => scrollToSection("contact")}
-          className="border-2 border-black text-black hover:bg-black hover:text-white px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
-        >
-          Get In Touch
-        </Button>
-      </div>
-    </div>
+                <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+                  {[
+                    { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" /> },
+                    { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" /> },
+                    { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" /> },
+                    { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" /> },
+                    { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" /> },
+                  ].map((item) => (
+                    <Badge
+                      key={item.label}
+                      variant="default"
+                      className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm"
+                    >
+                      {item.icon}
+                      {item.label}
+                    </Badge>
+                  ))}
+                </div>
 
-    {/* Right: Canvas */}
-    <div className="flex-1 w-full max-w-md flex justify-left ">
-      <div className="w-full h-[400px] relative">
-        {/* Glassmorphism container */}
-        <div className="absolute inset-0 bg-white/20 backdrop-blur-lg rounded-2xl border border-gray-200/50 shadow-xl" />
-        <div className="relative z-10 w-full h-full">
-          <PixelatedCanvasDemo />
-        </div>
-      </div>
-    </div>
-  </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button
+                    onClick={() => scrollToSection("projects")}
+                    className="bg-black text-white shadow-lg shadow-black/20 transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    View Projects
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => scrollToSection("contact")}
+                    className="border-gray-300 text-gray-900 transition-all duration-300 hover:border-black hover:text-black"
+                  >
+                    Book a Call
+                  </Button>
+                </div>
 
-  {/* macOS Dock — now aligned *with* the hero content */}
-  <div className="mt-12 w-full max-w-5xl px-4">
-    <div className="flex justify-left lg:justify-start">
-      <MacOSDockDemo />
-    </div>
-  </div>
-</section>
-<section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {heroStats.map((stat) => (
+                    <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm">
+                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
+                    <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
+                  </div>
+                  <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
+                    <PixelatedCanvasDemo />
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-3 text-left text-sm text-gray-600 md:grid-cols-3">
+                    {[
+                      { label: "Latency", value: "8.2 ms" },
+                      { label: "Throughput", value: "650k req/s" },
+                      { label: "Render Budget", value: "9.4 ms" },
+                    ].map((metric) => (
+                      <div key={metric.label} className="rounded-2xl border border-gray-100 bg-white/70 p-3">
+                        <p className="text-xs text-gray-500">{metric.label}</p>
+                        <p className="text-sm font-semibold text-gray-900">{metric.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-dashed border-gray-200 bg-white/70 p-4 text-left text-sm text-gray-600 md:hidden">
+                    <p className="font-semibold text-gray-900">Mobile-friendly</p>
+                    <p className="text-gray-600">Heavy visualizers are deferred to keep pages silky smooth on phones.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 hidden lg:block">
+              <MacOSDockDemo />
+            </div>
+          </div>
+        </section>
+        <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
           </div>
@@ -374,353 +505,244 @@ if (isLoading) {
           </div>
         </section>
 
-       <StickyScrollRevealDemo />
-       <PlaceholdersAndVanishInputDemo />
-        {/* Skills Section */}
-        <section id="skills" className="py-24 px-6 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-fade-in-up">
-                Technical Arsenal
+        <section id="journey" className="bg-white px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-6xl">
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+                Journey
+              </div>
+              <h2 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Precision built through real-world impact
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto animate-fade-in-up-delay">
-                A comprehensive toolkit forged through years of hands-on experience and relentless curiosity.
+              <p className="mt-4 text-lg text-gray-600">
+                Each chapter sharpened my obsession with reliability, maintainability, and graceful human experiences.
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 mb-16">
-              {/* Systems Programming */}
-              <div className="group relative animate-fade-in-up">
-                <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-800 rounded-3xl blur-2xl opacity-10 group-hover:opacity-30 transition-all duration-500" />
-                <Card className="relative bg-white border-2 border-gray-100 shadow-xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-4 hover:rotate-1 h-full transform-gpu">
-                  <CardContent className="p-8">
-                    <div className="flex items-center mb-8">
-                      <div className="p-4 bg-black rounded-2xl mr-6 group-hover:rotate-12 transition-transform duration-300">
-                        <Cpu className="h-10 w-10 text-white" />
+            <div className="mt-16 space-y-10">
+              {journeyMilestones.map((milestone, index) => {
+                const Icon = milestone.icon
+                return (
+                  <div key={milestone.title} className="relative pl-10">
+                    <span className="absolute left-4 top-0 h-full w-px bg-gray-200" aria-hidden />
+                    <span className="absolute left-2 top-5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-white text-xs font-bold text-black">
+                      {index + 1}
+                    </span>
+                    <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-lg shadow-gray-100 lg:flex lg:items-center lg:gap-8">
+                      <div className="flex-shrink-0">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-900 text-white">
+                          <Icon className="h-6 w-6" />
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-2xl font-bold mb-2">Systems Programming</h3>
-                        <p className="text-gray-600">Low-level mastery and performance optimization</p>
+                      <div className="mt-6 space-y-3 lg:mt-0">
+                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
+                          <span className="font-semibold uppercase tracking-wide text-gray-800">{milestone.period}</span>
+                          <span className="h-1 w-1 rounded-full bg-gray-300" />
+                          <span>{milestone.impact}</span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900">{milestone.title}</h3>
+                        <p className="text-gray-600">{milestone.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {milestone.stack.map((tech) => (
+                            <Badge key={`${milestone.title}-${tech}`} variant="secondary" className="bg-gray-100 text-gray-800">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
 
-                    <div className="space-y-4">
-                      {[
-                        { name: "Rust", experience: "beginner", years: "1+ years", color: "bg-orange-500" },
-                        { name: "C++", experience: "intermidiate", years: "3+ years", color: "bg-blue-500" },
-                        { name: "C", experience: "intermidiate", years: "2+ years", color: "bg-gray-700" },
-                        { name: "Assembly", experience: "mid", years: "1.5+ years", color: "bg-red-500" },
-                      ].map((skill, index) => (
-                        <div key={skill.name} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold">{skill.name}</span>
-                            <div className="text-right">
-                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
-                              <div className="text-xs text-gray-500">{skill.years}</div>
-                            </div>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                            <div
-                              className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
-                              style={{
-                                animationDelay: `${index * 0.2}s`,
-                              }}
-                            />
-                          </div>
-                        </div>
+       <StickyScrollRevealDemo />
+       <PlaceholdersAndVanishInputDemo />
+        {/* Skills Section */}
+        <section id="skills" className="relative overflow-hidden bg-slate-950 px-4 py-24 text-white sm:px-6">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),transparent_60%)]" aria-hidden />
+          <div className="relative z-10 mx-auto max-w-6xl space-y-12">
+            <div className="text-center space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-emerald-300">Technical Arsenal</p>
+              <h2 className="text-4xl font-bold sm:text-5xl">Operational excellence across the stack.</h2>
+              <p className="text-base text-white/70 sm:text-lg">
+                Latency budgets, memory profiling, and tactile design converge so products feel instant on any device.
+              </p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              {skillClusters.map((cluster) => {
+                const Icon = cluster.icon
+                return (
+                  <article
+                    key={cluster.title}
+                    className={"h-full rounded-3xl border border-white/10 bg-gradient-to-br " + cluster.gradient + " p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <p className="text-lg font-semibold">{cluster.title}</p>
+                        <p className="text-sm text-white/60">{cluster.description}</p>
+                      </div>
+                    </div>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {cluster.stack.map((badge) => (
+                        <Badge key={badge} variant="secondary" className="bg-white/10 text-white">
+                          {badge}
+                        </Badge>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </article>
+                )
+              })}
+            </div>
 
-              {/* Security & DevOps */}
-              <div className="group relative animate-fade-in-up-delay">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl blur-2xl opacity-10 group-hover:opacity-30 transition-all duration-500" />
-                <Card className="relative bg-white border-2 border-gray-100 shadow-xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-4 hover:rotate-1 h-full transform-gpu">
-                  <CardContent className="p-8">
-                    <div className="flex items-center mb-8">
-                      <div className="p-4 bg-red-600 rounded-2xl mr-6 group-hover:rotate-12 transition-transform duration-300">
-                        <Shield className="h-10 w-10 text-white" />
-                      </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {capabilityStats.map((stat) => {
+                const Icon = stat.icon
+                return (
+                  <div
+                    key={stat.label}
+                    className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-5 shadow-inner shadow-white/10"
+                  >
+                    <div className="space-y-1">
+                      <p className="text-sm uppercase tracking-[0.3em] text-white/50">{stat.label}</p>
+                      <p className="text-3xl font-semibold">{stat.value}</p>
+                      <p className="text-xs text-white/60">{stat.detail}</p>
+                    </div>
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/40">
+              <div className="grid gap-4">
+                {skillMatrix.map((skill) => (
+                  <div key={skill.name}>
+                    <div className="flex items-center justify-between text-sm">
                       <div>
-                        <h3 className="text-2xl font-bold mb-2">Security & DevOps</h3>
-                        <p className="text-gray-600">Protecting systems and automating workflows</p>
+                        <p className="font-semibold">{skill.name}</p>
+                        <p className="text-xs text-white/60">{skill.blurb}</p>
                       </div>
+                      <p className="font-mono text-white/80">{skill.level}%</p>
                     </div>
-
-                    <div className="space-y-4">
-                      {[
-                        {
-                          name: "Linux Administration",
-                          experience: "intermidiate",
-                          years: "3+ years",
-                          color: "bg-yellow-500",
-                        },
-                        { name: "Network Security", experience: "mid-level", years: "3+ years", color: "bg-red-500" },
-                        { name: "Docker", experience: "beginner", years: "1+ years", color: "bg-blue-500" },
-                        { name: "CI/CD Pipelines", experience: "intermidiate", years: "2+ years", color: "bg-green-500" },
-                      ].map((skill, index) => (
-                        <div key={skill.name} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold">{skill.name}</span>
-                            <div className="text-right">
-                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
-                              <div className="text-xs text-gray-500">{skill.years}</div>
-                            </div>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                            <div
-                              className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
-                              style={{
-                                animationDelay: `${index * 0.2 + 0.5}s`,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                    <div className="mt-2 h-2 w-full rounded-full bg-white/10">
+                      <div
+                        className={skill.tone + " h-full rounded-full transition-all duration-700"}
+                        style={{ width: skill.level + "%" }}
+                      />
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Web & Tools */}
-              <div className="group relative animate-fade-in-up-delay-2">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl blur-2xl opacity-10 group-hover:opacity-30 transition-all duration-500" />
-                <Card className="relative bg-white border-2 border-gray-100 shadow-xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-4 hover:rotate-1 h-full transform-gpu">
-                  <CardContent className="p-8">
-                    <div className="flex items-center mb-8">
-                      <div className="p-4 bg-purple-600 rounded-2xl mr-6 group-hover:rotate-12 transition-transform duration-300">
-                        <Globe className="h-10 w-10 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold mb-2">Web & Tools</h3>
-                        <p className="text-gray-600">Modern development and productivity</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      {[
-                        { name: "React/Next.js", experience: "Intermediate", years: "3+ years", color: "bg-cyan-500" },
-                        { name: "TypeScript", experience: "Advanced", years: "4+ years", color: "bg-blue-600" },
-                        { name: "Vim/Neovim", experience: "Advanced", years: "3+ years", color: "bg-green-600" },
-                        { name: "Git & GitHub", experience: "Expert", years: "4+ years", color: "bg-gray-700" },
-                      ].map((skill, index) => (
-                        <div key={skill.name} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold">{skill.name}</span>
-                            <div className="text-right">
-                              <div className="text-sm font-medium text-gray-700">{skill.experience}</div>
-                              <div className="text-xs text-gray-500">{skill.years}</div>
-                            </div>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                            <div
-                              className={`h-full ${skill.color} rounded-full transition-all duration-1000 ease-out animate-skill-bar`}
-                              style={{
-                               
-                                animationDelay: `${index * 0.2 + 1}s`,
-                              }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-<section id="projects" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
-  <div className="max-w-7xl mx-auto">
-    {/* Header */}
-    <div className="text-center mb-16">
-      <div className="inline-flex items-center gap-3 px-4 py-2 bg-black/5 rounded-full mb-6">
-        <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-        <span className="text-sm font-medium text-gray-700">Featured Work</span>
-      </div>
-      <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-       Featured Projects
-
-      </h2>
-      <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-        Building the future with Secure, Scalable innovative solutions. Each project represents a journey of learning, problem-solving, and pushing technical boundaries.
-      </p>
-    </div>
-
-    {/* Projects Grid */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {[
-        {
-          title: "Sawerni",
-          description: "Algeria’s premier photography platform connecting clients with verified photographers nationwide.",
-          image: "/sawerni.png",
-          tags: ["Rust", "TypeScript", "PostgreSQL", "JWT"],
-          year: "2025",
-          featured: true,
-          github: "https://github.com/xCyberpunkx/sawerni-kv",
-          demo: "https://sawerni.vercel.app/",
-        },
-        {
-          title: "Optimize Construction",
-          description: "Professional platform for modular construction and industrial solutions in Algeria.",
-          image: "/optimize.png",
-          tags: ["WordPress", "Elementor", "Cloudflare", "PHP"],
-          year: "2024",
-          featured: true,
-          demo: "https://optimize-construction.dz",
-        },
-        {
-          title: "Remdani Dental Center",
-          description: "Modern landing page for a dental clinic, optimized for conversion & accessibility.",
-          image: "/ramdani.png",
-          tags: ["Next.js", "TypeScript", "OAuth", "Tailwind"],
-          year: "2023",
-          featured: true,
-          github: "https://github.com/xCyberpunkx/dental-frontend",
-          demo: "https://ramdani.vercel.app/",
-        },
-        {
-          title: "Cabinet BENSERAI",
-          description: "Professional platform for accounting, audit, tax, and legal services.",
-          image: "/cabinet.png",
-          tags: ["PHP", "Elementor", "WP", "Cloudflare"],
-          year: "2023",
-          featured: false,
-          demo: "https://cabinet-benserai.com/",
-        },
-        {
-          title: "Architecture Studio",
-          description: "Digital platform for an architecture studio in Blida, Algeria.",
-          image: "/amel.png",
-          tags: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
-          year: "2024",
-          featured: false,
-          demo: "https://betarchimoktariamel.com/",
-        },
-        {
-          title: "Personal Portfolio v0.1",
-          description: "My first personal website, built to introduce myself as a software engineer.",
-          image: "/personal.png",
-          tags: ["Laravel", "WebAssembly", "Linux", "React"],
-          year: "2024",
-          featured: false,
-          github: "https://github.com/xCyberpunkx/res",
-          demo: "https://0xnira.vercel.app/",
-        },
-      ].map((project, idx) => (
-        <motion.div
-          key={project.title}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: idx * 0.1, duration: 0.6 }}
-          className="group"
-        >
-          <Card className="overflow-hidden h-full border-2 border-gray-100 hover:border-gray-300 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
-            {/* Image */}
-            <div className="relative overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              {/* Badges */}
-              <div className="absolute top-4 right-4">
-                <Badge variant="secondary" className="bg-white/90 text-black font-semibold shadow-sm">
-                  {project.year}
-                </Badge>
+        <section id="projects" className="bg-gradient-to-b from-white to-slate-50 px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-6xl space-y-12">
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
+                Releases
               </div>
-              {project.featured && (
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-gradient-to-r  text-white px-3 py-1 text-xs font-bold shadow-lg">
-                    <Star className="h-3 w-3 mr-1 inline" /> Featured
-                  </Badge>
-                </div>
-              )}
+              <h2 className="text-4xl font-bold sm:text-5xl">Products that stay fast in the wild.</h2>
+              <p className="text-lg text-slate-600">
+                Each build ships with budgets for performance, accessibility, and security so launches hit production without regressions.
+              </p>
             </div>
 
-            {/* Content */}
-            <CardContent className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-black transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                {project.description}
-              </p>
+            <div className="space-y-10">
+              {projectShowcase.map((project, idx) => (
+                <article
+                  key={project.title}
+                  className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_45px_rgba(15,23,42,0.1)]"
+                >
+                  <div className={"flex flex-col gap-10 lg:items-center lg:gap-12 " + (idx % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row")}>
+                    <div className="w-full lg:w-1/2">
+                      <div className="relative overflow-hidden rounded-[28px] border border-slate-100 bg-slate-900/5">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading="lazy"
+                          className="h-72 w-full object-cover transition duration-500 hover:scale-105"
+                        />
+                        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+                          <Badge variant="secondary" className="bg-white/90 text-slate-900">
+                            {project.year}
+                          </Badge>
+                          <Badge className="bg-slate-900 text-white">{project.badge}</Badge>
+                        </div>
+                      </div>
+                      <div className="mt-6 grid grid-cols-2 gap-3 text-sm text-slate-600">
+                        {project.metrics.map((metric) => (
+                          <div key={project.title + "-" + metric.label} className="rounded-2xl border border-slate-100 bg-slate-50 p-3">
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{metric.label}</p>
+                            <p className="text-lg font-semibold text-slate-900">{metric.value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-              {/* Tech Tags */}
-              <div className="flex flex-wrap gap-2 mb-5">
-                {project.tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="outline"
-                    className="text-xs px-2 py-1 bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700 transition-colors"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
+                    <div className="w-full space-y-5 lg:w-1/2">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Case Study</p>
+                        <h3 className="mt-2 text-3xl font-bold text-slate-900">{project.title}</h3>
+                      </div>
+                      <p className="text-base text-slate-600">{project.description}</p>
+                      <p className="text-sm text-slate-500">{project.impact}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.stack.map((tech) => (
+                          <Badge key={project.title + "-" + tech} variant="outline" className="border-slate-200 text-slate-700">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-3">
+                        {project.github && (
+                          <Button
+                            variant="outline"
+                            onClick={() => window.open(project.github, "_blank")}
+                            className="border-slate-300 text-slate-900"
+                          >
+                            <Github className="mr-2 h-4 w-4" />
+                            Source
+                          </Button>
+                        )}
+                        {project.demo && (
+                          <Button onClick={() => window.open(project.demo, "_blank")} className="bg-slate-900 text-white">
+                            <ExternalLink className="mr-2 h-4 w-4" />
+                            Live
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-inner">
+              <p className="text-slate-600">Need a secure build with pixel-perfect polish?</p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                <Button onClick={() => window.open("https://github.com/xCyberpunkx", "_blank")} className="bg-slate-900 text-white">
+                  <Github className="mr-2 h-4 w-4" />
+                  Explore GitHub
+                </Button>
+                <Button variant="outline" onClick={() => scrollToSection("contact")} className="border-slate-300 text-slate-900">
+                  <Send className="mr-2 h-4 w-4" />
+                  Book a build
+                </Button>
               </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3">
-                {project.github && (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 hover:bg-black hover:text-white"
-                    onClick={() => window.open(project.github, "_blank")}
-                  >
-                    <Github className="h-3 w-3 mr-1" />
-                    Code
-                  </Button>
-                )}
-                {project.demo && (
-                  <Button
-                    size="sm"
-                    className="flex-1 bg-black text-white hover:bg-gray-800"
-                    onClick={() => window.open(project.demo, "_blank")}
-                  >
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    Live
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
-    </div>
-
-    {/* CTA */}
-    <div className="mt-20 text-center">
-      <p className="text-gray-600 mb-6">All projects are open for collaboration and contribution</p>
-      <div className="flex flex-wrap justify-center gap-4">
-        <Button
-          onClick={() => window.open("https://github.com/xCyberpunkx", "_blank")}
-          className="bg-black text-white hover:bg-gray-800 px-6 py-3 font-medium"
-        >
-          <Github className="h-4 w-4 mr-2" />
-          View GitHub
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => scrollToSection("contact")}
-          className="border-black text-black hover:bg-black hover:text-white px-6 py-3 font-medium"
-        >
-          <Send className="h-4 w-4 mr-2" />
-          Discuss a Project
-        </Button>
-      </div>
-    </div>
-  </div>
-</section>
+            </div>
+          </div>
+        </section>
 
         {/* Services Section */}
         <section id="services" className="py-24 px-6 bg-gray-50">

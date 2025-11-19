@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, JSX } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,10 +16,21 @@ import {
   Eye, EyeOff, Key, Lock, Unlock, Settings, Bell, CircleDollarSign,
   CreditCard, ShoppingCart, Heart, Bookmark, Share2, Copy, Edit3, Trash2,
   MoreVertical, MoreHorizontal, Filter, Sliders, Grid, List, Grid3x3,
-  RotateCcw, RotateCw, Minimize2, Maximize2, Square, Minus, Plus, HopIcon
+  RotateCcw, RotateCw, Minimize2, Maximize2, Square, Minus, Plus, HopIcon,
+  Keyboard
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import React from "react";
+
+type NavItem = {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  megaContent?: any;
+  href?: string;
+};
 
 // CV Preview Modal Component
 const CVPreviewModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
@@ -174,7 +187,7 @@ const CVPreviewModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (
   );
 };
 
-const navItems = [
+const navItems: NavItem[] = [
   {
     id: "home",
     label: "Home",
@@ -191,17 +204,17 @@ const navItems = [
         {
           title: "My Story",
           items: [
-            { title: "The Beginning", description: "How I discovered programming", icon: Rocket, badge: "Journey" },
-            { title: "Passion & Purpose", description: "Why I love what I do", icon: Heart, badge: "Values" },
-            { title: "Philosophy", description: "My approach to development", icon: Brain, badge: "Mindset" }
+            { title: "The Beginning", description: "How I discovered programming", icon: Rocket, badge: "Journey", target: "journey" },
+            { title: "Passion & Purpose", description: "Why I love what I do", icon: Heart, badge: "Values", target: "about" },
+            { title: "Philosophy", description: "My approach to development", icon: Brain, badge: "Mindset", target: "about" }
           ]
         },
         {
           title: "Credentials",
           items: [
-            { title: "Education", description: "Academic achievements & learning", icon: GraduationCap, badge: "Degrees" },
-            { title: "Certifications", description: "Professional credentials & skills", icon: Award, badge: "Verified" },
-            { title: "Experience", description: "Professional background & roles", icon: Briefcase, badge: "Years" }
+            { title: "Education", description: "Academic achievements & learning", icon: GraduationCap, badge: "Degrees", target: "journey" },
+            { title: "Certifications", description: "Professional credentials & skills", icon: Award, badge: "Verified", target: "skills" },
+            { title: "Experience", description: "Professional background & roles", icon: Briefcase, badge: "Years", target: "projects" }
           ]
         }
       ],
@@ -259,31 +272,31 @@ const navItems = [
         {
           category: "Frontend",
           skills: [
-            { name: "React", level: 95, icon: "⚛️" },
-            { name: "Next.js", level: 90, icon: "🚀" },
-            { name: "TypeScript", level: 88, icon: "🔷" },
-            { name: "Tailwind CSS", level: 92, icon: "🎨" },
-            { name: "Framer Motion", level: 85, icon: "⚡" }
+            { name: "React", level: 95, iconSlug: "react", iconHex: "61DAFB" },
+            { name: "Next.js", level: 90, iconSlug: "nextdotjs", iconHex: "ffffff" },
+            { name: "TypeScript", level: 88, iconSlug: "typescript", iconHex: "3178C6" },
+            { name: "Tailwind CSS", level: 92, iconSlug: "tailwindcss", iconHex: "38BDF8" },
+            { name: "Framer Motion", level: 85, iconSlug: "framermotion", iconHex: "0055FF" }
           ]
         },
         {
           category: "Backend",
           skills: [
-            { name: "Node.js", level: 87, icon: "🟢" },
-            { name: "Python", level: 82, icon: "🐍" },
-            { name: "MongoDB", level: 85, icon: "🟤" },
-            { name: "PostgreSQL", level: 80, icon: "🐘" },
-            { name: "Firebase", level: 88, icon: "🔥" }
+            { name: "Node.js", level: 87, iconSlug: "nodedotjs", iconHex: "5FA04E" },
+            { name: "Python", level: 82, iconSlug: "python", iconHex: "3776AB" },
+            { name: "MongoDB", level: 85, iconSlug: "mongodb", iconHex: "47A248" },
+            { name: "PostgreSQL", level: 80, iconSlug: "postgresql", iconHex: "4169E1" },
+            { name: "Firebase", level: 88, iconSlug: "firebase", iconHex: "FFCA28" }
           ]
         },
         {
           category: "DevOps & Tools",
           skills: [
-            { name: "Git", level: 95, icon: "🐙" },
-            { name: "Docker", level: 78, icon: "🐋" },
-            { name: "AWS", level: 75, icon: "☁️" },
-            { name: "Vercel", level: 90, icon: "⚡" },
-            { name: "Figma", level: 85, icon: "🎨" }
+            { name: "Git", level: 95, iconSlug: "git", iconHex: "F05032" },
+            { name: "Docker", level: 78, iconSlug: "docker", iconHex: "2496ED" },
+            { name: "AWS", level: 75, iconSlug: "amazonaws", iconHex: "FF9900" },
+            { name: "Vercel", level: 90, iconSlug: "vercel", iconHex: "000000" },
+            { name: "Figma", level: 85, iconSlug: "figma", iconHex: "F24E1E" }
           ]
         }
       ],
@@ -294,10 +307,35 @@ const navItems = [
         { title: "React Advanced", provider: "Meta", year: "2024" }
       ]
     }
+  },
+  {
+    id: "arcade",
+    label: "Arcade",
+    icon: Gamepad2,
+    megaContent: {
+      title: "Arcade Lab",
+      description: "Mini-games for latency, binary logic, and command mastery.",
+      games: [
+        { id: "latency-tap", title: "Latency Tap", summary: "Reflex trainer for sub-150ms reactions.", icon: Zap },
+        { id: "bit-flip", title: "Bit Flip", summary: "Binary builder sharpening mental math.", icon: Cpu },
+        { id: "command-sprint", title: "Command Sprint", summary: "Terminal typing races for pros.", icon: Keyboard }
+      ],
+      cta: {
+        label: "Launch Arcade",
+        href: "/arcade"
+      }
+    }
+  },
+  {
+    id: "typing-lab",
+    label: "Typing",
+    icon: Keyboard,
+    href: "/typing"
   }
 ];
 
 export default function Portfolio() {
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
@@ -372,9 +410,28 @@ export default function Portfolio() {
     }
   };
 
+  const handleNavigation = (item: NavItem) => {
+    if (item.href) {
+      router.push(item.href);
+      setMobileMenuOpen(false);
+      setMegaMenuOpen(null);
+      setActiveSection(item.id);
+      return;
+    }
+    scrollToSection(item.id);
+  };
+
   const springConfig = { damping: 25, stiffness: 150 };
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
+
+  const quickLinks: Array<{ title: string; icon: LucideIcon; action: () => void }> = [
+    { title: "View All Projects", icon: Grid, action: () => scrollToSection("projects") },
+    { title: "Download Portfolio", icon: Download, action: () => window.open("/resume.pdf", "_blank") },
+    { title: "Schedule a Call", icon: Phone, action: () => scrollToSection("contact") },
+    { title: "Play Arcade Games", icon: Gamepad2, action: () => router.push("/arcade") },
+    { title: "Request Quote", icon: CircleDollarSign, action: () => scrollToSection("contact") }
+  ];
 
   return (
     <div>
@@ -424,7 +481,7 @@ export default function Portfolio() {
                 return (
                   <div key={item.id} className="relative">
                     <motion.button
-                      onClick={() => hasMega ? openMega(item.id) : scrollToSection(item.id)}
+                      onClick={() => hasMega ? openMega(item.id) : handleNavigation(item)}
                       onMouseEnter={() => hasMega && openMega(item.id)}
                       onMouseLeave={() => hasMega && scheduleCloseMega()}
                       className={cn(
@@ -540,24 +597,25 @@ export default function Portfolio() {
                         {megaMenuOpen === "about" && (
                           <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {navItems.find(i => i.id === "about")?.megaContent?.sections?.map((section, idx) => (
+                              {navItems.find(i => i.id === "about")?.megaContent?.sections?.map((section: { title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; items: any[]; }, idx: Key | null | undefined) => (
                                 <div key={idx} className="space-y-3">
                                   <h3 className="font-semibold text-gray-800 flex items-center gap-2">
                                     <span className="w-2 h-2 bg-black rounded-full"></span>
                                     {section.title}
                                   </h3>
                                   <div className="space-y-2">
-                                    {section.items.map((it, itemIdx) => (
-                                      <motion.a
+                                    {section.items.map((it: { target: any; icon: JSX.IntrinsicAttributes; title: React.ReactNode; badge: React.ReactNode; description: React.ReactNode }, itemIdx: number) => (
+                                      <motion.button
                                         key={itemIdx}
-                                        href="#"
-                                        className="flex items-start p-3 rounded-lg hover:bg-gray-50/80 transition-all duration-200 group"
+                                        type="button"
+                                        onClick={() => scrollToSection(it.target || "about")}
+                                        className="flex w-full items-start rounded-lg p-3 text-left transition-all duration-200 group hover:bg-gray-50/80"
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: itemIdx * 0.05 }}
+                                        transition={{ delay: typeof itemIdx === "number" ? itemIdx * 0.05 : 0 }}
                                       >
-                                        <div className="flex-shrink-0 mt-0.5 p-1.5 bg-gray-100 rounded-lg group-hover:bg-black group-hover:text-white">
-                                          <it.icon className="h-4 w-4" />
+                                        <div className="shrink-0 mt-0.5 p-1.5 bg-gray-100 rounded-lg group-hover:bg-black group-hover:text-white">
+                                          {typeof it.icon === "function" && React.createElement(it.icon as React.ElementType, { className: "h-4 w-4" })}
                                         </div>
                                         <div className="ml-3">
                                           <div className="flex items-center gap-2">
@@ -568,14 +626,14 @@ export default function Portfolio() {
                                           </div>
                                           <p className="text-sm text-gray-500 group-hover:text-gray-700 mt-1">{it.description}</p>
                                         </div>
-                                      </motion.a>
+                                      </motion.button>
                                     ))}
                                   </div>
                                 </div>
                               ))}
                             </div>
 
-                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+                            <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
                               <h3 className="font-semibold text-gray-800 mb-3">
                                 {navItems.find(i => i.id === "about")?.megaContent?.featured?.title}
                               </h3>
@@ -595,9 +653,11 @@ export default function Portfolio() {
                           <div className="space-y-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                               {navItems.find(i => i.id === "services")?.megaContent?.services?.map((service, idx) => (
-                                <motion.div
+                                <motion.button
                                   key={idx}
-                                  className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group"
+                                  type="button"
+                                  onClick={() => scrollToSection("services")}
+                                  className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 text-left group"
                                   whileHover={{ y: -5 }}
                                   initial={{ opacity: 0, scale: 0.95 }}
                                   animate={{ opacity: 1, scale: 1 }}
@@ -618,7 +678,7 @@ export default function Portfolio() {
                                       </div>
                                     ))}
                                   </div>
-                                </motion.div>
+                                </motion.button>
                               ))}
                             </div>
 
@@ -651,14 +711,14 @@ export default function Portfolio() {
                         {megaMenuOpen === "skills" && (
                           <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                              {navItems.find(i => i.id === "skills")?.megaContent?.techStack?.map((category, idx) => (
+                              {navItems.find(i => i.id === "skills")?.megaContent?.techStack?.map((category: { category: string; skills: any[] }, idx: number) => (
                                 <div key={idx} className="space-y-4">
                                   <h3 className="font-semibold text-gray-800 flex items-center gap-2">
                                     <span className="w-2 h-2 bg-black rounded-full"></span>
                                     {category.category}
                                   </h3>
                                   <div className="space-y-3">
-                                    {category.skills.map((skill, sIdx) => (
+                                    {category.skills.map((skill: any, sIdx: number) => (
                                       <motion.div
                                         key={sIdx}
                                         className="flex items-center gap-3"
@@ -666,9 +726,20 @@ export default function Portfolio() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: sIdx * 0.03 }}
                                       >
-                                        <span className="text-lg">{skill.icon}</span>
+                                        {skill.iconSlug ? (
+                                          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white">
+                                            <Image
+                                              src={`https://cdn.simpleicons.org/${skill.iconSlug}/${skill.iconHex}`}
+                                              alt={`${skill.name} logo`}
+                                              width={20}
+                                              height={20}
+                                              className="h-5 w-5 object-contain"
+                                            />
+                                          </span>
+                                        ) : (
+                                          <span className="text-lg">{skill.icon}</span>
+                                        )}
                                         <span className="text-sm font-medium text-gray-700">{skill.name}</span>
-                                        {/* ✅ NO PERCENTAGE BARS — CLEAN AND PROFESSIONAL */}
                                       </motion.div>
                                     ))}
                                   </div>
@@ -697,13 +768,51 @@ export default function Portfolio() {
                             </div>
                           </div>
                         )}
+
+                        {megaMenuOpen === "arcade" && (
+                          <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              {navItems.find(i => i.id === "arcade")?.megaContent?.games?.map((game, idx) => (
+                                <motion.button
+                                  key={game.id}
+                                  type="button"
+                                  onClick={() => router.push(`/arcade#${game.id}`)}
+                                  className="rounded-2xl border border-gray-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                                  initial={{ opacity: 0, y: 10 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.05 }}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
+                                      <game.icon className="h-5 w-5" />
+                                    </span>
+                                    <div>
+                                      <p className="text-sm font-semibold text-gray-900">{game.title}</p>
+                                      <p className="text-xs text-gray-500">{game.summary}</p>
+                                    </div>
+                                  </div>
+                                </motion.button>
+                              ))}
+                            </div>
+                            <Button
+                              onClick={() => router.push("/arcade")}
+                              className="w-full bg-black text-white hover:bg-gray-900"
+                            >
+                              Launch Arcade Lab
+                              <ChevronRight className="ml-2 h-4 w-4" />
+                            </Button>
+                          </div>
+                        )}
                       </div>
 
                       <div className="space-y-6">
                         <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-xl p-6">
                           <h3 className="font-bold text-xl mb-3">🚀 Let's Build Something Amazing</h3>
                           <p className="text-blue-100 mb-4">Ready to start your next project? I'm here to help.</p>
-                          <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold">
+                          <Button
+                            className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold"
+                            onClick={() => scrollToSection("contact")}
+                          >
                             Get Started
                             <ChevronRight className="h-4 w-4 ml-2" />
                           </Button>
@@ -712,22 +821,21 @@ export default function Portfolio() {
                         <div className="space-y-4">
                           <h3 className="font-semibold text-gray-800">Quick Links</h3>
                           <div className="space-y-2">
-                            {[
-                              { title: "View All Projects", icon: Grid },
-                              { title: "Download Portfolio", icon: Download },
-                              { title: "Schedule a Call", icon: Phone },
-                              { title: "Request Quote", icon: CircleDollarSign }
-                            ].map((link, idx) => (
-                              <motion.a
-                                key={idx}
-                                href="#"
-                                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
-                                whileHover={{ x: 5 }}
-                              >
-                                <link.icon className="h-4 w-4 text-gray-500 group-hover:text-black" />
-                                <span className="text-sm text-gray-700 group-hover:text-black">{link.title}</span>
-                              </motion.a>
-                            ))}
+                            {quickLinks.map((link) => {
+                              const Icon = link.icon;
+                              return (
+                                <motion.button
+                                  key={link.title}
+                                  type="button"
+                                  onClick={link.action}
+                                  className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-all duration-200 hover:bg-gray-100 group"
+                                  whileHover={{ x: 5 }}
+                                >
+                                  <Icon className="h-4 w-4 text-gray-500 group-hover:text-black" />
+                                  <span className="text-sm text-gray-700 group-hover:text-black">{link.title}</span>
+                                </motion.button>
+                              );
+                            })}
                           </div>
                         </div>
 
@@ -777,7 +885,7 @@ export default function Portfolio() {
                       <Button
                         variant={activeSection === section.id ? "default" : "ghost"}
                         size="sm"
-                        onClick={() => scrollToSection(section.id)}
+                        onClick={() => handleNavigation(section)}
                         className={cn(
                           "w-full justify-start gap-2 h-12 font-medium",
                           activeSection === section.id
