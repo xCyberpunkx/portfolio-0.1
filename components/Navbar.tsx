@@ -326,12 +326,6 @@ const navItems: NavItem[] = [
       }
     }
   },
-  {
-    id: "typing-lab",
-    label: "Typing",
-    icon: Keyboard,
-    href: "/typing"
-  }
 ];
 
 export default function Portfolio() {
