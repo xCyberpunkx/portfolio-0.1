@@ -1,0 +1,820 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Download, User, Mail, Code, Globe, Terminal, Shield, Cpu, Github, Linkedin,
+  ExternalLink, ChevronUp, Menu, X, Play, Gamepad2, Zap, Star, Rocket, Brain,
+  Trophy, Send, HelpCircle, Twitter, Phone, MessageCircle, GitBranch, ChevronDown,
+  Search as SearchIcon, Sparkles, Flame, Bot, Palette, Layout, Smartphone, Laptop,
+  Database, Cloud, Server, Network, ChartBar, BarChart3, TrendingUp, Award,
+  Users, Briefcase, GraduationCap, Calendar, Clock, MapPin, ChevronRight,
+  Eye, EyeOff, Key, Lock, Unlock, Settings, Bell, CircleDollarSign,
+  CreditCard, ShoppingCart, Heart, Bookmark, Share2, Copy, Edit3, Trash2,
+  MoreVertical, MoreHorizontal, Filter, Sliders, Grid, List, Grid3x3,
+  RotateCcw, RotateCw, Minimize2, Maximize2, Square, Minus, Plus, HopIcon
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+
+// CV Preview Modal Component
+const CVPreviewModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          onClick={() => onOpenChange(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center p-4 border-b border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900">Resume Preview</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onOpenChange(false)}
+                className="hover:bg-gray-100"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+
+            <div className="p-6 max-h-[70vh] overflow-y-auto">
+              {/* Header */}
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 pb-6 border-b border-gray-200">
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                    ZR
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Zine Eddine Rouabah</h1>
+                    <p className="text-gray-600">Senior Frontend Engineer & UI/UX Developer</p>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-4 md:mt-0">
+                  <Button size="sm" variant="outline" onClick={() => window.open("/resume.pdf", "_blank")}>
+                    <Download className="h-4 w-4 mr-1" /> PDF
+                  </Button>
+                  <Button size="sm" variant="default" onClick={() => window.location.href = "mailto:hello@zinerouabah.com"}>
+                    <Mail className="h-4 w-4 mr-1" /> Contact
+                  </Button>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <section className="mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-black rounded-full"></span>
+                  Summary
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  Passionate frontend engineer with 5+ years of experience building high-performance web applications. 
+                  Specialized in React, Next.js, and modern UI frameworks. Focused on creating accessible, 
+                  performant, and visually stunning user experiences.
+                </p>
+              </section>
+
+              {/* Experience */}
+              <section className="mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-black rounded-full"></span>
+                  Experience
+                </h2>
+                <div className="space-y-4">
+                  <div className="border-l-2 border-gray-200 pl-4">
+                    <div className="flex flex-wrap items-baseline gap-2 mb-1">
+                      <h3 className="font-medium text-gray-900">Senior Frontend Engineer</h3>
+                      <span className="text-gray-500">•</span>
+                      <span className="text-sm text-gray-600">2022 – Present</span>
+                    </div>
+                    <p className="text-gray-600">Tech Innovations Inc.</p>
+                    <ul className="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
+                      <li>Led frontend architecture for SaaS platform serving 50k+ users</li>
+                      <li>Reduced bundle size by 40% and improved Lighthouse score to 95+</li>
+                      <li>Mentored 3 junior developers and established code review standards</li>
+                    </ul>
+                  </div>
+                  <div className="border-l-2 border-gray-200 pl-4">
+                    <div className="flex flex-wrap items-baseline gap-2 mb-1">
+                      <h3 className="font-medium text-gray-900">Frontend Developer</h3>
+                      <span className="text-gray-500">•</span>
+                      <span className="text-sm text-gray-600">2020 – 2022</span>
+                    </div>
+                    <p className="text-gray-600">Digital Solutions Co.</p>
+                    <ul className="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
+                      <li>Developed responsive e-commerce platform with React and Node.js</li>
+                      <li>Implemented CI/CD pipeline reducing deployment time by 60%</li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+
+              {/* Skills */}
+              <section className="mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-black rounded-full"></span>
+                  Technical Skills
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-medium text-gray-800 mb-2">Frontend</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"].map((skill) => (
+                        <span key={skill} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-800 mb-2">Backend & Tools</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {["Node.js", "Python", "MongoDB", "Git", "Docker", "AWS"].map((skill) => (
+                        <span key={skill} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* Education */}
+              <section className="mb-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-black rounded-full"></span>
+                  Education
+                </h2>
+                <div className="border-l-2 border-gray-200 pl-4">
+                  <div className="flex flex-wrap items-baseline gap-2 mb-1">
+                    <h3 className="font-medium text-gray-900">B.Sc. Computer Science</h3>
+                    <span className="text-gray-500">•</span>
+                    <span className="text-sm text-gray-600">2016 – 2020</span>
+                  </div>
+                  <p className="text-gray-600">University of Technology</p>
+                </div>
+              </section>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const navItems = [
+  {
+    id: "home",
+    label: "Home",
+    icon: Rocket
+  },
+  {
+    id: "about",
+    label: "About",
+    icon: User,
+    megaContent: {
+      title: "About Me",
+      description: "Get to know the person behind the code",
+      sections: [
+        {
+          title: "My Story",
+          items: [
+            { title: "The Beginning", description: "How I discovered programming", icon: Rocket, badge: "Journey" },
+            { title: "Passion & Purpose", description: "Why I love what I do", icon: Heart, badge: "Values" },
+            { title: "Philosophy", description: "My approach to development", icon: Brain, badge: "Mindset" }
+          ]
+        },
+        {
+          title: "Credentials",
+          items: [
+            { title: "Education", description: "Academic achievements & learning", icon: GraduationCap, badge: "Degrees" },
+            { title: "Certifications", description: "Professional credentials & skills", icon: Award, badge: "Verified" },
+            { title: "Experience", description: "Professional background & roles", icon: Briefcase, badge: "Years" }
+          ]
+        }
+      ],
+      featured: {
+        title: "Quick Facts",
+        items: [
+          { icon: Calendar, text: "5+ Years Experience" },
+          { icon: Users, text: "50+ Projects Built" },
+          { icon: Trophy, text: "12+ Awards Won" },
+          { icon: Globe, text: "Global Clients" }
+        ]
+      }
+    }
+  },
+  {
+    id: "journey",
+    label: "Journey",
+    icon: Star
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    icon: Code
+  },
+  {
+    id: "services",
+    label: "Services",
+    icon: Zap,
+    megaContent: {
+      title: "Professional Services",
+      description: "End-to-end digital solutions for your business",
+      services: [
+        { title: "Web Development", description: "Custom websites and web applications", icon: Layout, features: ["Responsive Design", "SEO Optimization", "Performance", "Security"] },
+        { title: "Mobile Development", description: "iOS and Android applications", icon: Smartphone, features: ["Native Performance", "Cross-Platform", "App Store Optimization", "Push Notifications"] },
+        { title: "AI Integration", description: "Machine learning and automation", icon: Bot, features: ["Predictive Analytics", "Computer Vision", "NLP", "Custom Models"] },
+        { title: "UI/UX Design", description: "Beautiful and intuitive interfaces", icon: Palette, features: ["User Research", "Wireframing", "Prototyping", "Usability Testing"] }
+      ],
+      process: [
+        { step: "1", title: "Discovery", description: "Understand your needs" },
+        { step: "2", title: "Planning", description: "Create roadmap & timeline" },
+        { step: "3", title: "Development", description: "Build & test solutions" },
+        { step: "4", title: "Launch", description: "Deploy & optimize" },
+        { step: "5", title: "Support", description: "Ongoing maintenance" }
+      ]
+    }
+  },
+  {
+    id: "skills",
+    label: "Skills",
+    icon: Shield,
+    megaContent: {
+      title: "Technical Expertise",
+      description: "Comprehensive skill set across modern technologies",
+      techStack: [
+        {
+          category: "Frontend",
+          skills: [
+            { name: "React", level: 95, icon: "⚛️" },
+            { name: "Next.js", level: 90, icon: "🚀" },
+            { name: "TypeScript", level: 88, icon: "🔷" },
+            { name: "Tailwind CSS", level: 92, icon: "🎨" },
+            { name: "Framer Motion", level: 85, icon: "⚡" }
+          ]
+        },
+        {
+          category: "Backend",
+          skills: [
+            { name: "Node.js", level: 87, icon: "🟢" },
+            { name: "Python", level: 82, icon: "🐍" },
+            { name: "MongoDB", level: 85, icon: "🟤" },
+            { name: "PostgreSQL", level: 80, icon: "🐘" },
+            { name: "Firebase", level: 88, icon: "🔥" }
+          ]
+        },
+        {
+          category: "DevOps & Tools",
+          skills: [
+            { name: "Git", level: 95, icon: "🐙" },
+            { name: "Docker", level: 78, icon: "🐋" },
+            { name: "AWS", level: 75, icon: "☁️" },
+            { name: "Vercel", level: 90, icon: "⚡" },
+            { name: "Figma", level: 85, icon: "🎨" }
+          ]
+        }
+      ],
+      certifications: [
+        { title: "AWS Certified", provider: "Amazon", year: "2023" },
+        { title: "Google Analytics", provider: "Google", year: "2022" },
+        { title: "MongoDB University", provider: "MongoDB", year: "2023" },
+        { title: "React Advanced", provider: "Meta", year: "2024" }
+      ]
+    }
+  }
+];
+
+export default function Portfolio() {
+  const [activeSection, setActiveSection] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false); // ✅ For modal
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const navRef = useRef<HTMLDivElement>(null);
+  const megaRef = useRef<HTMLDivElement | null>(null);
+  const closeTimeout = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (navRef.current) {
+        const rect = navRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+      }
+    };
+
+    const handleDocMouseDown = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (!navRef.current?.contains(target) && !megaRef.current?.contains(target)) {
+        setMegaMenuOpen(null);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mousedown', handleDocMouseDown);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mousedown', handleDocMouseDown);
+    };
+  }, [mouseX, mouseY]);
+
+  const openMega = (id: string) => {
+    if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+    closeTimeout.current = null;
+    setMegaMenuOpen(id);
+  };
+
+  const scheduleCloseMega = (delay = 180) => {
+    if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+    closeTimeout.current = window.setTimeout(() => {
+      setMegaMenuOpen(null);
+      closeTimeout.current = null;
+    }, delay);
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
+    setMobileMenuOpen(false);
+    setMegaMenuOpen(null);
+
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect();
+      const elementRect = element.getBoundingClientRect();
+      const elementPosition = elementRect.top - bodyRect.top;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const springConfig = { damping: 25, stiffness: 150 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+
+  return (
+    <div>
+      {/* ✅ CV Preview Modal */}
+      <CVPreviewModal open={isPreviewOpen} onOpenChange={setIsPreviewOpen} />
+
+      <motion.nav
+        ref={navRef}
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/30 shadow-sm transition-all duration-500",
+          isScrolled && "shadow-md"
+        )}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", damping: 20, stiffness: 300 }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <motion.div
+              className="flex items-center"
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <div className="text-2xl font-bold bg-gradient-to-r from-black via-gray-800 to-gray-600 bg-clip-text text-transparent flex items-center gap-2">
+                <motion.div
+                  className="text-2xl"
+                  animate={{ rotate: [0, -6, 6, -3, 3, 0] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }}
+                >
+                  🐧
+                </motion.div>
+                <span className="font-mono tracking-tighter">
+                  <span className="md:hidden">ZR</span>
+                  <span className="hidden md:inline">Zine Eddine</span>
+                </span>
+              </div>
+            </motion.div>
+
+            <div className="hidden lg:flex items-center space-x-1">
+              {navItems.map((item) => {
+                const hasMega = !!item.megaContent;
+                return (
+                  <div key={item.id} className="relative">
+                    <motion.button
+                      onClick={() => hasMega ? openMega(item.id) : scrollToSection(item.id)}
+                      onMouseEnter={() => hasMega && openMega(item.id)}
+                      onMouseLeave={() => hasMega && scheduleCloseMega()}
+                      className={cn(
+                        "flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 relative",
+                        activeSection === item.id ? "text-black font-semibold" : "text-gray-600 hover:text-black",
+                        "hover:bg-gray-100"
+                      )}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      aria-haspopup={hasMega ? "true" : "false"}
+                      aria-expanded={megaMenuOpen === item.id}
+                    >
+                      <item.icon className="h-4 w-4 mr-2" />
+                      <span>{item.label}</span>
+                      {hasMega && (
+                        <ChevronDown
+                          className={cn(
+                            "ml-1 h-3 w-3 transition-transform duration-300",
+                            megaMenuOpen === item.id && "rotate-180"
+                          )}
+                        />
+                      )}
+
+                      {activeSection === item.id && (
+                        <motion.div
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-black rounded-full"
+                          layoutId="activeIndicator"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        />
+                      )}
+                    </motion.button>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    onClick={() => window.open("/resume.pdf", "_blank")}
+                    className="bg-gradient-to-r from-black to-gray-800 text-white hover:from-gray-800 hover:to-gray-900 transition-all duration-300 shadow-lg font-medium group relative overflow-hidden"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:animate-shine" />
+                    <Download className="h-4 w-4 mr-2 group-hover:animate-bounce" />
+                    <span>Download CV</span>
+                  </Button>
+                </motion.div>
+
+                {/* ✅ PREVIEW BUTTON NOW OPENS MODAL */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsPreviewOpen(true)}
+                  className="hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-black transition-all duration-300"
+                  aria-label="Preview CV"
+                  title="Preview CV"
+                >
+                  <Eye className="h-4 w-4" />
+                </motion.button>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
+          </div>
+
+          <AnimatePresence>
+            {megaMenuOpen && (
+              <motion.div
+                ref={(el) => {
+                  if (el) megaRef.current = el;
+                }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.18 }}
+                className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200/50 overflow-hidden z-50"
+                onMouseEnter={() => {
+                  if (closeTimeout.current) window.clearTimeout(closeTimeout.current);
+                }}
+                onMouseLeave={() => scheduleCloseMega()}
+              >
+                <div className="max-w-7xl mx-auto px-8 py-8">
+                  {navItems.find(item => item.id === megaMenuOpen)?.megaContent && (
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      <div className="lg:col-span-2">
+                        <div className="flex items-start gap-4 mb-6">
+                          <div className="flex-shrink-0 p-3 bg-black/10 rounded-xl">
+                            {(() => {
+                              const item = navItems.find(navItem => navItem.id === megaMenuOpen);
+                              const IconComponent = item?.icon;
+                              return IconComponent && <IconComponent className="h-6 w-6 text-black" />;
+                            })()}
+                          </div>
+                          <div>
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                              {navItems.find(item => item.id === megaMenuOpen)?.megaContent?.title}
+                            </h2>
+                            <p className="text-gray-600">
+                              {navItems.find(item => item.id === megaMenuOpen)?.megaContent?.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        {megaMenuOpen === "about" && (
+                          <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              {navItems.find(i => i.id === "about")?.megaContent?.sections?.map((section, idx) => (
+                                <div key={idx} className="space-y-3">
+                                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                                    <span className="w-2 h-2 bg-black rounded-full"></span>
+                                    {section.title}
+                                  </h3>
+                                  <div className="space-y-2">
+                                    {section.items.map((it, itemIdx) => (
+                                      <motion.a
+                                        key={itemIdx}
+                                        href="#"
+                                        className="flex items-start p-3 rounded-lg hover:bg-gray-50/80 transition-all duration-200 group"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: itemIdx * 0.05 }}
+                                      >
+                                        <div className="flex-shrink-0 mt-0.5 p-1.5 bg-gray-100 rounded-lg group-hover:bg-black group-hover:text-white">
+                                          <it.icon className="h-4 w-4" />
+                                        </div>
+                                        <div className="ml-3">
+                                          <div className="flex items-center gap-2">
+                                            <h4 className="font-medium text-gray-900 group-hover:text-black">{it.title}</h4>
+                                            <Badge variant="outline" className="text-xs px-2 py-0.5">
+                                              {it.badge}
+                                            </Badge>
+                                          </div>
+                                          <p className="text-sm text-gray-500 group-hover:text-gray-700 mt-1">{it.description}</p>
+                                        </div>
+                                      </motion.a>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+                              <h3 className="font-semibold text-gray-800 mb-3">
+                                {navItems.find(i => i.id === "about")?.megaContent?.featured?.title}
+                              </h3>
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                {navItems.find(i => i.id === "about")?.megaContent?.featured?.items?.map((fact, idx) => (
+                                  <div key={idx} className="flex items-center gap-2">
+                                    <fact.icon className="h-4 w-4 text-blue-600" />
+                                    <span className="text-sm text-gray-700">{fact.text}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {megaMenuOpen === "services" && (
+                          <div className="space-y-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                              {navItems.find(i => i.id === "services")?.megaContent?.services?.map((service, idx) => (
+                                <motion.div
+                                  key={idx}
+                                  className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 group"
+                                  whileHover={{ y: -5 }}
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: idx * 0.06 }}
+                                >
+                                  <div className="flex items-center gap-3 mb-3">
+                                    <div className="p-2 bg-black/10 rounded-lg group-hover:bg-black group-hover:text-white">
+                                      <service.icon className="h-5 w-5" />
+                                    </div>
+                                    <h3 className="font-semibold text-gray-800">{service.title}</h3>
+                                  </div>
+                                  <p className="text-gray-600 text-sm mb-3">{service.description}</p>
+                                  <div className="space-y-1 text-xs text-gray-500">
+                                    {service.features.map((feature, fIdx) => (
+                                      <div key={fIdx} className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                                        {feature}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+
+                            <div className="bg-gray-50 rounded-xl p-6">
+                              <h3 className="font-semibold text-gray-800 mb-4 text-center">Our Process</h3>
+                              <div className="flex flex-wrap justify-center gap-4">
+                                {navItems.find(i => i.id === "services")?.megaContent?.process?.map((step, idx) => (
+                                  <motion.div
+                                    key={idx}
+                                    className="flex flex-col items-center"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.05 }}
+                                  >
+                                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-bold mb-2">
+                                      {step.step}
+                                    </div>
+                                    <div className="text-center">
+                                      <div className="font-medium text-gray-800">{step.title}</div>
+                                      <div className="text-xs text-gray-600">{step.description}</div>
+                                    </div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ✅ SKILLS SECTION — PERCENTAGES REMOVED */}
+                        {megaMenuOpen === "skills" && (
+                          <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                              {navItems.find(i => i.id === "skills")?.megaContent?.techStack?.map((category, idx) => (
+                                <div key={idx} className="space-y-4">
+                                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                                    <span className="w-2 h-2 bg-black rounded-full"></span>
+                                    {category.category}
+                                  </h3>
+                                  <div className="space-y-3">
+                                    {category.skills.map((skill, sIdx) => (
+                                      <motion.div
+                                        key={sIdx}
+                                        className="flex items-center gap-3"
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: sIdx * 0.03 }}
+                                      >
+                                        <span className="text-lg">{skill.icon}</span>
+                                        <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+                                        {/* ✅ NO PERCENTAGE BARS — CLEAN AND PROFESSIONAL */}
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 border border-purple-100">
+                              <h3 className="font-semibold text-gray-800 mb-3">Certifications</h3>
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                                {navItems.find(i => i.id === "skills")?.megaContent?.certifications?.map((cert, idx) => (
+                                  <motion.div
+                                    key={idx}
+                                    className="bg-white rounded-lg p-3 border border-purple-200"
+                                    whileHover={{ scale: 1.02 }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: idx * 0.05 }}
+                                  >
+                                    <div className="font-medium text-gray-800 text-sm">{cert.title}</div>
+                                    <div className="text-xs text-gray-600">{cert.provider}</div>
+                                    <div className="text-xs text-purple-600 font-medium">{cert.year}</div>
+                                  </motion.div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-6">
+                        <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-xl p-6">
+                          <h3 className="font-bold text-xl mb-3">🚀 Let's Build Something Amazing</h3>
+                          <p className="text-blue-100 mb-4">Ready to start your next project? I'm here to help.</p>
+                          <Button className="w-full bg-white text-blue-600 hover:bg-gray-100 font-semibold">
+                            Get Started
+                            <ChevronRight className="h-4 w-4 ml-2" />
+                          </Button>
+                        </div>
+
+                        <div className="space-y-4">
+                          <h3 className="font-semibold text-gray-800">Quick Links</h3>
+                          <div className="space-y-2">
+                            {[
+                              { title: "View All Projects", icon: Grid },
+                              { title: "Download Portfolio", icon: Download },
+                              { title: "Schedule a Call", icon: Phone },
+                              { title: "Request Quote", icon: CircleDollarSign }
+                            ].map((link, idx) => (
+                              <motion.a
+                                key={idx}
+                                href="#"
+                                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 group"
+                                whileHover={{ x: 5 }}
+                              >
+                                <link.icon className="h-4 w-4 text-gray-500 group-hover:text-black" />
+                                <span className="text-sm text-gray-700 group-hover:text-black">{link.title}</span>
+                              </motion.a>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-xl p-4">
+                          <h3 className="font-semibold text-gray-800 mb-3">Recent Activity</h3>
+                          <div className="space-y-3">
+                            {[
+                              { title: "Launched E-commerce Platform", time: "2 hours ago" },
+                              { title: "Completed AI Integration", time: "1 day ago" },
+                              { title: "Published Case Study", time: "3 days ago" }
+                            ].map((activity, idx) => (
+                              <div key={idx} className="flex items-start gap-2">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2"></div>
+                                <div className="flex-1">
+                                  <div className="text-sm text-gray-700">{activity.title}</div>
+                                  <div className="text-xs text-gray-500">{activity.time}</div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.28 }}
+                className="lg:hidden mt-2 pb-4 border-t border-gray-100"
+              >
+                <div className="grid grid-cols-2 gap-2">
+                  {navItems.map((section) => (
+                    <motion.div
+                      key={section.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.06 }}
+                    >
+                      <Button
+                        variant={activeSection === section.id ? "default" : "ghost"}
+                        size="sm"
+                        onClick={() => scrollToSection(section.id)}
+                        className={cn(
+                          "w-full justify-start gap-2 h-12 font-medium",
+                          activeSection === section.id
+                            ? "bg-black text-white"
+                            : "text-gray-700 hover:text-black hover:bg-gray-100"
+                        )}
+                      >
+                        <section.icon className="h-4 w-4" />
+                        {section.label}
+                      </Button>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <Button
+                    onClick={() => window.open("/resume.pdf", "_blank")}
+                    className="bg-black text-white text-sm font-medium"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download CV
+                  </Button>
+                  {/* ✅ MOBILE PREVIEW BUTTON NOW OPENS MODAL */}
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsPreviewOpen(true)}
+                    className="text-gray-700 border-gray-300 hover:bg-gray-100"
+                  >
+                    <Eye className="h-4 w-4" />
+                    Preview
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
+    </div>
+  );
+}

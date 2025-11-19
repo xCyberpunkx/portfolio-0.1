@@ -3,9 +3,9 @@ import { PixelatedCanvas } from "@/components/ui/pixelated-canvas";
 
 export function PixelatedCanvasDemo() {
   return (
-    <div className="">
+    <div className="flex justify-center">
       <PixelatedCanvas
-        src="https://assets.aceternity.com/manu-red.png"
+        src="max.jpg"
         width={400}
         height={500}
         cellSize={3}
@@ -13,7 +13,7 @@ export function PixelatedCanvasDemo() {
         shape="square"
         backgroundColor="#000000"
         dropoutStrength={0.4}
-        interactive
+        interactive={true}
         distortionStrength={3}
         distortionRadius={80}
         distortionMode="swirl"
@@ -21,9 +21,9 @@ export function PixelatedCanvasDemo() {
         jitterStrength={4}
         jitterSpeed={4}
         sampleAverage
-        tintColor="#FFFFFF"
+        tintColor="#3333ff"
         tintStrength={0.2}
-        className="rounded-xl border border-neutral-800 shadow-lg"
+        className="rounded-xl border border-neutral-800 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-neutral-700"
       />
     </div>
   );

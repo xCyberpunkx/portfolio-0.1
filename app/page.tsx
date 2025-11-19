@@ -45,6 +45,8 @@ import AppleHelloEffectDemo from "@/components/HelloApple"
 import { AnimatedThemeTogglerDemo } from "@/components/toggle"
 import MacOSDockDemo from "@/components/Dock"
 import { TooltipCardDemo } from "@/components/tooltip"
+import Navbar from "@/components/Navbar"
+import { motion } from "framer-motion"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -189,119 +191,17 @@ if (isLoading) {
 
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
-    
-      
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="text-2xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent flex items-center gap-2">
-                <div className="hidden md:block text-3xl">🐧</div>
-                <span className="md:hidden">ZR</span>
-                <span className="hidden md:inline">Zine Eddine</span>
-              </div>
-            </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <a href="#about" className="text-gray-700 hover:text-black transition-colors font-medium">
-                About
-              </a>
-              <a href="#journey" className="text-gray-700 hover:text-black transition-colors font-medium">
-                Journey
-              </a>
-              <a href="#projects" className="text-gray-700 hover:text-black transition-colors font-medium">
-                Projects
-              </a>
-              <a href="#skills" className="text-gray-700 hover:text-black transition-colors font-medium">
-                Skills
-              </a>
-              <a href="#contact" className="text-gray-700 hover:text-black transition-colors font-medium">
-                Contact
-              </a>
-            </div>
 
-            <div className="flex items-center gap-4">
-              {/* Desktop Buttons */}
-              <div className="hidden md:flex items-center gap-4">
-               
-                <Button
-                  onClick={() => window.open("/resume.pdf", "_blank")}
-                  className="bg-black text-white hover:bg-gray-800 transition-all duration-300 hover:scale-105 shadow-lg font-medium animate-pulse"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download CV
-                </Button>
-              </div>
-
-              {/* Mobile Buttons */}
-              <div className="flex md:hidden items-center gap-2">
-                <Button
-                  onClick={() => window.open("/resume.pdf", "_blank")}
-                  size="sm"
-                  className="bg-black text-white hover:bg-gray-800 text-xs px-2"
-                >
-                  <Download className="h-3 w-3" />
-                </Button>
-                <Button onClick={() => setShowLogin(true)} variant="outline" size="sm" className="text-xs px-2">
-                  <User className="h-3 w-3" />
-                </Button>
-              </div>
-
-              
-              <Button
-                variant="ghost"
-                size="sm"
-                className="lg:hidden"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </Button>
-            </div>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="lg:hidden mt-4 pb-4 border-t border-gray-100">
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                {[
-                  { id: "hero", label: "Home", icon: Rocket },
-                  { id: "about", label: "About", icon: User },
-                  { id: "journey", label: "Journey", icon: Star },
-                  { id: "skills", label: "Skills", icon: Zap },
-                  { id: "projects", label: "Projects", icon: Code },
-                  { id: "services", label: "Services", icon: Globe },
-                  { id: "arcade", label: "Arcade", icon: Gamepad2 },
-                  { id: "contact", label: "Contact", icon: Mail },
-                ].map((section) => (
-                  <Button
-                    key={section.id}
-                    variant={activeSection === section.id ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => scrollToSection(section.id)}
-                    className={cn(
-                      "justify-start gap-2 transition-all duration-300",
-                      activeSection === section.id
-                        ? "bg-black text-white"
-                        : "text-gray-600 hover:text-black hover:bg-gray-50",
-                    )}
-                  >
-                    <section.icon className="h-4 w-4" />
-                    {section.label}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="pt-15">
        
         <section
   id="hero"
-  className=" min-h-screen flex items-center justify-center  sm:px-6 relative overflow-hidden"
+  className="min-h-screen flex flex-col items-center justify-center sm:px-6 relative overflow-hidden py-12 lg:py-20"
 >
-  {/* Animated Background Dots & Icons */}
+  {/* Animated Background */}
   <div className="absolute inset-0 pointer-events-none opacity-5">
     {animatedDots.map((dot, i) => (
       <div
@@ -314,140 +214,104 @@ if (isLoading) {
         }}
       />
     ))}
-    {/* Floating distro icons */}
-    {[
-      { icon: "🐧", top: "15%", left: "10%" },
-      { icon: "🅰️", top: "25%", left: "85%" },
-      { icon: "🇬", top: "75%", left: "5%" },
-    ].map((item, idx) => (
-      <div
-        key={idx}
-        className="absolute text-xl opacity-30 animate-bounce"
-        style={{
-          top: item.top,
-          left: item.left,
-          animationDelay: `${idx * 0.5}s`,
-          animationDuration: "3s",
-        }}
-      >
-        {item.icon}
-      </div>
-    ))}
-  </div>
-
-  {/* Two-Column Layout */}
-  <div className="relative z-10 w-full max-w-7xl mx-auto">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16 items-center">
-     {/* Left: Text Content — Vibrant, Functional, Linux-Flavored */}
-<div className="text-center lg:text-left space-y-8">
-  <div className="space-y-4">
-    
-   {/* Terminal Prompt - Centered */}
-        <div className="flex items-center justify-center  text-xs sm:text-sm font-mono tracking-wide text-gray-500">
-          <span className="text-green-500">●</span>
-          <span className="text-blue-600 font-semibold">root</span>
-          <span>@</span>
-          <span className="text-blue-500 flex items-center">
-            archlinux <span className="text-base">🅰️</span>
-          </span>
-          <span>:~$</span>
-        </div>
-
-        {/* Name - Centered */}
-        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight flex justify-center">
-          <TextPressureDemo />
-</h1>
-
-<TooltipCardDemo/>
-</div>
-    {/* Tagline 
-    <p className="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-      Software Engineer from Algeria. Passionate about{" "}
-      <span className="font-semibold text-gray-800"><strong>Rust</strong></span>,{" "}
-      <span className="font-semibold text-gray-800"><strong>C++</strong></span>, and secure systems on{" "}
-      <span className="font-semibold text-gray-800"><strong>Linux</strong></span> 🐧.
-    </p>
-  */}
-
-  {/* Badges — Clean, Interactive */}
-<div className="flex flex-wrap justify-center lg:justify-start gap-3">
-  {[
-  { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" />, color: "from-orange-400/80 to-orange-500/80", glow: "shadow-orange-300/30" },
-  { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" />, color: "from-red-400/80 to-red-500/80", glow: "shadow-red-300/30" },
-  { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" />, color: "from-gray-700/80 to-gray-800/80", glow: "shadow-gray-400/30" },
-  { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" />, color: "from-green-500/80 to-emerald-600/80", glow: "shadow-green-300/30" },
-  { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" />, color: "from-purple-500/80 to-indigo-600/80", glow: "shadow-purple-300/30" },
-].map((item, i) => (
-    <div
-      key={item.label}
-      className="group relative"
-      onMouseEnter={() => setHoveredProject(i)}
-      onMouseLeave={() => setHoveredProject(null)}
-    >
-      <Badge
-        variant="default"
-        className={`
-          px-4 py-2.5 text-sm font-medium text-gray-800
-          bg-white/60 backdrop-blur-lg
-          border border-white/20
-          shadow-md group-hover:shadow-lg
-          rounded-xl
-          transition-all duration-300
-          hover:scale-[1.03] hover:bg-white/80
-          cursor-pointer
-          flex items-center gap-2
-          overflow-hidden
-        `}
-      >
-        <span className="text-base">{item.icon}</span>
-        <span>{item.label}</span>
-        {/* Subtle inner glow on hover */}
+    {[{ icon: "🐧", top: "15%", left: "10%" }, { icon: "🅰️", top: "25%", left: "85%" }, { icon: "🇬", top: "75%", left: "5%" }].map(
+      (item, idx) => (
         <div
-          className={`absolute inset-0 rounded-xl bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-15 transition-opacity duration-300 pointer-events-none`}
-        />
-      </Badge>
-    </div>
-  ))}
-</div>
-
-  {/* Buttons — Polished */}
-  <div className="flex flex-col items-center sm:items-start gap-6">
-  {/* Buttons Row */}
-  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-    <Button
-      onClick={() => scrollToSection("projects")}
-      className="bg-black text-white hover:bg-white hover:text-black hover:border-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 shadow-md"
-    >
-      View My Work
-    </Button>
-    <Button
-      variant="outline"
-      onClick={() => scrollToSection("contact")}
-      className="border-2 border-black text-black hover:bg-black hover:text-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
-    >
-      Get In Touch
-    </Button>
+          key={idx}
+          className="absolute text-xl opacity-30 animate-bounce"
+          style={{
+            top: item.top,
+            left: item.left,
+            animationDelay: `${idx * 0.5}s`,
+            animationDuration: "3s",
+          }}
+        >
+          {item.icon}
+        </div>
+      )
+    )}
   </div>
 
-  
-</div>
- 
-</div>
-
-      {/* Right: Canvas */}
-      <div className="flex justify-center lg:justify-end">
-        <div className="w-full max-w-md h-[400px] relative">
-          <div className="relative inset-0 bg-white/30 backdrop-blur-sm rounded-2xl border border-gray-200" />
-          <div className="relative z-10">
-            <PixelatedCanvasDemo />
-          </div>
-        </div>
-     
+  {/* Main Content: Two Columns */}
+  <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 px-4">
+    {/* Left: Text Content */}
+    <div className="flex-1 w-full lg:w-auto flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 lg:space-y-8">
+      {/* Terminal Prompt */}
+      <div className="flex items-center text-xs sm:text-sm font-mono tracking-wide text-gray-500">
+        <span className="text-green-500">●</span>
+        <span className="text-blue-600 font-semibold ml-1">root</span>
+        <span className="mx-0.5">@</span>
+        <span className="text-blue-500 flex items-center">
+          archlinux <span className="text-base ml-0.5">🅰️</span>
+        </span>
+        <span className="ml-1">:~$</span>
       </div>
-    </div>  <div className="flex justify-start lg:justify-start my-10">
-  <MacOSDockDemo />
-</div>
 
+      {/* Name */}
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tighter">
+        <TextPressureDemo />
+      </h1>
+
+      {/* Tagline / Tooltip */}
+      <div className="max-w-2xl">
+        <TooltipCardDemo />
+      </div>
+
+      {/* Badges */}
+      <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+        {[
+          { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" /> },
+          { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" /> },
+          { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" /> },
+          { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" /> },
+          { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" /> },
+        ].map((item) => (
+          <Badge
+            key={item.label}
+            variant="default"
+            className="px-4 py-2.5 text-sm font-medium text-gray-800 bg-white/50 backdrop-blur-md border border-white/20 shadow-sm rounded-xl flex items-center gap-2 hover:scale-[1.03] hover:bg-white/70 transition-transform duration-300 cursor-pointer"
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </Badge>
+        ))}
+      </div>
+
+      {/* CTA Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2">
+        <Button
+          onClick={() => scrollToSection("projects")}
+          className="bg-black text-white hover:bg-white hover:text-black hover:border-black px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 shadow-md"
+        >
+          View My Work
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => scrollToSection("contact")}
+          className="border-2 border-black text-black hover:bg-black hover:text-white px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105"
+        >
+          Get In Touch
+        </Button>
+      </div>
+    </div>
+
+    {/* Right: Canvas */}
+    <div className="flex-1 w-full max-w-md flex justify-left ">
+      <div className="w-full h-[400px] relative">
+        {/* Glassmorphism container */}
+        <div className="absolute inset-0 bg-white/20 backdrop-blur-lg rounded-2xl border border-gray-200/50 shadow-xl" />
+        <div className="relative z-10 w-full h-full">
+          <PixelatedCanvasDemo />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* macOS Dock — now aligned *with* the hero content */}
+  <div className="mt-12 w-full max-w-5xl px-4">
+    <div className="flex justify-left lg:justify-start">
+      <MacOSDockDemo />
+    </div>
   </div>
 </section>
 <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
@@ -669,235 +533,193 @@ if (isLoading) {
           </div>
         </section>
 
-        <section id="projects" className="py-32 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-6xl font-bold mb-8 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent animate-fade-in-up">
-                Featured Projects
-              </h2>
-              <p className="text-xl text-gray-600 max-w-4xl mx-auto animate-fade-in-up-delay leading-relaxed">
-                Building the future with Secure, Scalable innovative solutions. Each project
-                represents a journey of learning, problem-solving, and pushing technical boundaries.
-              </p>
-            </div>
+<section id="projects" className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
+  <div className="max-w-7xl mx-auto">
+    {/* Header */}
+    <div className="text-center mb-16">
+      <div className="inline-flex items-center gap-3 px-4 py-2 bg-black/5 rounded-full mb-6">
+        <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+        <span className="text-sm font-medium text-gray-700">Featured Work</span>
+      </div>
+      <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+        Engineering Excellence
+      </h2>
+      <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+        Production-grade systems built with security, scalability, and user experience as core principles.
+      </p>
+    </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-             {/* {[
-                {
-                  title: "RustSec Scanner",
-                  description:
-                    "Advanced vulnerability scanner built in Rust for real-time security analysis with ML-powered threat detection and automated reporting.",
-                  image: "/rust-security-scanner.png",
-                  tags: ["Rust", "Security", "Machine Learning", "CLI"],
-                  github: "https://github.com/zinedine/rustsec-scanner",
-                  demo: "https://rustsec-demo.vercel.app",
-                  year: "2024",
-                  featured: true,
-                },
-                {
-                  title: "Arch Automation Suite",
-                  description:
-                    "Complete Arch Linux installation and configuration automation with Hyprland, dotfiles, and custom scripts for seamless setup.",
-                  image: "/arch-hyprland-script.png",
-                  tags: ["Bash", "Linux", "Automation", "Hyprland"],
-                  github: "https://github.com/zinedine/arch-automation",
-                  year: "2024",
-                  featured: true,
-                },
-                {
-                  title: "Memory Allocator Pro",
-                  description:
-                    "High-performance custom memory allocator in C++ with advanced debugging, profiling capabilities, and memory leak detection.",
-                  image: "/c-memory-allocator-debug.png",
-                  tags: ["C++", "Systems", "Performance", "Memory"],
-                  github: "https://github.com/zinedine/memory-allocator",
-                  year: "2023",
-                  featured: true,
-                },
-                {
-                  title: "Packet Analyzer Pro",
-                  description:
-                    "Real-time network packet analysis tool with protocol detection, traffic visualization, and security threat identification.",
-                  image: "/network-analyzer-interface.png",
-                  tags: ["C", "Networking", "Security", "Wireshark"],
-                  github: "https://github.com/zinedine/packet-analyzer",
-                  year: "2023",
-                  featured: false,
-                },
-                {
-                  title: "Vim Plugin Suite",
-                  description:
-                    "Collection of powerful Neovim plugins for systems programming with LSP integration, syntax highlighting, and productivity tools.",
-                  image: "/neovim-custom-editor.png",
-                  tags: ["Lua", "Vim", "LSP", "Productivity"],
-                  github: "https://github.com/zinedine/vim-plugins",
-                  year: "2024",
-                  featured: false,
-                },
-                {
-                  title: "Blockchain Explorer",
-                  description:
-                    "Fast blockchain explorer built with Rust and WebAssembly for real-time transaction analysis and network visualization.",
-                  image: "/blockchain-explorer-dashboard.png",
-                  tags: ["Rust", "WebAssembly", "Blockchain", "React"],
-                  github: "https://github.com/zinedine/blockchain-explorer",
-                  demo: "https://blockchain-explorer-demo.vercel.app",
-                  year: "2024",
-                  featured: false,
-                */}
-                {[
-                {
-                  title: "Cabinet BENSERAI",
-                  description:
-                    "Cabinet BENSERAI’s website is a professional platform that showcases their accounting, audit, tax, and legal services. It highlights their expertise, builds client trust with testimonials and insights, and makes it easy for businesses to contact them and request support.",
-                  image: "/cabinet.png",
-                  tags: ["Web", "PHP", "Elementor", "WP"],                  
-                  demo: "https://cabinet-benserai.com/",
-                  year: "2023",
-                  featured: true,
-                },
-                {
-                  title: "Optimize Construction",
-                  description:
-                    "Optimize Construction’s website is a professional digital platform showcasing their modular construction and space-optimization solutions. From durable modular cabins and bases of life to industrial shelving, material handling systems, and consumables.",
-                  image: "/optimize.png",
-                  tags: ["Wordpress", "Elementor", "Cloudflare"], 
-                  demo: "https://optimize-construction.dz",
-                  year: "2024",
-                  featured: true,
-                },
-                {
-                  title: "Remdani Dental Center",
-                  description:
-                    "A professional landing page for Remdani Dental Center. This landing page was designed to showcase the services and professionalism of Remdani Dental Center. With a clean and modern design, it provides visitors with essential information about the clinic, its services, and contact details. The website is optimized for performance and accessibility, ensuring a great user experience across all devices.",
-                  image: "/ramdani.png",
-                  tags: ["Typescript", "Oauth", "Nextjs", "Expressjs"],
-                  github: "https://github.com/xCyberpunkx/dental-frontend",
-                  demo: "https://ramdani.vercel.app/",
-                  year: "2023",
-                  featured: true,
-                },
-                {
-                  title: "Sawerni photography platform",
-                  description:
-                    "Sawerni is Algeria’s premier photography platform—connecting clients with verified professional photographers across the country. Users can explore curated portfolios, communicate directly with artists, and instantly book sessions with seamless scheduling and secure payments.",
-                  image: "/sawerni.png",
-                  tags: ["Typescript", "JWT", "Prisma", "PostgreSQL"],
-                  github: "https://github.com/xCyberpunkx/sawerni-kv",
-                  demo: "https://sawerni.vercel.app/",
-                  year: "2025",
-                  featured: true,
-                },
-                {
-                  title: "architecture and engineering studio",
-                  description:
-                    "Moktari Amel’s website is a refined digital platform for an architecture and engineering studio in Blida, Algeria. It promotes bespoke, functional, and sustainable design from the initial sketch to project delivery.",
-                  image: "/amel.png",
-                  tags: ["Nextjs", "Typescript", "Tailwind", "Vercel"],
-                  demo: "https://betarchimoktariamel.com/",
-                  year: "2024",
-                  featured: false,
-                },
-                {
-                  title: "Personal Potfolio Website v0.1",
-                  description:
-                    "My first personal website, built to introduce myself as a software engineer and showcase my projects, skills, and interests. A clean, modern portfolio that reflects my passion for coding, Linux, and security.",
-                  image: "/personal.png",
-                  tags: ["Laravel", "WebAssembly", "linux", "React"],
-                  github: "https://github.com/xCyberpunkx/res",
-                  demo: "https://0xnira.vercel.app/",
-                  year: "2024",
-                  featured: false,
-                }
+    {/* Projects Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {[
+        {
+          title: "Sawerni",
+          description: "Algeria’s premier photography platform connecting clients with verified photographers nationwide.",
+          image: "/sawerni.png",
+          tags: ["Rust", "TypeScript", "PostgreSQL", "JWT"],
+          year: "2025",
+          featured: true,
+          github: "https://github.com/xCyberpunkx/sawerni-kv",
+          demo: "https://sawerni.vercel.app/",
+        },
+        {
+          title: "Optimize Construction",
+          description: "Professional platform for modular construction and industrial solutions in Algeria.",
+          image: "/optimize.png",
+          tags: ["WordPress", "Elementor", "Cloudflare", "PHP"],
+          year: "2024",
+          featured: true,
+          demo: "https://optimize-construction.dz",
+        },
+        {
+          title: "Remdani Dental Center",
+          description: "Modern landing page for a dental clinic, optimized for conversion & accessibility.",
+          image: "/ramdani.png",
+          tags: ["Next.js", "TypeScript", "OAuth", "Tailwind"],
+          year: "2023",
+          featured: true,
+          github: "https://github.com/xCyberpunkx/dental-frontend",
+          demo: "https://ramdani.vercel.app/",
+        },
+        {
+          title: "Cabinet BENSERAI",
+          description: "Professional platform for accounting, audit, tax, and legal services.",
+          image: "/cabinet.png",
+          tags: ["PHP", "Elementor", "WP", "Cloudflare"],
+          year: "2023",
+          featured: false,
+          demo: "https://cabinet-benserai.com/",
+        },
+        {
+          title: "Architecture Studio",
+          description: "Digital platform for an architecture studio in Blida, Algeria.",
+          image: "/amel.png",
+          tags: ["Next.js", "TypeScript", "Tailwind", "Vercel"],
+          year: "2024",
+          featured: false,
+          demo: "https://betarchimoktariamel.com/",
+        },
+        {
+          title: "Personal Portfolio v0.1",
+          description: "My first personal website, built to introduce myself as a software engineer.",
+          image: "/personal.png",
+          tags: ["Laravel", "WebAssembly", "Linux", "React"],
+          year: "2024",
+          featured: false,
+          github: "https://github.com/xCyberpunkx/res",
+          demo: "https://0xnira.vercel.app/",
+        },
+      ].map((project, idx) => (
+        <motion.div
+          key={project.title}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: idx * 0.1, duration: 0.6 }}
+          className="group"
+        >
+          <Card className="overflow-hidden h-full border-2 border-gray-100 hover:border-gray-300 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
+            {/* Image */}
+            <div className="relative overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
-              ].map((project, index) => (
-                <div
-                  key={project.title}
-                  className={cn(
-                    "group relative animate-fade-in-up transform-gpu",
-                    project.featured && "lg:col-span-1 md:col-span-1",
-                  )}
-                  style={{ animationDelay: `${index * 0.15}s` }}
-                  onMouseEnter={() => setHoveredProject(index)}
-                  onMouseLeave={() => setHoveredProject(null)}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-600 rounded-3xl blur-3xl opacity-0 group-hover:opacity-30 transition-all duration-700 scale-95 group-hover:scale-105" />
-                  <Card className="relative bg-white border-2 border-gray-100 shadow-xl hover:shadow-3xl transition-all duration-700 hover:-translate-y-8 hover:rotate-2 h-full overflow-hidden group-hover:border-black/20">
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        className="w-full h-56 object-cover transition-all duration-700 group-hover:scale-110"
-                        loading="lazy"
-                        decoding="async"
-                        fetchPriority={index < 3 ? "high" : "low"}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                      <div className="absolute top-4 right-4">
-                        <Badge variant="secondary" className="bg-white/95 text-black font-semibold shadow-lg">
-                          {project.year}
-                        </Badge>
-                      </div>
-                      {project.featured && (
-                        <div className="absolute top-4 left-4">
-                          <Badge className="bg-black text-white font-semibold animate-pulse shadow-lg">
-                            <Star className="h-3 w-3 mr-1" />
-                            Featured
-                          </Badge>
-                        </div>
-                      )}
-                    </div>
-
-                    <CardContent className="p-8">
-                      <h3 className="text-2xl font-bold mb-4 group-hover:text-black transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-600 mb-6 text-base leading-relaxed">{project.description}</p>
-
-                      <div className="flex flex-wrap gap-2 mb-8">
-                        {project.tags.map((tag) => (
-                          <Badge
-                            key={tag}
-                            variant="outline"
-                            className="text-sm hover:bg-black hover:text-white transition-all duration-300 hover:scale-105"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-4">
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="flex-1 hover:bg-black hover:text-white transition-all duration-300 bg-transparent"
-                          asChild
-                        >
-                          <a href={project.github} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-4 w-4 mr-2" />
-                            Code
-                          </a>
-                        </Button>
-                        {project.demo && (
-                          <Button
-                            size="sm"
-                            className="flex-1 bg-black text-white hover:bg-gray-800 transition-all duration-300"
-                            asChild
-                          >
-                            <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="h-4 w-4 mr-2" />
-                              Demo
-                            </a>
-                          </Button>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+              {/* Badges */}
+              <div className="absolute top-4 right-4">
+                <Badge variant="secondary" className="bg-white/90 text-black font-semibold shadow-sm">
+                  {project.year}
+                </Badge>
+              </div>
+              {project.featured && (
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-gradient-to-r  text-white px-3 py-1 text-xs font-bold shadow-lg">
+                    <Star className="h-3 w-3 mr-1 inline" /> Featured
+                  </Badge>
                 </div>
-              ))}
+              )}
             </div>
-          </div>
-        </section>
+
+            {/* Content */}
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-black transition-colors">
+                {project.title}
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                {project.description}
+              </p>
+
+              {/* Tech Tags */}
+              <div className="flex flex-wrap gap-2 mb-5">
+                {project.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="outline"
+                    className="text-xs px-2 py-1 bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700 transition-colors"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                {project.github && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 hover:bg-black hover:text-white"
+                    onClick={() => window.open(project.github, "_blank")}
+                  >
+                    <Github className="h-3 w-3 mr-1" />
+                    Code
+                  </Button>
+                )}
+                {project.demo && (
+                  <Button
+                    size="sm"
+                    className="flex-1 bg-black text-white hover:bg-gray-800"
+                    onClick={() => window.open(project.demo, "_blank")}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    Live
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* CTA */}
+    <div className="mt-20 text-center">
+      <p className="text-gray-600 mb-6">All projects are open for collaboration and contribution</p>
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button
+          onClick={() => window.open("https://github.com/xCyberpunkx", "_blank")}
+          className="bg-black text-white hover:bg-gray-800 px-6 py-3 font-medium"
+        >
+          <Github className="h-4 w-4 mr-2" />
+          View GitHub
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => scrollToSection("contact")}
+          className="border-black text-black hover:bg-black hover:text-white px-6 py-3 font-medium"
+        >
+          <Send className="h-4 w-4 mr-2" />
+          Discuss a Project
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* Services Section */}
         <section id="services" className="py-24 px-6 bg-gray-50">
