@@ -542,10 +542,11 @@ if (isLoading) {
         <span className="text-sm font-medium text-gray-700">Featured Work</span>
       </div>
       <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-        Engineering Excellence
+       Featured Projects
+
       </h2>
       <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-        Production-grade systems built with security, scalability, and user experience as core principles.
+        Building the future with Secure, Scalable innovative solutions. Each project represents a journey of learning, problem-solving, and pushing technical boundaries.
       </p>
     </div>
 
