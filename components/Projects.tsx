@@ -179,9 +179,7 @@ export function Projects() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="space-y-4 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">Project Atlas</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-              2 web builds, 2 desktop labs, 2 C++ experiments
-            </h2>
+           
             <p className="text-gray-600">
               Tap any filter to reshuffle the grid. Each tile ships with real demos, repo links, and screenshots.
             </p>
