@@ -17,7 +17,8 @@ import {
   CreditCard, ShoppingCart, Heart, Bookmark, Share2, Copy, Edit3, Trash2,
   MoreVertical, MoreHorizontal, Filter, Sliders, Grid, List, Grid3x3,
   RotateCcw, RotateCw, Minimize2, Maximize2, Square, Minus, Plus, HopIcon,
-  Keyboard
+  Keyboard,
+  Book
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,9 +32,6 @@ type NavItem = {
   megaContent?: any;
   href?: string;
 };
-
-// CV Preview Modal Component
-
 
 const navItems: NavItem[] = [
   {
@@ -67,11 +65,6 @@ const navItems: NavItem[] = [
         }
       ]
     }
-  },
-  {
-    id: "journey",
-    label: "Journey",
-    icon: Star
   },
   {
     id: "projects",
@@ -111,31 +104,31 @@ const navItems: NavItem[] = [
         {
           category: "Frontend",
           skills: [
-            { name: "React", level: 95,  iconHex: "61DAFB" },
+            { name: "React", level: 95, iconHex: "61DAFB" },
             { name: "Next.js", level: 90, iconHex: "ffffff" },
             { name: "TypeScript", level: 88, iconHex: "3178C6" },
             { name: "Tailwind CSS", level: 92, iconHex: "38BDF8" },
-            { name: "Framer Motion", level: 85,  iconHex: "0055FF" }
+            { name: "Framer Motion", level: 85, iconHex: "0055FF" }
           ]
         },
         {
           category: "Backend",
           skills: [
-            { name: "Node.js", level: 87,  iconHex: "5FA04E" },
-            { name: "Python", level: 82,  iconHex: "3776AB" },
-            { name: "MongoDB", level: 85,  iconHex: "47A248" },
-            { name: "PostgreSQL", level: 80,  iconHex: "4169E1" },
+            { name: "Node.js", level: 87, iconHex: "5FA04E" },
+            { name: "Python", level: 82, iconHex: "3776AB" },
+            { name: "MongoDB", level: 85, iconHex: "47A248" },
+            { name: "PostgreSQL", level: 80, iconHex: "4169E1" },
             { name: "Firebase", level: 88, iconHex: "FFCA28" }
           ]
         },
         {
           category: "DevOps & Tools",
           skills: [
-            { name: "Git", level: 95,  iconHex: "F05032" },
-            { name: "Docker", level: 78,  iconHex: "2496ED" },
+            { name: "Git", level: 95, iconHex: "F05032" },
+            { name: "Docker", level: 78, iconHex: "2496ED" },
             { name: "AWS", level: 75, iconHex: "FF9900" },
             { name: "Vercel", level: 90, iconHex: "000000" },
-            { name: "Figma", level: 85,  iconHex: "F24E1E" }
+            { name: "Figma", level: 85, iconHex: "F24E1E" }
           ]
         }
       ],
@@ -146,6 +139,12 @@ const navItems: NavItem[] = [
         { title: "React Advanced", provider: "Meta", year: "2024" }
       ]
     }
+  },
+  {
+    id: "blog",
+    label: "Blog",
+    icon: Book,
+    href: "/blog"
   },
   {
     id: "arcade",
@@ -266,7 +265,6 @@ export default function Portfolio() {
 
   return (
     <div>
-
       <motion.nav
         ref={navRef}
         className={cn(
@@ -360,9 +358,6 @@ export default function Portfolio() {
                     <span>Download CV</span>
                   </Button>
                 </motion.div>
-
-              
-                
               </div>
 
               <Button
@@ -527,7 +522,6 @@ export default function Portfolio() {
                           </div>
                         )}
 
-                        {/* ✅ SKILLS SECTION — PERCENTAGES REMOVED */}
                         {megaMenuOpen === "skills" && (
                           <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -728,7 +722,9 @@ export default function Portfolio() {
                     <Download className="h-4 w-4 mr-2" />
                     Download CV
                   </Button>
-                  
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <Image src="/pirelli.png" alt="Pirelli Logo" width={100} height={40} />
                 </div>
               </motion.div>
             )}

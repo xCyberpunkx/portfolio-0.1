@@ -39,7 +39,7 @@ import { TooltipCardDemo } from "@/components/tooltip"
 import Navbar from "@/components/Navbar"
 import { motion } from "framer-motion"
 import { Projects } from "@/components/Projects"
-
+import Image from "next/image"
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
   loading: () => <div className="min-h-[400px]" />,
@@ -412,9 +412,19 @@ if (isLoading) {
         <div className="space-y-6">
           <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
-              <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
-            </div>
+  <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
+
+  {/* Pirelli Logo in between */}
+  <Image
+    src="/pirelli.png"
+    alt="Pirelli Logo"
+    width={60}
+    height={20}
+    className="object-contain mx-2"
+  />
+
+  <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
+</div>
             <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
               <PixelatedCanvasDemo />
             </div>
