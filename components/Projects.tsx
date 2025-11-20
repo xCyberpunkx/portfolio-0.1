@@ -56,19 +56,20 @@ const projects: Project[] = [
     type: "web",
   },
   {
-    title: "Personal Portfolio v1",
-    category: "Web Personal",
+    title: "SignalOps Console Suite",
+    category: "Desktop Telemetry",
     description:
-      "First release of my interactive portfolio with ripple-grid hero, case studies, and blogging surface built to showcase systems + UI craft.",
-    stack: ["Next.js", "Tailwind", "Framer Motion", "Vercel"],
+      "C#/.NET 8 console toolkit that streams factory telemetry, triages anomalies, and syncs with ClickUp-style command boards.",
+    stack: ["C#", ".NET 8", "gRPC", "Azure"],
     stats: [
-      { label: "Version", value: "v1" },
-      { label: "Ship", value: "2024" },
+      { label: "Nodes", value: "42 edge" },
+      { label: "Ingest", value: "1.3M evt/min" },
     ],
     image: "/personal.png",
-    link: "https://0xnira.vercel.app/",
+    link: "https://github.com/xCyberpunkx/signal-ops",
+    github: "https://github.com/xCyberpunkx/signal-ops",
     accent: "from-indigo-50 via-white to-white",
-    type: "web",
+    type: "desktop",
   },
   {
     title: "Chronicle Scheduler",
@@ -179,7 +180,9 @@ export function Projects() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="space-y-4 max-w-2xl">
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gray-500">Project Atlas</p>
-           
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+              2 web builds, 2 desktop labs, 2 C++ experiments
+            </h2>
             <p className="text-gray-600">
               Tap any filter to reshuffle the grid. Each tile ships with real demos, repo links, and screenshots.
             </p>
