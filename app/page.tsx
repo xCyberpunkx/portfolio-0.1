@@ -37,9 +37,9 @@ import AppleHelloEffectDemo from "@/components/HelloApple"
 import MacOSDockDemo from "@/components/Dock"
 import { TooltipCardDemo } from "@/components/tooltip"
 import Navbar from "@/components/Navbar"
-import { motion } from "framer-motion"
-import { Projects } from "@/components/Projects"
 import Image from "next/image"
+import { Projects } from "@/components/Projects"
+import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect"
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
   loading: () => <div className="min-h-[400px]" />,
@@ -148,87 +148,7 @@ export default function Portfolio() {
     { name: "Systems Design", level: 90, blurb: "Streaming, sharding, HA", tone: "bg-slate-600" },
     { name: "DevOps", level: 84, blurb: "CI/CD, observability, SRE", tone: "bg-purple-500" },
   ]
-  const projectShowcase: Array<{
-    title: string;
-    description: string;
-    impact: string;
-    badge: string;
-    year: string;
-    image: string;
-    stack: string[];
-    metrics: Array<{ label: string; value: string }>;
-    github?: string;
-    demo?: string;
-  }> = [
-    {
-      title: "Sawerni",
-      description: "Algeria’s platform for matching clients with verified photographers in seconds.",
-      impact: "3.2× faster onboarding and automated trust scoring with Rust microservices.",
-      badge: "Flagship Case Study",
-      year: "2025",
-      image: "/sawerni.png",
-      stack: ["Rust", "TypeScript", "PostgreSQL", "JWT"],
-      metrics: [
-        { label: "Latency", value: "120ms p95" },
-        { label: "Coverage", value: "48 provinces" },
-      ],
-      github: "https://github.com/xCyberpunkx/sawerni-kv",
-      demo: "https://sawerni.vercel.app/",
-    },
-    {
-      title: "Optimize Construction",
-      description: "Enterprise site for modular construction specialists with realtime lead routing.",
-      impact: "Headless CMS + edge rendering improved SEO impressions by 61%.",
-      badge: "Energy & Industry",
-      year: "2024",
-      image: "/optimize.png",
-      stack: ["Next.js", "Cloudflare", "WordPress"],
-      metrics: [
-        { label: "Leads ↑", value: "+37%" },
-      ],
-      demo: "https://optimize-construction.dz",
-    },
-    {
-      title: "Remdani Dental Center",
-      description: "Conversion-focused landing for a modern clinic with calendar sync.",
-      impact: "HIPAA-ready forms and OTP booking flow raised conversion by 24%.",
-      badge: "Healthcare",
-      year: "2023",
-      image: "/ramdani.png",
-      stack: ["Next.js", "OAuth", "Tailwind"],
-      metrics: [
-        { label: "PageSpeed", value: "98" },
-      ],
-      github: "https://github.com/xCyberpunkx/dental-frontend",
-      demo: "https://ramdani.vercel.app/",
-    },
-    {
-      title: "Cabinet BENSERAI",
-      description: "Responsive platform for accounting & tax advisory services.",
-      impact: "Form intelligence slashed response time to <2h for premium clients.",
-      badge: "Finance",
-      year: "2023",
-      image: "/cabinet.png",
-      stack: ["PHP", "Elementor", "Cloudflare"],
-      metrics: [
-        { label: "Bounce rate", value: "-28%" },
-      ],
-      demo: "https://cabinet-benserai.com/",
-    },
-    {
-      title: "Architecture Studio",
-      description: "Minimal aesthetic site for a boutique architecture firm in Blida.",
-      impact: "Edge-rendered gallery handles 4k textures while staying ADA compliant.",
-      badge: "Creative",
-      year: "2024",
-      image: "/amel.png",
-      stack: ["Next.js", "Vercel", "Tailwind"],
-      metrics: [
-        { label: "CLS", value: "0.01" },
-      ],
-      demo: "https://betarchimoktariamel.com/",
-    },
-  ]
+
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -306,12 +226,16 @@ if (isLoading) {
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
       <Navbar />
-      <main className="pt-15">
-        <section
-          id="hero"
-          className="relative isolate overflow-hidden px-4 pt-28 pb-20 sm:px-6 lg:px-8"
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-white" />
+        <main className="pt-15">
+
+          <section
+            id="hero"
+            className="relative isolate overflow-hidden px-4 pt-28 pb-20 sm:px-6 lg:px-8"
+          >
+          <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-50 via-white to-white" />
+          <div className="absolute inset-0 -z-10 opacity-50">
+            <BackgroundRippleEffect rows={9} cols={24} cellSize={46} />
+          </div>
           <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white/80 via-white/40 to-transparent blur-3xl" />
           <div className="absolute inset-0 pointer-events-none opacity-0 sm:opacity-30 hidden md:block">
             {animatedDots.map((dot, i) => (
@@ -512,87 +436,41 @@ if (isLoading) {
           </div>
         </section>
 
-       <section id="Journey" className="bg-white px-4 py-24 sm:px-6">
+        <section id="journey" className="bg-white px-4 py-24 sm:px-6">
 <div className="mx-auto max-w-6xl">
-{/* Header Animations */}
-<motion.div
-initial={{ opacity: 0, y: 30 }}
-whileInView={{ opacity: 1, y: 0 }}
-transition={{ duration: 0.6 }}
-viewport={{ once: true }}
-className="text-center"
->
+            <div className="text-center space-y-4">
 <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
 Journey
 </div>
-<h2 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+              <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
 Precision built through real-world impact
 </h2>
-<p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
 Each chapter sharpened my obsession with reliability, maintainability, and graceful human experiences.
 </p>
-</motion.div>
+            </div>
 
-
-{/* Timeline */}
-<div className="relative mt-20">
-{/* Animated vertical line */}
-<motion.span
-initial={{ scaleY: 0 }}
-whileInView={{ scaleY: 1 }}
-viewport={{ once: true }}
-transition={{ duration: 0.9, ease: "easeOut" }}
-className="absolute left-8 top-0 h-full w-px origin-top bg-gray-300"
-/>
-
-
-<div className="space-y-16 pl-4">
-{journeyMilestones.map((milestone, index) => {
+            <div className="mt-16 space-y-10">
+              {journeyMilestones.map((milestone) => {
 const Icon = milestone.icon
 return (
-<motion.div
+                  <article
 key={milestone.title}
-initial={{ opacity: 0, x: -25 }}
-whileInView={{ opacity: 1, x: 0 }}
-viewport={{ once: true }}
-transition={{ duration: 0.5, delay: index * 0.1 }}
-className="relative flex gap-6"
->
-{/* Step number */}
-<div className="flex flex-col items-center">
-<span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-white text-xs font-bold text-black">
-{index + 1}
-</span>
-</div>
-
-
-{/* Card */}
-<motion.div
-whileHover={{ scale: 1.02 }}
-transition={{ type: "spring", stiffness: 220, damping: 18 }}
-className="flex-1 rounded-3xl border border-gray-100 bg-white p-8 shadow-md shadow-gray-100 lg:flex lg:items-center lg:gap-10"
->
-<div className="flex-shrink-0">
-<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-sm">
-<Icon className="h-7 w-7" />
-</div>
-</div>
-
-
-<div className="mt-6 space-y-4 lg:mt-0">
+                    className="rounded-[32px] border border-gray-100 bg-white shadow-xl shadow-gray-100/80 p-6 md:p-8"
+                  >
 <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
-<span className="font-semibold uppercase tracking-wide text-gray-800">
-{milestone.period}
-</span>
+                      <span className="font-semibold uppercase tracking-wide text-gray-800">{milestone.period}</span>
 <span className="h-1 w-1 rounded-full bg-gray-300" />
 <span>{milestone.impact}</span>
 </div>
 
-
+                    <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-sm">
+                        <Icon className="h-7 w-7" />
+                      </div>
+                      <div className="space-y-4 flex-1">
 <h3 className="text-2xl font-bold text-gray-900">{milestone.title}</h3>
 <p className="text-gray-600 leading-relaxed">{milestone.description}</p>
-
-
 <div className="flex flex-wrap gap-2">
 {milestone.stack.map((tech) => (
 <Badge
@@ -605,81 +483,14 @@ className="bg-gray-100 text-gray-800 px-3 py-1 rounded-md shadow-sm"
 ))}
 </div>
 </div>
-</motion.div>
-</motion.div>
+                    </div>
+                  </article>
 )
 })}
 </div>
 </div>
-</div>
 </section>
 
-      <div id="projects"> <Projects /></div>
-       <PlaceholdersAndVanishInputDemo />
-        {/* Skills Section */}
-        <section id="skills" className="relative overflow-hidden bg-slate-950 px-4 py-24 text-white sm:px-6">
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.12),transparent_60%)]" aria-hidden />
-
-  <div className="relative z-10 mx-auto max-w-6xl space-y-16">
-    {/* Header */}
-    <div className="text-center space-y-4">
-      <p className="text-xs font-semibold uppercase tracking-widest text-emerald-300">Technical Arsenal</p>
-      <h2 className="text-4xl font-bold sm:text-5xl">Operational excellence across the stack</h2>
-      <p className="text-base text-white/70 sm:text-lg">
-        Latency budgets, memory profiling, and tactile design converge to create instant, reliable experiences on any device.
-      </p>
-    </div>
-
-    {/* Skill Clusters */}
-    <div className="grid gap-6 lg:grid-cols-3">
-      {skillClusters.map((cluster) => {
-        const Icon = cluster.icon;
-        return (
-          <article
-            key={cluster.title}
-            className={`h-full rounded-3xl border border-white/10 bg-gradient-to-br ${cluster.gradient} p-6 shadow-lg shadow-black/40 hover:scale-105 transition-transform duration-300`}
-          >
-            <div className="flex items-center gap-4">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
-                <Icon className="h-5 w-5 text-white" />
-              </span>
-              <div>
-                <p className="text-lg font-semibold">{cluster.title}</p>
-                <p className="text-sm text-white/60">{cluster.description}</p>
-              </div>
-            </div>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {cluster.stack.map((tech) => (
-                <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
-                  {tech}
-                </Badge>
-              ))}
-            </div>
-          </article>
-        );
-      })}
-    </div>
-    {/* Modern Skill Matrix (no percentages) */}
-    <div className="grid gap-6 lg:grid-cols-2">
-      {skillMatrix.map((skill) => (
-        <div
-          key={skill.name}
-          className="rounded-3xl border border-white/20 bg-gradient-to-r from-white/5 to-white/10 p-6 shadow-lg shadow-black/50 hover:scale-105 transition-transform duration-300"
-        >
-          <p className="text-lg font-semibold mb-2">{skill.name}</p>
-          <p className="text-sm text-white/60 mb-4">{skill.blurb}</p>
-          <div className="flex flex-wrap gap-2">
-            {skill.stack?.map((tech) => (
-              <Badge key={tech} variant="secondary" className="bg-white/10 text-white">
-                {tech}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
 
         {/* Services Section */}
         <section id="services" className="py-24 px-6 bg-gray-50">
@@ -784,6 +595,8 @@ className="bg-gray-100 text-gray-800 px-3 py-1 rounded-md shadow-sm"
             </div>
           </div>
         </section>
+
+        <Projects />
 
         <section id="arcade" className="py-24 px-6 bg-black text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
@@ -1129,559 +942,7 @@ ${formData.get("message")}`
             </div>
           </div>
         </section>
-        
-        <section
-          id="lifestyle"
-          className="py-24 px-6 bg-gradient-to-br from-slate-50 to-gray-100 relative overflow-hidden"
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Beyond Code
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Life is more than just programming. Here's what shapes my perspective and drives my passion.
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-              {/* Islamic Studies & Quran */}
-<Card className="bg-white border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-  <CardContent className="p-8 text-center">
-    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-      <span className="text-2xl text-white">📖</span>
-    </div>
-    <h3 className="text-2xl font-bold text-green-700 mb-4">Islamic Studies</h3>
-    <p className="text-gray-600 mb-4">
-      Daily Quran recitation and Islamic philosophy studies that provide spiritual grounding and ethical
-      guidance in both life and work.
-    </p>
-    <div className="text-sm text-green-600 font-semibold mb-4">
-      Currently reading: Tafsir Ibn Kathir
-    </div>
-
-    {/* Actions */}
-    <div className="flex justify-center gap-4">
-      <a
-        href="https://www.quranful.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700 transition"
-      >
-        Read Qur’an
-      </a>
-      <a
-        href="https://www.kalamullah.com/Books/Tafsir%20Ibn%20Kathir%20all%2010%20volumes.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition"
-      >
-        Download Tafsir
-      </a>
-    </div>
-  </CardContent>
-</Card>
-
-              {/* Books & Learning */}
-<Card className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-  <CardContent className="p-8 text-center">
-    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-      <span className="text-2xl text-white">📚</span>
-    </div>
-    <h3 className="text-2xl font-bold text-blue-700 mb-4">Continuous Learning</h3>
-    <p className="text-gray-600 mb-4">
-      Passionate reader of technical books, philosophy, and personal development. Always expanding
-      knowledge across multiple domains.
-    </p>
-    <div className="text-sm text-blue-600 font-semibold mb-4">
-      Current read: "The Rust Programming Language"
-    </div>
-
-    {/* Actions */}
-    <div className="flex justify-center gap-4">
-      <a
-        href="https://doc.rust-lang.org/book/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition"
-      >
-        The Rust Guide
-      </a>
-      <a
-        href="https://www.learncpp.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 transition"
-      >
-        Learn C++
-      </a>
-    </div>
-  </CardContent>
-</Card>
-
-
-             {/* Study Roadmap */}
-<Card className="bg-white border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-  <CardContent className="p-8 text-center">
-    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
-      <span className="text-2xl text-white">🗺️</span>
-    </div>
-    <h3 className="text-2xl font-bold text-purple-700 mb-4">Learning Roadmap</h3>
-    <div className="text-left space-y-2 text-gray-600">
-
-      <a
-        href="https://roadmap.sh/rust"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:text-purple-700 transition"
-      >
-        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-        <span className="text-sm">Advanced Rust & WebAssembly</span>
-      </a>
-
-      <a
-        href="https://roadmap.sh/ai-data-scientist"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:text-purple-700 transition"
-      >
-        <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-        <span className="text-sm">Machine Learning with PyTorch</span>
-      </a>
-
-      <a
-        href="https://roadmap.sh/backend"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:text-purple-700 transition"
-      >
-        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-        <span className="text-sm">Distributed Systems Design</span>
-      </a>
-
-      <a
-        href="https://roadmap.sh/ai-engineer"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 hover:text-purple-700 transition"
-      >
-        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-        <span className="text-sm">Quantum Computing Basics</span>
-      </a>
-
-    </div>
-  </CardContent>
-</Card>
-              {/* Fitness & Health */}
-              <Card className="bg-white border-2 border-orange-200 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">💪</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-orange-700 mb-4">Fitness & Wellness</h3>
-                  <p className="text-gray-600 mb-4">
-                    Regular gym sessions and outdoor activities to maintain physical and mental health. Believe in the
-                    connection between a healthy body and sharp mind.
-                  </p>
-                  <div className="text-sm text-orange-600 font-semibold">Current goal: Marathon training</div>
-                </CardContent>
-              </Card>
-
-              {/* Tech Community */}
-<Card className="bg-white border-2 border-teal-200 hover:border-teal-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-  <CardContent className="p-8 text-center">
-    <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center">
-      <span className="text-2xl text-white">🌐</span>
-    </div>
-    <h3 className="text-2xl font-bold text-teal-700 mb-4">Community</h3>
-    <p className="text-gray-600 mb-4">
-      Active in tech communities, contributing to open source, mentoring junior developers, and sharing
-      knowledge through blogs and talks.
-    </p>
-    <div className="text-sm text-teal-600 font-semibold mb-4">Find me on:</div>
-    {/* Dev Platforms */}
-    <div className="flex justify-center gap-4">
-      <a
-        href="https://www.reddit.com/r/programming/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold hover:bg-orange-600 transition"
-      >
-        Reddit
-      </a>
-      <a
-        href="https://news.ycombinator.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-gray-800 text-white rounded-xl text-sm font-semibold hover:bg-gray-900 transition"
-      >
-        Hacker News
-      </a>
-      <a
-        href="https://app.daily.dev/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="px-4 py-2 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 transition"
-      >
-        daily.dev
-      </a>
-    </div>
-  </CardContent>
-</Card>
-              {/* Travel & Culture */}
-              <Card className="bg-white border-2 border-rose-200 hover:border-rose-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">✈️</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-rose-700 mb-4">Travel & Culture</h3>
-                  <p className="text-gray-600 mb-4">
-                    Exploring different cultures and perspectives through travel. Each journey brings new insights that
-                    influence my approach to problem-solving.
-                  </p>
-                  <div className="text-sm text-rose-600 font-semibold">Next destination: Tokyo, Japan</div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="roadmap"
-          className="py-24 px-6 bg-gradient-to-br from-gray-50 to-slate-100 relative overflow-hidden"
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Coming Soon Roadmap
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Exciting projects and learning paths I'm working on. Stay tuned for updates!
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Advanced Rust Projects */}
-              <Card className="bg-white border-2 border-orange-200 hover:border-orange-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Q2 2024
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🦀</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-orange-700 mb-4">Advanced Rust Ecosystem</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• WebAssembly game engine</li>
-                    <li>• Async networking library</li>
-                    <li>• Performance monitoring tools</li>
-                    <li>• Cross-platform GUI framework</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* AI/ML Integration */}
-              <Card className="bg-white border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-purple-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Q3 2024
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🤖</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-purple-700 mb-4">AI/ML Integration</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• Neural network from scratch in C++</li>
-                    <li>• Computer vision applications</li>
-                    <li>• Natural language processing</li>
-                    <li>• Reinforcement learning games</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Open Source Contributions */}
-              <Card className="bg-white border-2 border-green-200 hover:border-green-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Ongoing
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🌟</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-green-700 mb-4">Open Source Impact</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• Linux kernel contributions</li>
-                    <li>• Rust crate development</li>
-                    <li>• Developer tooling</li>
-                    <li>• Community mentorship</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Mobile Development */}
-              <Card className="bg-white border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Q4 2026
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">📱</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-blue-700 mb-4">Cross-Platform Mobile</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• Flutter productivity apps</li>
-                    <li>• React Native games</li>
-                    <li>• Native iOS/Android features</li>
-                    <li>• AR/VR experiments</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Blockchain & Web3 */}
-              <Card className="bg-white border-2 border-yellow-200 hover:border-yellow-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  mid 2026
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">⛓️</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-yellow-700 mb-4">Blockchain Innovation</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• Smart contract development</li>
-                    <li>• DeFi protocol design</li>
-                    <li>• NFT marketplace</li>
-                    <li>• Cryptocurrency trading bot</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Content Creation */}
-              <Card className="bg-white border-2 border-rose-200 hover:border-rose-400 transition-all duration-300 hover:scale-105 hover:shadow-xl relative overflow-hidden">
-                <div className="absolute top-4 right-4 bg-rose-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                  Upcoming
-                </div>
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl text-white">🎥</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-rose-700 mb-4">Content & Education</h3>
-                  <ul className="text-gray-600 space-y-2 text-sm">
-                    <li>• YouTube coding tutorials</li>
-                    <li>• Technical blog series</li>
-                    <li>• Conference speaking</li>
-                    <li>• Online course creation</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Gaming Universe Section - Enhanced Professional Design 
-        <section id="gaming" className="py-20 bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Gaming Profile</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                League of Legends competitive journey and achievements
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <Card className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="mb-4">
-                    <img
-                      src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/ranked-mini-crests/platinum.png"
-                      alt="Platinum Rank"
-                      className="w-20 h-20 mx-auto"
-                      onError={(e) => {
-                        e.currentTarget.src = "/platinum-rank-icon.png"
-                      }}
-                    />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Current Rank</h3>
-                  <p className="text-2xl font-bold text-blue-600 mb-1">Platinum II</p>
-                  <p className="text-gray-600">1,247 LP • EUW</p>
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-sm text-gray-500">Peak: Platinum I</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="mb-4 relative">
-                    <img
-                      src="https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/Vladimir.png"
-                      alt="Vladimir"
-                      className="w-20 h-20 mx-auto rounded-full border-4 border-red-500"
-                      onError={(e) => {
-                        e.currentTarget.src = "/vladimir-lol-vampire.png"
-                      }}
-                    />
-                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold">
-                      M7
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Main Champion</h3>
-                  <p className="text-2xl font-bold text-red-600 mb-1">Vladimir</p>
-                  <p className="text-gray-600">456,789 Points</p>
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-sm text-gray-500">72% Win Rate</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-6 text-center">
-                  <div className="mb-4">
-                    <div className="w-20 h-20 mx-auto bg-purple-100 rounded-full flex items-center justify-center">
-                      <span className="text-3xl">⚔️</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Preferred Role</h3>
-                  <p className="text-2xl font-bold text-purple-600 mb-1">Mid Lane</p>
-                  <p className="text-gray-600">AP Carry</p>
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <p className="text-sm text-gray-500">Control Mage</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card className="bg-white border border-gray-200 shadow-lg mb-12">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Season Statistics</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                  {[
-                    { label: "Penta Kills", value: 3, max: 5, color: "bg-red-500" },
-                    { label: "Quadra Kills", value: 12, max: 15, color: "bg-orange-500" },
-                    { label: "Triple Kills", value: 47, max: 50, color: "bg-yellow-500" },
-                    { label: "Win Rate", value: 72, max: 100, color: "bg-green-500" },
-                  ].map((stat, index) => (
-                    <div key={stat.label} className="text-center">
-                      <div className="mb-3">
-                        <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                        <div className="text-sm text-gray-600">{stat.label}</div>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${stat.color} transition-all duration-1000 ease-out`}
-                          style={{
-                            width: `${(stat.value / stat.max) * 100}%`,
-                            animation: `chargeBar 2s ease-out ${index * 0.2}s both`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white border border-gray-200 shadow-lg mb-12">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Champion Mastery</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {[
-                    { name: "Vladimir", mastery: 7, points: "456,789", champion: "Vladimir" },
-                    { name: "Azir", mastery: 7, points: "234,567", champion: "Azir" },
-                    { name: "Yasuo", mastery: 6, points: "189,432", champion: "Yasuo" },
-                    { name: "LeBlanc", mastery: 6, points: "156,221", champion: "Leblanc" },
-                  ].map((champion) => (
-                    <div
-                      key={champion.name}
-                      className="text-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                    >
-                      <div className="relative mb-3">
-                        <img
-                          src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/champion/${champion.champion}.png`}
-                          alt={champion.name}
-                          className="w-16 h-16 mx-auto rounded-full"
-                          onError={(e) => {
-                            e.currentTarget.src = `/placeholder.svg?height=64&width=64&query=${champion.name} League of Legends champion`
-                          }}
-                        />
-                        <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center">
-                          <span className="text-xs font-bold text-black">{champion.mastery}</span>
-                        </div>
-                      </div>
-                      <p className="font-bold text-gray-900 text-sm">{champion.name}</p>
-                      <p className="text-xs text-gray-600">{champion.points} pts</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <style jsx>{`
-              @keyframes chargeBar {
-                0% {
-                  width: 0;
-                }
-                100% {
-                  width: ${(stat) => (stat.value / stat.max) * 100}%;
-                }
-              }
-            `}</style>
-
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="bg-white border border-gray-200 shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                    <Monitor className="h-5 w-5" />
-                    Gaming Setup
-                  </h3>
-                  <div className="space-y-4">
-                    {[
-                      { label: "Monitor", value: "ASUS ROG Swift 144Hz" },
-                      { label: "Mouse", value: "Logitech G Pro X Superlight" },
-                      { label: "Keyboard", value: "Mechanical RGB Cherry MX" },
-                      { label: "Headset", value: "SteelSeries Arctis Pro" },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
-                      >
-                        <span className="text-gray-600 font-medium">{item.label}:</span>
-                        <span className="text-gray-900 font-semibold text-sm">{item.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white border border-gray-200 shadow-lg">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                    <Users className="h-5 w-5" />
-                    Gaming Social
-                  </h3>
-                  <div className="space-y-3">
-                    {[
-                      { platform: "Discord", handle: "Zinedine#1337", color: "text-indigo-600" },
-                      { platform: "Reddit", handle: "u/zinedine_dev", color: "text-orange-600" },
-                      { platform: "Medium", handle: "@zinedine", color: "text-green-600" },
-                      { platform: "Twitch", handle: "zinedine_streams", color: "text-purple-600" },
-                      { platform: "YouTube", handle: "ZinedineGaming", color: "text-red-600" },
-                      { platform: "Steam", handle: "zinedine_dev", color: "text-blue-600" },
-                    ].map((social) => (
-                      <div key={social.platform} className="flex justify-between items-center py-2">
-                        <span className="text-gray-600 font-medium">{social.platform}:</span>
-                        <span className={`font-semibold ${social.color}`}>{social.handle}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-          </div>
-        </section>
-*/}
+        <PlaceholdersAndVanishInputDemo />
         <footer className="bg-black text-white py-16 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">

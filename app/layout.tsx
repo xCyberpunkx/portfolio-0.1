@@ -81,7 +81,7 @@ export const metadata: Metadata = {
   },
 
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE",
+    google: "google1f46b3e3232c221e",
   },
 
   alternates: {
