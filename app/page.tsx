@@ -38,6 +38,7 @@ import MacOSDockDemo from "@/components/Dock"
 import { TooltipCardDemo } from "@/components/tooltip"
 import Navbar from "@/components/Navbar"
 import { motion } from "framer-motion"
+import { Projects } from "@/components/Projects"
 
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
@@ -58,25 +59,31 @@ export default function Portfolio() {
   const [isLoading, setIsLoading] = useState(true)
   const [animatedDots, setAnimatedDots] = useState<Array<{ top: number; left: number; delay: number }>>([])
   const [stars, setStars] = useState<Array<{ id: number; left: number; top: number; delay: number }>>([])
-  const heroHighlights: Array<{ title: string; description: string; icon: LucideIcon }> = [
+  const heroHighlights: Array<{ title: string; description: string; }> = [
    {
     title: "Networking",
     description: "Designing and maintaining secure, high-performance networks; experience with routing, switching, and protocols.",
-    icon: Terminal
+
   },
   {
     title: "Software Engineering",
     description: "Building reliable, scalable applications with clean architecture, efficient algorithms, and robust system design.",
-    icon: Code
+ 
   },
-    { title: "Realtime experiences", description: "WebGL, three.js, performant UI motion for the web.", icon: Globe },
-    { title: "Open source", description: "Contributor and maintainer across Linux & Rust ecosystems.", icon: GitBranch },
+    { title: "Realtime experiences", description: "WebGL, three.js, performant UI motion for the web." },
+    { title: "Open source", description: "Contributor and maintainer across Linux & Rust ecosystems." },
   ]
   const heroStats = [
     { label: "Years Shipping", value: "05+" },
-    { label: "Projects Delivered", value: "50+" },
-    { label: "OSS Contributions", value: "120" },
-    { label: "Uptime Focus", value: "99.95%" },
+    { label: "Projects Delivered", value: "30+" },
+    { label: "OSS Contributions", value: "50+" },
+    
+  ]
+  const heroBadges: Array<{ label: string; icon: LucideIcon; color: string }> = [
+    { label: "Software Dev", icon: Code, color: "text-orange-600" },
+    { label: "Systems Design", icon: Cpu, color: "text-slate-600" },
+    { label: "DevOps", icon: Shield, color: "text-purple-600" },
+    { label: "Open Source", icon: Github, color: "text-black dark:text-white" },
   ]
   const journeyMilestones: Array<{
     period: string;
@@ -329,118 +336,107 @@ if (isLoading) {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="font-mono text-sm text-gray-500">portfolio@archlinux:~$ echo "Hello, world!"</p>
-                  <h1 className="text-4xl font-black leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                    Zine Eddine{" "}
-                    <span className="block bg-gradient-to-r from-black via-gray-800 to-gray-500 bg-clip-text text-transparent">
-                      Rouabah
-                    </span>
-                  </h1>
-                  <p className="text-lg text-gray-600 sm:text-xl">
-                    I build software that works smoothly, from low-level systems to user-friendly applications. I focus on clean, efficient, and reliable solutions.
-                  </p>
-                </div>
+            <p className="font-mono text-sm text-gray-500">portfolio@archlinux:~$ echo "Hello, world!"</p>
+            <h1 className="text-4xl font-black leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+              Zine Eddine{" "}
+              <span className="block bg-gradient-to-r from-black via-gray-800 to-gray-500 bg-clip-text text-transparent">
+                Rouabah
+              </span>
+            </h1>
+            <p className="text-lg text-gray-600 sm:text-xl">
+              I build software that works smoothly, from low-level systems to user-friendly applications. I focus on
+              clean, efficient, and reliable solutions.
+            </p>
+          </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {heroHighlights.map((highlight) => {
-                    const Icon = highlight.icon
-                    return (
-                      <div
-                        key={highlight.title}
-                        className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm backdrop-blur lg:hover:-translate-y-1 lg:hover:shadow-lg transition-all duration-300"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-900 text-white">
-                            <Icon className="h-4 w-4" />
-                          </span>
-                          <div>
-                            <p className="text-sm font-semibold">{highlight.title}</p>
-                            <p className="text-xs text-gray-500">{highlight.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                <div className="max-w-2xl">
-                  <TooltipCardDemo />
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
-                  {[
-                    { label: "Rust", icon: <Zap className="h-4 w-4 text-orange-500" /> },
-                    { label: "C++", icon: <Cpu className="h-4 w-4 text-red-500" /> },
-                    { label: "Linux", icon: <Terminal className="h-4 w-4 text-gray-700" /> },
-                    { label: "Security", icon: <Shield className="h-4 w-4 text-green-600" /> },
-                    { label: "Open Source", icon: <GitBranch className="h-4 w-4 text-purple-600" /> },
-                  ].map((item) => (
-                    <Badge
-                      key={item.label}
-                      variant="default"
-                      className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm"
-                    >
-                      {item.icon}
-                      {item.label}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button
-                    onClick={() => scrollToSection("projects")}
-                    className="bg-black text-white shadow-lg shadow-black/20 transition-all duration-300 hover:scale-[1.02]"
-                  >
-                    View Projects
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => scrollToSection("contact")}
-                    className="border-gray-300 text-gray-900 transition-all duration-300 hover:border-black hover:text-black"
-                  >
-                    Book a Call
-                  </Button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {heroStats.map((stat) => (
-                    <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm">
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
-                    <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
-                  </div>
-                  <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
-                    <PixelatedCanvasDemo />
-                  </div>
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-left text-sm text-gray-600 md:grid-cols-3">
-                    {[
-                      { label: "Latency", value: "8.2 ms" },
-                      { label: "Throughput", value: "650k req/s" },
-                      { label: "Render Budget", value: "9.4 ms" },
-                    ].map((metric) => (
-                      <div key={metric.label} className="rounded-2xl border border-gray-100 bg-white/70 p-3">
-                        <p className="text-xs text-gray-500">{metric.label}</p>
-                        <p className="text-sm font-semibold text-gray-900">{metric.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 rounded-2xl border border-dashed border-gray-200 bg-white/70 p-4 text-left text-sm text-gray-600 md:hidden">
-                    <p className="font-semibold text-gray-900">Mobile-friendly</p>
-                    <p className="text-gray-600">Heavy visualizers are deferred to keep pages silky smooth on phones.</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {heroHighlights.map((highlight) => (
+              <div
+                key={highlight.title}
+                className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm backdrop-blur lg:hover:-translate-y-1 lg:hover:shadow-lg transition-all duration-300"
+              >
+                <div className="flex items-center gap-3">
+                
+                  <div>
+                    <p className="text-sm font-semibold">{highlight.title}</p>
+                    <p className="text-xs text-gray-500">{highlight.description}</p>
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+
+          <div className="max-w-2xl">
+            <TooltipCardDemo />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+            {heroBadges.map((item) => (
+              <Badge
+                key={item.label}
+                variant="default"
+                className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm"
+              >
+                <item.icon className={`h-4 w-4 ${item.color}`} />
+                {item.label}
+              </Badge>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row justify-center lg:justify-start">
+            <Button
+              onClick={() => scrollToSection("projects")}
+              className="bg-black text-white shadow-lg shadow-black/20 transition-all duration-300 hover:scale-[1.02]"
+            >
+              View Projects
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => scrollToSection("contact")}
+              className="border-gray-300 text-gray-900 transition-all duration-300 hover:border-black hover:text-black"
+            >
+              Get in Touch
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {heroStats.map((stat) => (
+              <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm">
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
+              <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
             </div>
-
+            <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
+              <PixelatedCanvasDemo />
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 text-left text-sm text-gray-600 md:grid-cols-3">
+              {[
+                { label: "Latency", value: "8.2 ms" },
+                { label: "Throughput", value: "650k req/s" },
+                { label: "Render Budget", value: "9.4 ms" },
+              ].map((metric) => (
+                <div key={metric.label} className="rounded-2xl border border-gray-100 bg-white/70 p-3">
+                  <p className="text-xs text-gray-500">{metric.label}</p>
+                  <p className="text-sm font-semibold text-gray-900">{metric.value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl border border-dashed border-gray-200 bg-white/70 p-4 text-left text-sm text-gray-600 md:hidden">
+              <p className="font-semibold text-gray-900">Mobile-friendly</p>
+              <p className="text-gray-600">Heavy visualizers are deferred to keep pages silky smooth on phones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
             <div className="mt-12 hidden lg:block">
               <MacOSDockDemo />
             </div>
@@ -506,60 +502,109 @@ if (isLoading) {
           </div>
         </section>
 
-        <section id="journey" className="bg-white px-4 py-24 sm:px-6">
-          <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
-                Journey
-              </div>
-              <h2 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                Precision built through real-world impact
-              </h2>
-              <p className="mt-4 text-lg text-gray-600">
-                Each chapter sharpened my obsession with reliability, maintainability, and graceful human experiences.
-              </p>
-            </div>
+       <section id="Journey" className="bg-white px-4 py-24 sm:px-6">
+<div className="mx-auto max-w-6xl">
+{/* Header Animations */}
+<motion.div
+initial={{ opacity: 0, y: 30 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.6 }}
+viewport={{ once: true }}
+className="text-center"
+>
+<div className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+Journey
+</div>
+<h2 className="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+Precision built through real-world impact
+</h2>
+<p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+Each chapter sharpened my obsession with reliability, maintainability, and graceful human experiences.
+</p>
+</motion.div>
 
-            <div className="mt-16 space-y-10">
-              {journeyMilestones.map((milestone, index) => {
-                const Icon = milestone.icon
-                return (
-                  <div key={milestone.title} className="relative pl-10">
-                    <span className="absolute left-4 top-0 h-full w-px bg-gray-200" aria-hidden />
-                    <span className="absolute left-2 top-5 flex h-5 w-5 items-center justify-center rounded-full border-2 border-black bg-white text-xs font-bold text-black">
-                      {index + 1}
-                    </span>
-                    <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-lg shadow-gray-100 lg:flex lg:items-center lg:gap-8">
-                      <div className="flex-shrink-0">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-900 text-white">
-                          <Icon className="h-6 w-6" />
-                        </div>
-                      </div>
-                      <div className="mt-6 space-y-3 lg:mt-0">
-                        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
-                          <span className="font-semibold uppercase tracking-wide text-gray-800">{milestone.period}</span>
-                          <span className="h-1 w-1 rounded-full bg-gray-300" />
-                          <span>{milestone.impact}</span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-gray-900">{milestone.title}</h3>
-                        <p className="text-gray-600">{milestone.description}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {milestone.stack.map((tech) => (
-                            <Badge key={`${milestone.title}-${tech}`} variant="secondary" className="bg-gray-100 text-gray-800">
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
 
-       <StickyScrollRevealDemo />
+{/* Timeline */}
+<div className="relative mt-20">
+{/* Animated vertical line */}
+<motion.span
+initial={{ scaleY: 0 }}
+whileInView={{ scaleY: 1 }}
+viewport={{ once: true }}
+transition={{ duration: 0.9, ease: "easeOut" }}
+className="absolute left-8 top-0 h-full w-px origin-top bg-gray-300"
+/>
+
+
+<div className="space-y-16 pl-4">
+{journeyMilestones.map((milestone, index) => {
+const Icon = milestone.icon
+return (
+<motion.div
+key={milestone.title}
+initial={{ opacity: 0, x: -25 }}
+whileInView={{ opacity: 1, x: 0 }}
+viewport={{ once: true }}
+transition={{ duration: 0.5, delay: index * 0.1 }}
+className="relative flex gap-6"
+>
+{/* Step number */}
+<div className="flex flex-col items-center">
+<span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-white text-xs font-bold text-black">
+{index + 1}
+</span>
+</div>
+
+
+{/* Card */}
+<motion.div
+whileHover={{ scale: 1.02 }}
+transition={{ type: "spring", stiffness: 220, damping: 18 }}
+className="flex-1 rounded-3xl border border-gray-100 bg-white p-8 shadow-md shadow-gray-100 lg:flex lg:items-center lg:gap-10"
+>
+<div className="flex-shrink-0">
+<div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-900 text-white shadow-sm">
+<Icon className="h-7 w-7" />
+</div>
+</div>
+
+
+<div className="mt-6 space-y-4 lg:mt-0">
+<div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
+<span className="font-semibold uppercase tracking-wide text-gray-800">
+{milestone.period}
+</span>
+<span className="h-1 w-1 rounded-full bg-gray-300" />
+<span>{milestone.impact}</span>
+</div>
+
+
+<h3 className="text-2xl font-bold text-gray-900">{milestone.title}</h3>
+<p className="text-gray-600 leading-relaxed">{milestone.description}</p>
+
+
+<div className="flex flex-wrap gap-2">
+{milestone.stack.map((tech) => (
+<Badge
+key={`${milestone.title}-${tech}`}
+variant="secondary"
+className="bg-gray-100 text-gray-800 px-3 py-1 rounded-md shadow-sm"
+>
+{tech}
+</Badge>
+))}
+</div>
+</div>
+</motion.div>
+</motion.div>
+)
+})}
+</div>
+</div>
+</div>
+</section>
+
+      <div id="projects"> <Projects /></div>
        <PlaceholdersAndVanishInputDemo />
         {/* Skills Section */}
         <section id="skills" className="relative overflow-hidden bg-slate-950 px-4 py-24 text-white sm:px-6">

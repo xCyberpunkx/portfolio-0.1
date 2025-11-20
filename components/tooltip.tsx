@@ -1,76 +1,33 @@
-"use client";
-import React from "react";
-import { Tooltip } from "@/components/ui/tooltip-card";
+
+"use client"
+  
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function TooltipCardDemo() {
+  const [hovered, setHovered] = useState(false)
+
   return (
-    <div className="mx-auto max-w-2xl p-4 md:p-10">
-      <p className="text-base sm:text-lg md:text-xl text-black max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-        Software Engineer from Algeria. Passionate about{" "}
-        <Tooltip
-          containerClassName="text-black"
-          content={
-            <div className="flex items-center gap-3">
-              <img
-                src="/images/rust.png"
-                alt="Rust logo"
-                className="h-10 w-10 rounded-sm"
-              />
-              <div>
-                <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">Rust</p>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400">Safe systems and performance.</p>
-              </div>
-            </div>
-          }
-        >
-          <span className="font-semibold text-gray-800">
-            <strong>Rust</strong>
-          </span>
-        </Tooltip>
-        ,{" "}
-        <Tooltip
-          containerClassName="text-black"
-          content={
-            <div className="flex items-center gap-3">
-              <img
-                src="/images/cpp.avif"
-                alt="C++ logo"
-                className="h-10 w-10 rounded-sm"
-              />
-              <div>
-                <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">C++</p>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400">High-performance systems and tooling.</p>
-              </div>
-            </div>
-          }
-        >
-          <span className="font-semibold text-gray-800">
-            <strong>C++</strong>
-          </span>
-        </Tooltip>
-        , and secure systems on{" "}
-        <Tooltip
-          containerClassName="text-black"
-          content={
-            <div className="flex items-center gap-3">
-              <img
-                src="/images/tux.png"
-                alt="Linux logo"
-                className="h-10 w-10 rounded-sm"
-              />
-              <div>
-                <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">Linux</p>
-                <p className="text-xs text-neutral-600 dark:text-neutral-400">Security-first workflows and kernels.</p>
-              </div>
-            </div>
-          }
-        >
-          <span className="font-semibold text-gray-800">
-            <strong>Linux</strong>
-          </span>
-        </Tooltip>{" "}
-        🐧.
-      </p>
+    <div className="relative inline-block">
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="cursor-pointer px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-sm font-medium"
+      >
+        Hover me for status
+      </div>
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap z-50"
+          >
+            Currently open to work!
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }

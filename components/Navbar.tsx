@@ -33,159 +33,7 @@ type NavItem = {
 };
 
 // CV Preview Modal Component
-const CVPreviewModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) => {
-  return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
-          onClick={() => onOpenChange(false)}
-        >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900">Resume Preview</h2>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="hover:bg-gray-100"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
 
-            <div className="p-6 max-h-[70vh] overflow-y-auto">
-              {/* Header */}
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 pb-6 border-b border-gray-200">
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                    ZR
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Zine Eddine Rouabah</h1>
-                    <p className="text-gray-600">Senior Frontend Engineer & UI/UX Developer</p>
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-4 md:mt-0">
-                  <Button size="sm" variant="outline" onClick={() => window.open("/resume.pdf", "_blank")}>
-                    <Download className="h-4 w-4 mr-1" /> PDF
-                  </Button>
-                  <Button size="sm" variant="default" onClick={() => window.location.href = "mailto:hello@zinerouabah.com"}>
-                    <Mail className="h-4 w-4 mr-1" /> Contact
-                  </Button>
-                </div>
-              </div>
-
-              {/* Summary */}
-              <section className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-black rounded-full"></span>
-                  Summary
-                </h2>
-                <p className="text-gray-600 leading-relaxed">
-                  Passionate frontend engineer with 5+ years of experience building high-performance web applications. 
-                  Specialized in React, Next.js, and modern UI frameworks. Focused on creating accessible, 
-                  performant, and visually stunning user experiences.
-                </p>
-              </section>
-
-              {/* Experience */}
-              <section className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-black rounded-full"></span>
-                  Experience
-                </h2>
-                <div className="space-y-4">
-                  <div className="border-l-2 border-gray-200 pl-4">
-                    <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                      <h3 className="font-medium text-gray-900">Senior Frontend Engineer</h3>
-                      <span className="text-gray-500">•</span>
-                      <span className="text-sm text-gray-600">2022 – Present</span>
-                    </div>
-                    <p className="text-gray-600">Tech Innovations Inc.</p>
-                    <ul className="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
-                      <li>Led frontend architecture for SaaS platform serving 50k+ users</li>
-                      <li>Reduced bundle size by 40% and improved Lighthouse score to 95+</li>
-                      <li>Mentored 3 junior developers and established code review standards</li>
-                    </ul>
-                  </div>
-                  <div className="border-l-2 border-gray-200 pl-4">
-                    <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                      <h3 className="font-medium text-gray-900">Frontend Developer</h3>
-                      <span className="text-gray-500">•</span>
-                      <span className="text-sm text-gray-600">2020 – 2022</span>
-                    </div>
-                    <p className="text-gray-600">Digital Solutions Co.</p>
-                    <ul className="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
-                      <li>Developed responsive e-commerce platform with React and Node.js</li>
-                      <li>Implemented CI/CD pipeline reducing deployment time by 60%</li>
-                    </ul>
-                  </div>
-                </div>
-              </section>
-
-              {/* Skills */}
-              <section className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-black rounded-full"></span>
-                  Technical Skills
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="font-medium text-gray-800 mb-2">Frontend</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"].map((skill) => (
-                        <span key={skill} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-800 mb-2">Backend & Tools</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {["Node.js", "Python", "MongoDB", "Git", "Docker", "AWS"].map((skill) => (
-                        <span key={skill} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Education */}
-              <section className="mb-8">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-black rounded-full"></span>
-                  Education
-                </h2>
-                <div className="border-l-2 border-gray-200 pl-4">
-                  <div className="flex flex-wrap items-baseline gap-2 mb-1">
-                    <h3 className="font-medium text-gray-900">B.Sc. Computer Science</h3>
-                    <span className="text-gray-500">•</span>
-                    <span className="text-sm text-gray-600">2016 – 2020</span>
-                  </div>
-                  <p className="text-gray-600">University of Technology</p>
-                </div>
-              </section>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
 const navItems: NavItem[] = [
   {
@@ -217,16 +65,7 @@ const navItems: NavItem[] = [
             { title: "Experience", description: "Professional background & roles", icon: Briefcase, badge: "Years", target: "projects" }
           ]
         }
-      ],
-      featured: {
-        title: "Quick Facts",
-        items: [
-          { icon: Calendar, text: "5+ Years Experience" },
-          { icon: Users, text: "50+ Projects Built" },
-          { icon: Trophy, text: "12+ Awards Won" },
-          { icon: Globe, text: "Global Clients" }
-        ]
-      }
+      ]
     }
   },
   {
@@ -334,8 +173,6 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false); // ✅ For modal
-
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const navRef = useRef<HTMLDivElement>(null);
@@ -429,8 +266,6 @@ export default function Portfolio() {
 
   return (
     <div>
-      {/* ✅ CV Preview Modal */}
-      <CVPreviewModal open={isPreviewOpen} onOpenChange={setIsPreviewOpen} />
 
       <motion.nav
         ref={navRef}
@@ -526,17 +361,8 @@ export default function Portfolio() {
                   </Button>
                 </motion.div>
 
-                {/* ✅ PREVIEW BUTTON NOW OPENS MODAL */}
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsPreviewOpen(true)}
-                  className="hidden sm:inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-black transition-all duration-300"
-                  aria-label="Preview CV"
-                  title="Preview CV"
-                >
-                  <Eye className="h-4 w-4" />
-                </motion.button>
+              
+                
               </div>
 
               <Button
@@ -902,15 +728,7 @@ export default function Portfolio() {
                     <Download className="h-4 w-4 mr-2" />
                     Download CV
                   </Button>
-                  {/* ✅ MOBILE PREVIEW BUTTON NOW OPENS MODAL */}
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsPreviewOpen(true)}
-                    className="text-gray-700 border-gray-300 hover:bg-gray-100"
-                  >
-                    <Eye className="h-4 w-4" />
-                    Preview
-                  </Button>
+                  
                 </div>
               </motion.div>
             )}
