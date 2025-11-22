@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zineddine.vercel.app"),
+  metadataBase: new URL("https://zineddine.vercel.app/"),
   title: {
     default: "Zinedine Rouabah - Software Developer",
     template: "%s | Zinedine Rouabah",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: "Zinedine Rouabah Portfolio",
     images: [
       {
-        url: "/placeholder-logo.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Zinedine Rouabah Portfolio",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
     description:
       "Building secure, high-performance systems with Rust, C++, and Linux.",
-    images: ["/placeholder-logo.png"],
+    images: ["//profile-picture.jpg"],
   },
 
   robots: {
@@ -125,10 +125,10 @@ export default function RootLayout({
                 "Systems programmer specializing in Rust, C++, Linux systems, and cybersecurity.",
               url: "https://zineddine.vercel.app",
               sameAs: [
-                "https://github.com/zinedine",
-                "https://linkedin.com/in/zinedine-rouabah",
-                "https://x.com/zinedine_dev",
-                "https://medium.com/@zinedine_dev",
+                "https://github.com/xCyberpunkx",
+                "https://www.linkedin.com/in/zine-eddine-rouabah/",
+                "https://x.com/peeplil6666",
+                "https://medium.com/@peeplil6666",
               ],
               worksFor: {
                 "@type": "Organization",
@@ -139,7 +139,7 @@ export default function RootLayout({
                 addressCountry: "DZ",
                 addressLocality: "Algeria",
               },
-              image: "https://zineddine.vercel.app/placeholder-logo.png",
+              image: "https://zineddine.vercel.app/profile-picture.jp g",
             }),
           }}
         />
