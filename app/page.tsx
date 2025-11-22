@@ -40,6 +40,8 @@ import Navbar from "@/components/Navbar"
 import Image from "next/image"
 import { Projects } from "@/components/Projects"
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect"
+import ScrollToTop from "@/components/ScrollToTop"
+
 // Lazy load heavy components for better performance
 const StickyScrollRevealDemo = dynamic(() => import("@/components/scroll-reveal").then(mod => ({ default: mod.StickyScrollRevealDemo })), {
   loading: () => <div className="min-h-[400px]" />,
@@ -56,9 +58,11 @@ const CoverDemo = dynamic(() => import("@/components/CoverDemo").then(mod => ({ 
 
 export default function Portfolio() {
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [animatedDots, setAnimatedDots] = useState<Array<{ top: number; left: number; delay: number }>>([])
   const [stars, setStars] = useState<Array<{ id: number; left: number; top: number; delay: number }>>([])
+  
   const heroHighlights: Array<{ title: string; description: string; }> = [
    {
     title: "Networking",
@@ -192,7 +196,12 @@ export default function Portfolio() {
       }
 
       rafRef.current = requestAnimationFrame(() => {
-        setShowScrollTop(window.scrollY > 500)
+        const scrollTop = window.scrollY
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+        const scrollPercent = (scrollTop / docHeight) * 100
+        
+        setScrollProgress(scrollPercent)
+        setShowScrollTop(scrollTop > 500)
       })
     }
 
@@ -782,162 +791,157 @@ className="bg-gray-100 text-gray-800 px-3 py-1 rounded-md shadow-sm"
                       <div className="text-gray-600">Zineddine Rouabah</div>
                     </a>
                   </div>
-                  {/* Discord */}
-      <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-        <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-          <MessageCircle className="h-6 w-6 text-white" /> {/* Lucide doesn’t have a Discord logo by default */}
-        </div>
-        <a
-          href="https://discord.com/users/557172887799463937"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
-          <div className="font-semibold">Discord</div>
-          <div className="text-gray-600">zineddiinee</div>
-        </a>
-      </div>
-
-      {/* WhatsApp */}
-      <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-        <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
-          <Phone className="h-6 w-6 text-white" />
-        </div>
-        <a
-          href="https://wa.me/0540166358"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block"
-        >
-          <div className="font-semibold">WhatsApp</div>
-          <div className="text-gray-600">+213 540 16 63 58</div>
-        </a>
-      </div>
-      </div>
-     </div>
+                  <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
+                      <MessageCircle className="h-6 w-6 text-white" />
+                    </div>
+                    <a
+                      href="https://discord.com/users/557172887799463937"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <div className="font-semibold">Discord</div>
+                      <div className="text-gray-600">zineddiinee</div>
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-4 p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                      <Phone className="h-6 w-6 text-white" />
+                    </div>
+                    <a
+                      href="https://wa.me/0540166358"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <div className="font-semibold">WhatsApp</div>
+                      <div className="text-gray-600">+213 540 16 63 58</div>
+                    </a>
+                  </div>
+                </div>
+              </div>
 
               <div className="animate-fade-in-up-delay">
                 <form
-  className="space-y-6 bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500"
-  onSubmit={(e) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const formData = new FormData(form)
+                  className="space-y-6 bg-white p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    const form = e.currentTarget
+                    const formData = new FormData(form)
 
-    const subject = `Portfolio Contact: ${formData.get("subject")}`
-    const body = `Name: ${formData.get("name")}
+                    const subject = `Portfolio Contact: ${formData.get("subject")}`
+                    const body = `Name: ${formData.get("name")}
 Email: ${formData.get("email")}
 How they found me: ${formData.get("social")}
 
 Message:
 ${formData.get("message")}`
 
-    // Gmail compose URL
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`
+                    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=rouabah.zineedinee@gmail.com&su=${encodeURIComponent(
+                      subject
+                    )}&body=${encodeURIComponent(body)}`
 
-    // Fallback mailto (if Gmail is blocked)
-    const mailtoUrl = `mailto:rouabah.zineedinee@gmail.com?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`
+                    const mailtoUrl = `mailto:rouabah.zineedinee@gmail.com?subject=${encodeURIComponent(
+                      subject
+                    )}&body=${encodeURIComponent(body)}`
 
-    const newWindow = window.open(gmailUrl, "_blank")
-    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
-      window.location.href = mailtoUrl
-    }
-  }}
->
-  <div>
-    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-      Name
-    </label>
-    <input
-      type="text"
-      id="name"
-      name="name"
-      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-      placeholder="Your name"
-      required
-    />
-  </div>
+                    const newWindow = window.open(gmailUrl, "_blank")
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+                      window.location.href = mailtoUrl
+                    }
+                  }}
+                >
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+                      placeholder="Your name"
+                      required
+                    />
+                  </div>
 
-  <div>
-    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-      Email
-    </label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-      placeholder="taylor.durden@example.com"
-      required
-    />
-  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+                      placeholder="taylor.durden@example.com"
+                      required
+                    />
+                  </div>
 
-  <div>
-    <label htmlFor="social" className="block text-sm font-semibold text-gray-700 mb-2">
-      How did you find me?
-    </label>
-    <select
-      id="social"
-      name="social"
-      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-      defaultValue=""
-      required
-    >
-      <option value="">Select platform</option>
-      <option value="github">GitHub</option>
-      <option value="linkedin">LinkedIn</option>
-      <option value="twitter">X (Twitter)</option>
-      <option value="reddit">Reddit</option>
-      <option value="medium">Medium</option>
-      <option value="discord">Discord</option>
-      <option value="instagram">Instagram</option>
-      <option value="youtube">YouTube</option>
-      <option value="tiktok">TikTok</option>
-      <option value="stackoverflow">Stack Overflow</option>
-      <option value="other">Other</option>
-    </select>
-  </div>
+                  <div>
+                    <label htmlFor="social" className="block text-sm font-semibold text-gray-700 mb-2">
+                      How did you find me?
+                    </label>
+                    <select
+                      id="social"
+                      name="social"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+                      defaultValue=""
+                      required
+                    >
+                      <option value="">Select platform</option>
+                      <option value="github">GitHub</option>
+                      <option value="linkedin">LinkedIn</option>
+                      <option value="twitter">X (Twitter)</option>
+                      <option value="reddit">Reddit</option>
+                      <option value="medium">Medium</option>
+                      <option value="discord">Discord</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="youtube">YouTube</option>
+                      <option value="tiktok">TikTok</option>
+                      <option value="stackoverflow">Stack Overflow</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
 
-  <div>
-    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
-      Subject
-    </label>
-    <input
-      type="text"
-      id="subject"
-      name="subject"
-      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
-      placeholder="What's this about?"
-      required
-    />
-  </div>
+                  <div>
+                    <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Subject
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      name="subject"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300"
+                      placeholder="What's this about?"
+                      required
+                    />
+                  </div>
 
-  <div>
-    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-      Message
-    </label>
-    <textarea
-      id="message"
-      name="message"
-      rows={5}
-      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300 resize-none"
-      placeholder="Tell me about your project or idea..."
-      required
-    />
-  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-black focus:outline-none transition-all duration-300 resize-none"
+                      placeholder="Tell me about your project or idea..."
+                      required
+                    />
+                  </div>
 
-  <Button
-    type="submit"
-    className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-  >
-    Send Message
-    <Send className="ml-2 h-5 w-5" />
-  </Button>
-</form>
+                  <Button
+                    type="submit"
+                    className="w-full bg-black text-white hover:bg-gray-800 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                  >
+                    Send Message
+                    <Send className="ml-2 h-5 w-5" />
+                  </Button>
+                </form>
               </div>
             </div>
           </div>
@@ -1053,16 +1057,8 @@ ${formData.get("message")}`
         </footer>
       </main>
 
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <Button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-40 bg-black text-white hover:bg-gray-800 rounded-full p-3 shadow-lg animate-bounce-subtle"
-          size="sm"
-        >
-          <ChevronUp className="h-5 w-5" />
-        </Button>
-      )}
+      {/* Enhanced Scroll to Top Button with Progress Ring */}
+      <ScrollToTop />
     </div>
   )
 }
