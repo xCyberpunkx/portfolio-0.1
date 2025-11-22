@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     siteName: "Zinedine Rouabah Portfolio",
     images: [
       {
-        url: "/og-image.png",
+        url: "/profile-picture.jpg",
         width: 1200,
         height: 630,
         alt: "Zinedine Rouabah Portfolio",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     title: "Zinedine Rouabah - Systems Programmer & Security Researcher",
     description:
       "Building secure, high-performance systems with Rust, C++, and Linux.",
-    images: ["//profile-picture.jpg"],
+    images: ["/profile-picture.jpg"],
   },
 
   robots: {
