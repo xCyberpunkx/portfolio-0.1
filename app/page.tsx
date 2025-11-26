@@ -234,217 +234,216 @@ if (isLoading) {
 
   return (
     <div className="min-h-screen bg-white text-black relative overflow-x-hidden">
-      <Navbar />
-        <main className="pt-15">
-
-          <section
-            id="hero"
-            className="relative isolate overflow-hidden px-4 pt-28 pb-20 sm:px-6 lg:px-8"
-          >
-          <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-50 via-white to-white" />
-          <div className="absolute inset-0 -z-10 opacity-50">
-            <BackgroundRippleEffect rows={9} cols={24} cellSize={46} />
-          </div>
-          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white/80 via-white/40 to-transparent blur-3xl" />
-          <div className="absolute inset-0 pointer-events-none opacity-0 sm:opacity-30 hidden md:block">
-            {animatedDots.map((dot, i) => (
-              <div
-                key={`dot-${i}`}
-                className="absolute w-1 h-1 bg-gray-400 rounded-full animate-pulse"
-                style={{
-                  top: `${dot.top}%`,
-                  left: `${dot.left}%`,
-                  animationDelay: `${dot.delay}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="relative z-10 mx-auto max-w-6xl">
-            <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-              <div className="space-y-8 text-center lg:text-left">
-                <div className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white/70 px-5 py-2 text-xs font-mono uppercase tracking-[0.3em] text-gray-600 shadow-sm">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                    software engineer
-                </div>
-
-                <div className="space-y-4">
-            <p className="font-mono text-sm text-gray-500">portfolio@archlinux:~$ echo "Hello, world!"</p>
-            <h1 className="text-4xl font-black leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-              Zine Eddine{" "}
-              <span className="block bg-gradient-to-r from-black via-gray-800 to-gray-500 bg-clip-text text-transparent">
-                Rouabah
-              </span>
-            </h1>
-            <p className="text-lg text-gray-600 sm:text-xl">
-              I build software that works smoothly, from low-level systems to user-friendly applications. I focus on
-              clean, efficient, and reliable solutions.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {heroHighlights.map((highlight) => (
-              <div
-                key={highlight.title}
-                className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm backdrop-blur lg:hover:-translate-y-1 lg:hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                
-                  <div>
-                    <p className="text-sm font-semibold">{highlight.title}</p>
-                    <p className="text-xs text-gray-500">{highlight.description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="max-w-2xl">
-            <TooltipCardDemo />
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
-            {heroBadges.map((item) => (
-              <Badge
-                key={item.label}
-                variant="default"
-                className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm"
-              >
-                <item.icon className={`h-4 w-4 ${item.color}`} />
-                {item.label}
-              </Badge>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row justify-center lg:justify-start">
-            <Button
-              onClick={() => scrollToSection("projects")}
-              className="bg-black text-white shadow-lg shadow-black/20 transition-all duration-300 hover:scale-[1.02]"
-            >
-              View Projects
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => scrollToSection("contact")}
-              className="border-gray-300 text-gray-900 transition-all duration-300 hover:border-black hover:text-black"
-            >
-              Get in Touch
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {heroStats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm">
-                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+  <Navbar />
+  <main className="pt-15">
+    <section
+      id="hero"
+      className="relative isolate overflow-hidden px-4 pt-28 pb-20 sm:px-6 lg:px-8"
+    >
+      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-slate-50 via-white to-white" />
+      
+      {/* Fixed BackgroundRippleEffect - Ensure full coverage */}
+      <div className="absolute inset-0 -z-10 opacity-15 w-full h-full"> {/* Further reduced opacity */}
+        <div className="w-full h-full">
+          <BackgroundRippleEffect rows={9} cols={24} cellSize={46} />
         </div>
+      </div>
+      
+      <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white/80 via-white/40 to-transparent blur-3xl" />
+      <div className="absolute inset-0 pointer-events-none opacity-0 sm:opacity-30 hidden md:block">
+        {animatedDots.map((dot, i) => (
+          <div
+            key={`dot-${i}`}
+            className="absolute w-1 h-1 bg-gray-400 rounded-full animate-pulse"
+            style={{
+              top: `${dot.top}%`,
+              left: `${dot.left}%`,
+              animationDelay: `${dot.delay}s`,
+            }}
+          />
+        ))}
+      </div>
 
-        <div className="space-y-6">
-          <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
-            <div className="flex items-center justify-between">
-  <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
-
-  {/* Pirelli Logo in between */}
-  <Image
-    src="/pirelli.png"
-    alt="Pirelli Logo"
-    width={60}
-    height={20}
-    className="object-contain mx-2"
-  />
-
-  <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
-</div>
-            <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
-              <PixelatedCanvasDemo />
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-8 text-center lg:text-left">
+            <div className="inline-flex items-center gap-3 rounded-full border border-gray-200 bg-white/70 px-5 py-2 text-xs font-mono uppercase tracking-[0.3em] text-gray-600 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              software engineer
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-left text-sm text-gray-600 md:grid-cols-3">
-              {[
-                { label: "Latency", value: "8.2 ms" },
-                { label: "Throughput", value: "650k req/s" },
-                { label: "Render Budget", value: "9.4 ms" },
-              ].map((metric) => (
-                <div key={metric.label} className="rounded-2xl border border-gray-100 bg-white/70 p-3">
-                  <p className="text-xs text-gray-500">{metric.label}</p>
-                  <p className="text-sm font-semibold text-gray-900">{metric.value}</p>
+
+            <div className="space-y-4">
+              <p className="font-mono text-sm text-gray-500">portfolio@archlinux:~$ echo "Hello, world!"</p>
+              <h1 className="text-4xl font-black leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                Zine Eddine{" "}
+                <span className="block bg-gradient-to-r from-black via-gray-800 to-gray-500 bg-clip-text text-transparent">
+                  Rouabah
+                </span>
+              </h1>
+              <p className="text-lg text-gray-600 sm:text-xl">
+                I build software that works smoothly and is easy for people to use.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {heroHighlights.map((highlight) => (
+                <div
+                  key={highlight.title}
+                  className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm backdrop-blur lg:hover:-translate-y-1 lg:hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <p className="text-sm font-semibold">{highlight.title}</p>
+                      <p className="text-xs text-gray-500">{highlight.description}</p>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 rounded-2xl border border-dashed border-gray-200 bg-white/70 p-4 text-left text-sm text-gray-600 md:hidden">
-              <p className="font-semibold text-gray-900">Mobile-friendly</p>
-              <p className="text-gray-600">Heavy visualizers are deferred to keep pages silky smooth on phones.</p>
+
+            <div className="max-w-2xl">
+              <TooltipCardDemo />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+              {heroBadges.map((item) => (
+                <Badge
+                  key={item.label}
+                  variant="default"
+                  className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-4 py-2 text-sm font-medium text-gray-900 shadow-sm"
+                >
+                  <item.icon className={`h-4 w-4 ${item.color}`} />
+                  {item.label}
+                </Badge>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row justify-center lg:justify-start">
+              <Button
+                onClick={() => scrollToSection("projects")}
+                className="bg-black text-white shadow-lg shadow-black/20 transition-all duration-300 hover:scale-[1.02]"
+              >
+                View Projects
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => scrollToSection("contact")}
+                className="border-gray-300 text-gray-900 transition-all duration-300 hover:border-black hover:text-black"
+              >
+                Get in Touch
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {heroStats.map((stat) => (
+                <div key={stat.label} className="rounded-2xl border border-gray-100 bg-white/80 p-4 text-left shadow-sm">
+                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-[32px] border border-gray-100 bg-white/80 p-6 shadow-xl shadow-gray-200/60 backdrop-blur">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-gray-600">Realtime cockpit</p>
+
+                {/* Pirelli Logo in between */}
+                <Image
+                  src="/pirelli.png"
+                  alt="Pirelli Logo"
+                  width={60}
+                  height={20}
+                  className="object-contain mx-2"
+                />
+
+                <span className="text-xs font-mono text-emerald-600">fps • latency • throughput</span>
+              </div>
+              <div className="mt-6 hidden rounded-3xl border border-gray-200 bg-slate-950/90 p-3 md:block">
+                <PixelatedCanvasDemo />
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3 text-left text-sm text-gray-600 md:grid-cols-3">
+                {[
+                  { label: "Latency", value: "8.2 ms" },
+                  { label: "Throughput", value: "650k req/s" },
+                  { label: "Render Budget", value: "9.4 ms" },
+                ].map((metric) => (
+                  <div key={metric.label} className="rounded-2xl border border-gray-100 bg-white/70 p-3">
+                    <p className="text-xs text-gray-500">{metric.label}</p>
+                    <p className="text-sm font-semibold text-gray-900">{metric.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 rounded-2xl border border-dashed border-gray-200 bg-white/70 p-4 text-left text-sm text-gray-600 md:hidden">
+                <p className="font-semibold text-gray-900">Mobile-friendly</p>
+                <p className="text-gray-600">Heavy visualizers are deferred to keep pages silky smooth on phones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-12 hidden lg:block">
+          <MacOSDockDemo />
+        </div>
+      </div>
+    </section>
+    
+    <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-28 items-center">
+          {/* Left Side - About Text with Creative Layout */}
+          <div className="space-y-8 animate-fade-in-up">
+            <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-10 shadow-xl border border-gray-200/50 hover:shadow-2xl transition-shadow duration-500">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-1 h-20 bg-gradient-to-b from-black to-gray-400 rounded-full"></div>
+                <div>
+                  <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
+                    Who is Zine Eddine Rouabah?
+                  </h3>
+                  <p className="text-gray-500 text-sm tracking-wider">std::cin.get();</p>
+                </div>
+              </div>
+              
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Zine Eddine Rouabah is a software engineer passionate about system-level programming, cybersecurity, and open-source development.
+              </p>
+              
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                He started in web development and progressed to creating <span className="font-semibold text-black">efficient, secure, and maintainable software</span> using <span className="font-semibold text-black">C++</span> and <span className="font-semibold text-black">Linux-based systems</span>.
+              </p>
+              
+              <p className="text-lg text-gray-700 leading-relaxed">
+                With a focus on low-level computer science concepts, network fundamentals, and modern development practices, he aims to bridge creativity and engineering precision in every project.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Side - Separator & Stacked 3D Cards */}
+          <div className="flex flex-col items-center space-y-8 animate-fade-in-up-delay">
+            {/* Animated Separator with Lottie-style animation */}
+            <div className="w-full flex items-center justify-center gap-4 py-4">
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-400"></div>
+              <div className="relative">
+                <div className="w-3 h-3 bg-black rounded-full animate-pulse-scale"></div>
+                <div className="absolute inset-0 w-3 h-3 bg-black rounded-full animate-ping opacity-20"></div>
+              </div>
+              <div className="flex-1 h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-400"></div>
+            </div>
+
+            {/* 3D Spaced Cards */}
+            <div className="relative w-full max-w-md space-y-8" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
+              <BackgroundBoxesDemo />
             </div>
           </div>
         </div>
       </div>
-            <div className="mt-12 hidden lg:block">
-              <MacOSDockDemo />
-            </div>
-          </div>
-        </section>
-        <section id="about" className="py-20 px-6 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.1),transparent_50%)]" />
-          </div>
-
-         
-          <div className="max-w-6xl mx-auto relative">
-            
-            {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-2 gap-28 items-center">
-              {/* Left Side - About Text with Creative Layout */}
-              <div className="space-y-8 animate-fade-in-up">
-                <div className="bg-white/50 backdrop-blur-sm rounded-3xl p-10 shadow-xl border border-gray-200/50 hover:shadow-2xl transition-shadow duration-500">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-1 h-20 bg-gradient-to-b from-black to-gray-400 rounded-full"></div>
-                    <div>
-                      <h3 className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                        Who is Zine Eddine Rouabah?
-                      </h3>
-                      <p className="text-gray-500 text-sm  tracking-wider">std::cin.get();</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                    Zine Eddine Rouabah is a software engineer passionate about system-level programming, cybersecurity, and open-source development.
-                  </p>
-                  
-                  <p className="text-lg text-gray-700 leading-relaxed mb-6">
-  He started in web development and progressed to creating <span className="font-semibold text-black">efficient, secure, and maintainable software</span> using <span className="font-semibold text-black">C++</span> and <span className="font-semibold text-black">Linux-based systems</span>.
-</p>
-                  
-                  <p className="text-lg text-gray-700 leading-relaxed">
-                    With a focus on low-level computer science concepts, network fundamentals, and modern development practices, he aims to bridge creativity and engineering precision in every project.
-                  </p>
-                </div>
-
-               
-              </div>
-
-              {/* Right Side - Separator & Stacked 3D Cards */}
-              <div className="flex flex-col items-center space-y-8 animate-fade-in-up-delay">
-                {/* Animated Separator with Lottie-style animation */}
-                <div className="w-full flex items-center justify-center gap-4 py-4">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-gray-400"></div>
-                  <div className="relative">
-                    <div className="w-3 h-3 bg-black rounded-full animate-pulse-scale"></div>
-                    <div className="absolute inset-0 w-3 h-3 bg-black rounded-full animate-ping opacity-20"></div>
-                  </div>
-                  <div className="flex-1 h-px bg-gradient-to-l from-transparent via-gray-300 to-gray-400"></div>
-                </div>
-
-                {/* 3D Spaced Cards */}
-                <div className="relative w-full max-w-md space-y-8" style={{ perspective: '1500px', transformStyle: 'preserve-3d' }}>
-                  <BackgroundBoxesDemo    />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+    </section>
+ 
         <section id="journey" className="bg-white px-4 py-24 sm:px-6">
 <div className="mx-auto max-w-6xl">
             <div className="text-center space-y-4">
